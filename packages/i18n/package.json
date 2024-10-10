@@ -1,0 +1,9 @@
+{
+    "name": "@easy-kit/i18n",
+    "version": "2.4.0",
+    "description": "> TODO: description",
+    "author": "赵振华 <topjquery@qq.com>",
+    "homepage": "",
+    "license": "MIT",
+    "type": "module"
+}

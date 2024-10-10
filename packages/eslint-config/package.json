@@ -1,0 +1,24 @@
+{
+    "name": "@easy-kit/eslint-config",
+    "version": "1.0.0",
+    "description": "> TODO: description",
+    "author": "赵振华 <284885069@qq.com>",
+    "homepage": "",
+    "license": "ISC",
+    "main": "lib/index.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "files": [
+        "lib"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@typescript-eslint/eslint-plugin": "7.15.0",
+        "@typescript-eslint/parser": "7.15.0",
+        "typescript": "5.5.3",
+        "eslint-config-next": "14.2.10"
+    }
+}
