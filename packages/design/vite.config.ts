@@ -1,10 +1,22 @@
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import path from "path";
+import dts from 'vite-plugin-dts'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react()],
+    plugins: [
+        dts({
+            include: [
+                "./components/**/*",
+                "./lib/**/*",
+                "./locales/**/*",
+                "index.ts",
+                "types.d.ts",
+            ],
+        }),
+        react()
+    ],
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./"),

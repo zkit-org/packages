@@ -95,12 +95,10 @@ const init = (config: BuildConfig) => {
     data = config.data || defaultData;
 }
 
-const build = async (config: BuildConfig) => {
+export const build = async (config: BuildConfig) => {
     init(config);
     jet.remove(dirVars.i18nDir);
     staticFileHandler();
     await buildFileHandler();
     console.log(chalk.yellow('all done'));
 }
-
-export default build;

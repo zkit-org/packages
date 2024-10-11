@@ -36,3 +36,5 @@ dist/
 
 apps/*/i18n/
 apps/*/out/
+
+tsconfig.tsbuildinfo

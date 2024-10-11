@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "extends": [
+        "@easykit/eslint-config"
+    ],
+    "ignorePatterns": [
+        "node_modules/",
+        "dist/",
+        "coverage/",
+        "public/",
+        "build/",
+        "scripts/",
+        "assets/",
+        "public/",
+        "out/"
+    ]
+}

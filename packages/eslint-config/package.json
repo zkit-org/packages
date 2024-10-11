@@ -1,10 +1,14 @@
 {
-    "name": "@easy-kit/eslint-config",
-    "version": "1.0.0",
-    "description": "> TODO: description",
-    "author": "赵振华 <284885069@qq.com>",
-    "homepage": "",
-    "license": "ISC",
+    "name": "@easykit/eslint-config",
+    "version": "0.0.1",
+    "description": "Easy kit common eslint config",
+    "author": "Grant <284885069@qq.com>",
+    "homepage": "https://github.com/zkit-org",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zkit-org/packages.git"
+    },
     "main": "lib/index.js",
     "directories": {
         "lib": "lib"

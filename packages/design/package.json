@@ -1,10 +1,15 @@
 {
     "name": "@easykit/design",
-    "version": "0.0.1",
-    "description": "",
-    "keywords": [],
-    "author": "",
-    "license": "NONE",
+    "version": "0.0.3",
+    "keywords": ["easykit", "design", "tailwindcss", "react"],
+    "description": "Easy kit design components",
+    "author": "Grant <284885069@qq.com>",
+    "homepage": "https://github.com/zkit-org",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zkit-org/packages.git"
+    },
     "scripts": {
         "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
@@ -62,6 +67,7 @@
         "dist",
         "README.md"
     ],
+    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "import": "./dist/index.js"
