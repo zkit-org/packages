@@ -1,6 +1,6 @@
 {
     "name": "@easykit/design",
-    "version": "0.0.3",
+    "version": "0.0.8",
     "keywords": ["easykit", "design", "tailwindcss", "react"],
     "description": "Easy kit design components",
     "author": "Grant <284885069@qq.com>",
@@ -67,10 +67,17 @@
         "dist",
         "README.md"
     ],
-    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
+            "types": "./dist/index.d.ts",
             "import": "./dist/index.js"
+        },
+        "./lib": {
+            "types": "./dist/lib/index.d.ts",
+            "import": "./dist/lib.js"
+        },
+        "./locales/": {
+            "import": "./dist/locales/"
         }
     }
 }
