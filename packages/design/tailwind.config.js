@@ -1,8 +1,8 @@
-import type { Config } from 'tailwindcss';
 import ta from 'tailwindcss-animate';
 import { tailwindConfig } from '@/lib/tailwind';
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+const config = {
     ...tailwindConfig,
     content: [
         "./**/*.{js,ts,jsx,tsx,mdx}",

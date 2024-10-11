@@ -33,6 +33,7 @@ packages/*/i18n/
 .idea/
 *.iml
 dist/
+types/
 
 apps/*/i18n/
 apps/*/out/

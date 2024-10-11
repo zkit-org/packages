@@ -1,7 +1,12 @@
 {
     "name": "@easykit/design",
-    "version": "0.0.8",
-    "keywords": ["easykit", "design", "tailwindcss", "react"],
+    "version": "0.0.18",
+    "keywords": [
+        "easykit",
+        "design",
+        "tailwindcss",
+        "react"
+    ],
     "description": "Easy kit design components",
     "author": "Grant <284885069@qq.com>",
     "homepage": "https://github.com/zkit-org",
@@ -41,6 +46,7 @@
         "@radix-ui/react-toast": "1.2.1",
         "@radix-ui/react-tooltip": "1.1.2",
         "@tanstack/react-table": "8.19.2",
+        "autoprefixer": "10.4.19",
         "axios": "1.7.4",
         "class-variance-authority": "0.7.0",
         "clsx": "2.1.1",
@@ -50,34 +56,33 @@
         "github-markdown-css": "5.6.1",
         "is-hotkey": "0.2.0",
         "lucide-react": "0.400.0",
+        "postcss": "8.4.39",
         "react-day-picker": "8.10.1",
         "react-dropzone": "14.2.3",
         "react-hook-form": "7.52.1",
         "react-resizable-panels": "2.0.20",
+        "rollup-plugin-copy": "^3.5.0",
         "slate": "0.103.0",
         "slate-history": "0.100.0",
         "slate-react": "0.106.0",
         "tailwind-merge": "2.3.0",
-        "uuid": "10.0.0"
+        "tailwindcss": "3.4.4",
+        "uuid": "10.0.0",
+        "vite-plugin-static-copy": "^2.0.0"
     },
     "devDependencies": {
         "@types/uuid": "10.0.0"
     },
     "files": [
-        "dist",
+        "components",
+        "lib",
+        "locales",
+        "index.d.ts",
+        "index.js",
+        "react-dom.js",
+        "style.css",
         "README.md"
     ],
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
-        },
-        "./lib": {
-            "types": "./dist/lib/index.d.ts",
-            "import": "./dist/lib.js"
-        },
-        "./locales/": {
-            "import": "./dist/locales/"
-        }
-    }
+    "module": "./index.js",
+    "types": "./index.d.ts"
 }
