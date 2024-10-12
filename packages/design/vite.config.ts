@@ -10,11 +10,8 @@ export default defineConfig({
     plugins: [
         dts({
             include: [
-                "./components/**/*",
                 "./lib/**/*",
-                "./locales/**/*",
-                "index.ts",
-                "types.d.ts",
+                "types.d.ts"
             ]
         }),
         react(),
@@ -27,16 +24,16 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "./"),
+            "@easykit/design": path.resolve(__dirname, "./lib/"),
         }
     },
     build: {
         lib: {
             entry: {
-                index: "./index.ts",
-                "locales/en-US": "./locales/en-US.ts",
-                "locales/zh-CN": "./locales/zh-CN.ts",
-                "lib/index": "./lib/index.ts",
+                index: "./lib/index.ts",
+                "locales/en-US": "./lib/locales/en-US.ts",
+                "locales/zh-CN": "./lib/locales/zh-CN.ts",
+                "lib/index": "./lib/lib/index.ts",
             },
             formats: ["es"]
         },

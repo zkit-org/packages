@@ -3,10 +3,27 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./*"]
+            "@/*": [
+                "./src/*"
+            ],
+            "@easykit/design": [
+                "./lib/index.ts"
+            ],
+            "@easykit/design/*": [
+                "./lib/*"
+            ]
         },
-        "jsx": "react-jsx",
+        "jsx": "preserve",
         "esModuleInterop": true,
         "resolveJsonModule": true
-    }
+    },
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
