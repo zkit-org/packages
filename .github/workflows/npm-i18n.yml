@@ -19,6 +19,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i -g pnpm
       - run: pnpm i
-      - run: cd packages/eslint-config/ && npm publish
+      - run: pnpm build:i18n
+      - run: cd packages/i18n/dist/ && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
