@@ -1,22 +1,13 @@
 {
-    "name": "@clover/root",
+    "name": "@easykit/root",
     "private": true,
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
-        "dev:main": "pnpm --filter @clover/main run dev",
-        "dev:i18n": "pnpm --filter @clover/i18n run dev",
-        "dev:admin": "pnpm --filter @clover/admin run dev",
-        "dev:wiki": "pnpm --filter @clover/wiki run dev",
-        "lint:main": "pnpm --filter @clover/main run lint",
-        "lint:i18n": "pnpm --filter @clover/i18n run lint",
-        "lint:admin": "pnpm --filter @clover/admin run lint",
-        "lint:wiki": "pnpm --filter @clover/wiki run lint",
-        "build:main": "pnpm --filter @clover/main run build",
-        "build:i18n": "pnpm --filter @clover/i18n run build",
-        "build:admin": "pnpm --filter @clover/admin run build",
-        "build:wiki": "pnpm --filter @clover/wiki run build"
+        "dev:design": "pnpm --filter @easykit/design run dev",
+        "lint:design": "pnpm --filter @easykit/design run lint",
+        "build:design": "pnpm --filter @easykit/design run build"
     },
     "dependencies": {
         "@easykit/eslint-config": "workspace:*",
