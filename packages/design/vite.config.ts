@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import path from "path";
 import dts from 'vite-plugin-dts'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
-import tailwindcss from 'tailwindcss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -31,9 +30,10 @@ export default defineConfig({
         lib: {
             entry: {
                 index: "./lib/index.ts",
+                "lib/index": "./lib/lib/index.ts",
                 "locales/en-US": "./lib/locales/en-US.ts",
                 "locales/zh-CN": "./lib/locales/zh-CN.ts",
-                "lib/index": "./lib/lib/index.ts",
+                "locales/zh-TW": "./lib/locales/zh-TW.ts",
             },
             formats: ["es"]
         },
