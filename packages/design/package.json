@@ -1,6 +1,6 @@
 {
     "name": "@easykit/design",
-    "version": "0.0.21",
+    "version": "0.0.22",
     "keywords": [
         "easykit",
         "design",
@@ -77,16 +77,6 @@
     "devDependencies": {
         "@types/uuid": "10.0.0"
     },
-    "files": [
-        "components",
-        "lib",
-        "locales",
-        "index.d.ts",
-        "index.js",
-        "react-dom.js",
-        "style.css",
-        "README.md"
-    ],
     "module": "./index.js",
     "types": "./index.d.ts"
 }
