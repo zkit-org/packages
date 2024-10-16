@@ -1,6 +1,6 @@
 {
     "name": "@easykit/design",
-    "version": "0.0.20",
+    "version": "0.0.21",
     "keywords": [
         "easykit",
         "design",
@@ -79,7 +79,7 @@
     },
     "files": [
         "components",
-        "utils",
+        "lib",
         "locales",
         "index.d.ts",
         "index.js",
