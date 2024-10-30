@@ -4,6 +4,7 @@ import type {Control} from "react-hook-form";
 import {Button} from "@easykit/design/components/uix/button";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import pick from "lodash/pick";
+import get from "lodash/get";
 
 export interface FilterItemProps {
     field: string;
@@ -54,8 +55,8 @@ export const Filters: FC<FiltersProps> = (props) => {
     })
 
     const config = useContext(UIXContext);
-    const searchText = props.searchText || config.locale.Filters.searchText;
-    const resetText = props.resetText || config.locale.Filters.resetText;
+    const searchText = props.searchText || get(config.locale, "Filters.searchTex");
+    const resetText = props.resetText || get(config.locale, "Filters.resetText");
 
     const onSubmit: SubmitHandler<any> = (data) => {
         load && load({

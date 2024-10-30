@@ -6,6 +6,7 @@ import {FC, useContext, useState} from "react";
 import { render as ReactDOMRender } from '@easykit/design/lib';
 import {Button} from "@easykit/design/components/uix/button";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import get from "lodash/get"
 
 export interface ConfirmProps {
     title?: string;
@@ -27,8 +28,8 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
     } = props;
 
     const config = useContext(UIXContext);
-    const okText = props.okText || config.locale.Alert.okText;
-    const cancelText = props.cancelText || config.locale.Alert.cancelText;
+    const okText = props.okText || get(config.locale, "Alert.okText");
+    const cancelText = props.cancelText || get(config.locale, "Alert.cancelText");
 
     const [open, setOpen] = useState(props.open);
     const [loading, setLoading] = useState(false);

@@ -35,6 +35,7 @@ import "./style.css";
 import { formatValue } from "@easykit/design/components/uix/value-formatter";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import { LayoutIcon } from "@radix-ui/react-icons";
+import get from "lodash/get";
 
 export interface StickyColumnProps {
     key: string;
@@ -140,7 +141,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
     } = props;
 
     const config = useContext(UIXContext);
-    const empty = props.empty || config.locale.DataTable.empty;
+    const empty = props.empty || get(config.locale, "DataTable.empty");
 
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

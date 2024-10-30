@@ -15,6 +15,7 @@ import remove from 'lodash/remove';
 import cloneDeep from "lodash/cloneDeep";
 import {useSize} from "@easykit/design/components/hooks/resize";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import get from "lodash/get";
 
 export interface ComboSelectOptionProps<Data> {
     value: string;
@@ -53,8 +54,8 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
     } = props;
 
     const config = useContext(UIXContext);
-    const empty = props.empty || config.locale.ComboSelect.empty;
-    const clearText = props.clearText || config.locale.ComboSelect.clearText;
+    const empty = props.empty || get(config.locale, "ComboSelect.empty");
+    const clearText = props.clearText || get(config.locale, "ComboSelect.clearText");
 
     const [open, setOpen] = useState(false)
     const containerRef = useRef(null);

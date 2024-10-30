@@ -9,6 +9,7 @@ import {
     Calendar
 } from "@easykit/design"
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import get from "lodash/get";
 
 export type DatePickerProps = {
     placeholder?: string,
@@ -25,9 +26,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, re
     const [presetValue, setPresetValue] = useState<string>('');
 
     const config = useContext(UIXContext);
-    const locale = config.locale.DatePicker.locale;
-    const formatConfig = props.format || config.locale.DatePicker.format;
-    const options = config.locale.DatePicker.options;
+    const locale = get(config.locale, "DatePicker.locale");
+    const formatConfig = props.format || get(config.locale, "DatePicker.format");
+    const options = get(config.locale, "DatePicker.options");
 
     const calendar = <Calendar
         locale={locale}

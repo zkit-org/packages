@@ -10,6 +10,7 @@ import { DateRange } from "react-day-picker";
 import { Calendar as CalendarIcon } from "lucide-react";
 import {forwardRef, HTMLAttributes, useContext, useState} from "react";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import get from "lodash/get";
 
 export type DateRangePickerProps = {
     value?: DateRange;
@@ -26,8 +27,8 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     } = props;
 
     const config = useContext(UIXContext);
-    const locale = config.locale.DateRangePicker.locale;
-    const formatConfig = props.format || config.locale.DateRangePicker.format;
+    const locale = get(config.locale, "DateRangePicker.locale");
+    const formatConfig = props.format || get(config.locale, "DateRangePicker.locale");
 
     const [date, setDate] = useState<DateRange | undefined>(value)
 

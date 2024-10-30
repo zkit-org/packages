@@ -4,6 +4,7 @@ import {ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRight
 import {Select} from "@easykit/design/components/uix/select";
 import {Input} from "@easykit/design/components/ui/input";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import get from "lodash/get";
 
 export interface PaginationProps {
     total: number;
@@ -27,11 +28,11 @@ export const Pagination: FC<PaginationProps> = (props) => {
     } = props;
 
     const config = useContext(UIXContext);
-    const totalPageText = config.locale.Pagination.totalPage;
-    const totalText = config.locale.Pagination.total;
-    const sizeText = config.locale.Pagination.size;
-    const go = config.locale.Pagination.go;
-    const goSuffix = config.locale.Pagination.goSuffix;
+    const totalPageText = get(config.locale, "Pagination.totalPage");
+    const totalText = get(config.locale, "Pagination.total");
+    const sizeText = get(config.locale, "Pagination.size");
+    const go = get(config.locale, "Pagination.go");
+    const goSuffix = get(config.locale, "Pagination.goSuffix");
 
 
     const totalPage = Math.ceil(Number(total) / Number(size));

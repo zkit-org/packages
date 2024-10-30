@@ -8,6 +8,7 @@ import {Button, Progress} from "@easykit/design";
 import remove from 'lodash/remove';
 import axios from "axios";
 import classNames from "classnames";
+import get from "lodash/get";
 
 export type UploaderProps = PropsWithChildren<{
     showFileList?: boolean;
@@ -64,8 +65,8 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
     });
 
     const config = useContext(UIXContext);
-    const placeholder = props.placeholder || config.locale.Uploader.placeholder;
-    const uploadText = props.uploadText || config.locale.Uploader.uploadText;
+    const placeholder = props.placeholder || get(config.locale, "Uploader.placeholder");
+    const uploadText = props.uploadText || get(config.locale, "Uploader.uploadText");
 
     const upload = async (file: File & any) => {
         const controller = new AbortController();
