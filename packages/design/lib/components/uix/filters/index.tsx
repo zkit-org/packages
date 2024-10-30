@@ -55,7 +55,7 @@ export const Filters: FC<FiltersProps> = (props) => {
     })
 
     const config = useContext(UIXContext);
-    const searchText = props.searchText || get(config.locale, "Filters.searchTex");
+    const searchText = props.searchText || get(config.locale, "Filters.searchText");
     const resetText = props.resetText || get(config.locale, "Filters.resetText");
 
     const onSubmit: SubmitHandler<any> = (data) => {
