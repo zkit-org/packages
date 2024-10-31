@@ -138,7 +138,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
         </div>
     }
 
-    return <div ref={ref} className={"space-y-2"}>
+    return <div ref={ref} className={"space-y-2 flex flex-col"}>
         <div {...getRootProps()} className={classNames(children ? "w-auto inline-block" : "")}>
             <input {...getInputProps()} />
             {
@@ -162,7 +162,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
         }
         {
             (!!files.filter(({status}: any) => (status === 'init')).length) && showButton ? <div>
-            <Button loading={!!files.filter(({status}: any) => (status === 'uploading')).length} onClick={onUpload} type={"button"} variant={"outline"}>{uploadText}</Button>
+                <Button loading={!!files.filter(({status}: any) => (status === 'uploading')).length} onClick={onUpload} type={"button"} variant={"outline"}>{uploadText}</Button>
             </div> : null
         }
     </div>;
