@@ -139,7 +139,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
     }
 
     return <div ref={ref} className={"space-y-2 flex flex-col"}>
-        <div {...getRootProps()} className={classNames(children ? "w-auto inline-block outline-none" : "")}>
+        <div {...getRootProps()} className={classNames(children ? "w-auto inline-block" : "", "outline-none")}>
             <input {...getInputProps()} />
             {
                 children ? children : <div className={cn(
