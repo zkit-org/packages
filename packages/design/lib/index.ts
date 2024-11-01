@@ -53,6 +53,7 @@ export {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
+    HoverCardArrow,
 } from "./components/ui/hover-card";
 export {
     ResizableHandle,
