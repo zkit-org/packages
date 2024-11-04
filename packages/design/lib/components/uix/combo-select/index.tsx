@@ -1,7 +1,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@easykit/design/components/ui/popover";
 import { Button } from "@easykit/design/components/ui/button";
-import {FC, forwardRef, PropsWithRef, ReactNode, useContext, useEffect, useRef, useState} from "react";
-import { CaretSortIcon, CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
+import {FC, forwardRef, PropsWithRef, ReactNode, useContext, useEffect, useMemo, useRef, useState} from "react";
+import {CaretSortIcon, CheckIcon, Cross2Icon, PlusCircledIcon} from "@radix-ui/react-icons";
 import {
     Command,
     CommandEmpty, CommandGroup,
@@ -16,12 +16,16 @@ import cloneDeep from "lodash/cloneDeep";
 import {useSize} from "@easykit/design/components/hooks/resize";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import get from "lodash/get";
+import {Skeleton} from "@easykit/design/components/ui/skeleton";
+import { DebouncedFunc } from "lodash";
 
 export interface ComboSelectOptionProps<Data> {
     value: string;
     label: ReactNode;
     raw?: Data;
 }
+
+type SearchFunction = (value: string) => Promise<void> | void;
 
 export interface ComboSelectProps extends PropsWithRef<any>{
     options?: ComboSelectOptionProps<any>[];
@@ -37,6 +41,8 @@ export interface ComboSelectProps extends PropsWithRef<any>{
     clearable?: boolean;
     clearText?: string;
     limit?: number;
+    search?: boolean;
+    onSearch?: SearchFunction | DebouncedFunc<SearchFunction>;
 }
 
 export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
@@ -51,6 +57,8 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
         multiple = false,
         clearable = true,
         limit = Number.MAX_VALUE,
+        search = false,
+        onSearch = async (value: string) => {}
     } = props;
 
     const config = useContext(UIXContext);
@@ -71,6 +79,8 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
         }
     }, [value, multiple]);
 
+    const showClear = useMemo(() => clearable &&  (selectedValues.length > 0 || valueState), [clearable, selectedValues, valueState])
+
     const placeholderDom = <span className={"font-normal text-muted-foreground"}>{placeholder}</span>
 
     return <Popover open={open} onOpenChange={setOpen}>
@@ -81,47 +91,67 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
                 role="combobox"
                 aria-expanded={open}
                 className={cn(
-                    "justify-between min-w-[150px] items-center h-9 py-1",
-                    multiple ? "border-dashed justify-start flex-wrap" : null,
-                    multiple && selectedValues && selectedValues.length ? "p-1 py-0.5 pb-1 space-x-1 space-y-0.5 h-auto" : null,
+                    "justify-between min-w-[150px] items-center h-9 py-1 px-2 group align-middle hover:bg-secondary/40",
+                    multiple ? "border-dashed" : null,
+                    multiple && selectedValues && selectedValues.length ? "h-auto pb-0" : null,
                     className,
                 )}
-                disabled={loading}
             >
-                {
-                    loading ? <Spin /> : <>
-                        {
-                            multiple ? <>
-                                {
-                                    selectedValues && selectedValues.length ? <>
-                                        <span />
-                                        {
-                                            selectedValues.map((v) => {
-                                                const label = options.find((option) => option.value === v)?.label;
-                                                return label ? <div className={"bg-secondary py-[3px] px-2 rounded"} key={v}>{label}</div> : null
-                                            })
-                                        }
-                                    </> : <>
-                                        <PlusCircledIcon className="mr-2 h-4 w-4" />
-                                        { placeholderDom }
-                                    </>
-                                }
-                            </> : <>
-                                <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
-                                <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </>
-                        }
-                    </>
-                }
+                <div className={"flex-1 flex items-start justify-start flex-wrap"}>
+                    {
+                        multiple ? <>
+                            {
+                                selectedValues && selectedValues.length ? <>
+                                    <span />
+                                    {
+                                        selectedValues.map((v) => {
+                                            const label = options.find((option) => option.value === v)?.label;
+                                            return label ? <div className={"bg-secondary py-[3px] px-2 rounded mb-1 mr-1"} key={v}>{label}</div> : null
+                                        })
+                                    }
+                                </> : <div className={"flex items-center"}>
+                                    <PlusCircledIcon className="mr-2 h-4 w-4" />
+                                    { placeholderDom }
+                                </div>
+                            }
+                        </> : <>
+                            <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
+                        </>
+                    }
+                </div>
+                <div className={"flex justify-center items-center shrink-0 opacity-50 ml-2"}>
+                    {
+                        loading ? <Spin /> : <>
+                            { multiple ? null : <CaretSortIcon className={cn("h-4 w-4 block", showClear ? "group-hover:hidden" : "")} /> }
+                            <Cross2Icon
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    const v = multiple ? [] : "";
+                                    setSelectedValues([]);
+                                    setValueState('');
+                                    onChange(v);
+                                    onSearch?.("");
+                                }}
+                                className={cn("h-4 w-4 hidden", showClear ? "group-hover:block" : "")}
+                            />
+                        </>
+                    }
+                </div>
             </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" style={{width: size.width}}>
             <Command filter={props.filter}>
-                <CommandInput placeholder={searchPlaceholder} className="h-9" />
-                <CommandEmpty>{ empty }</CommandEmpty>
+                { search ? <CommandInput onValueChange={onSearch} placeholder={searchPlaceholder} className="h-9" /> : null }
+                {
+                    loading ? <div className={"px-2"}>
+                        <Skeleton className={"w-full h-6 my-2"} />
+                        <Skeleton className={"w-full h-6 my-2"} />
+                        <Skeleton className={"w-full h-6 my-2"} />
+                    </div> : <CommandEmpty>{ empty }</CommandEmpty>
+                }
                 <CommandList>
                     {
-                        options.map((option) => {
+                        !loading ? options.map((option) => {
                             const isSelected = selectedValues.includes(option.value)
                             return <CommandItem
                                 key={option.value}
@@ -170,29 +200,9 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
                                     /> : null
                                 }
                             </CommandItem>
-                        })
+                        }) : null
                     }
                 </CommandList>
-                {
-                    clearable &&  (selectedValues.length > 0 || valueState) ? (
-                        <>
-                            <CommandSeparator />
-                            <CommandGroup>
-                                <CommandItem
-                                    onSelect={() => {
-                                        const v = multiple ? [] : "";
-                                        setSelectedValues([]);
-                                        setValueState('');
-                                        onChange(v);
-                                    }}
-                                    className="justify-center text-center"
-                                >
-                                    { clearText }
-                                </CommandItem>
-                            </CommandGroup>
-                        </>
-                    ) : null
-                }
             </Command>
         </PopoverContent>
     </Popover>
