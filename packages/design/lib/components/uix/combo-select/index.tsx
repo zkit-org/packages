@@ -171,7 +171,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
                                         setSelectedValues(v);
                                         onChange(v);
                                     }else{
-                                        const v = currentValue === valueState ? "" : currentValue;
+                                        const v = currentValue; // currentValue === valueState ? "" : currentValue;
                                         setValueState(v);
                                         onChange(v);
                                         setOpen(false)
