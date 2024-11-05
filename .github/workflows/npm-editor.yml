@@ -19,6 +19,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i -g pnpm
       - run: pnpm i
+      - run: pnpm build:design # This is a dependency of the editor package
       - run: pnpm build:editor
       - run: cd packages/editor/dist/ && npm publish
         env:
