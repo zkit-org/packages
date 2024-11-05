@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .ProseMirror {
     --margin-y: 1rem;
 }

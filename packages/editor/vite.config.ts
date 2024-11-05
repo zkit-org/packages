@@ -45,6 +45,7 @@ export default defineConfig({
                 "react/jsx-runtime",
                 "@easykit/design",
                 "i18next",
+                ...Object.keys(pkg.dependencies || {}).filter((key) => !key.startsWith("@tiptap")),
             ],
             output: {
                 entryFileNames: '[name].js',
