@@ -206,7 +206,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-atom-ui':
         specifier: 0.0.4
-        version: 0.0.4
+        version: 0.0.4(react@18.3.1)
       '@emotion/react':
         specifier: 11.11.4
         version: 11.11.4(@types/react@18.3.3)(react@18.3.1)
@@ -388,9 +388,6 @@ importers:
       '@tiptap/extension-code-block-lowlight':
         specifier: 2.7.2
         version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/extension-code-block@2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2)(highlight.js@11.9.0)(lowlight@3.1.0)
-      '@tiptap/extension-collaboration-cursor':
-        specifier: 2.7.2
-        version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(y-prosemirror@1.2.9(prosemirror-model@1.23.0)(prosemirror-state@1.4.3)(prosemirror-view@1.35.0)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))
       '@tiptap/extension-color':
         specifier: 2.7.2
         version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/extension-text-style@2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2)))
@@ -536,6 +533,8 @@ packages:
 
   '@arco-iconbox/react-atom-ui@0.0.4':
     resolution: {integrity: sha512-gYBxZRGfVNcGrJu3MGYK6Xtgf9m+oobn/OL8QnqmI6/2zv6JmWwccI+4fMtvDfeh5U7sgfyK9wYh1ftn95Wlpg==}
+    peerDependencies:
+      react: 18.3.1
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -1880,12 +1879,6 @@ packages:
     resolution: {integrity: sha512-WQqcVGe7i/E+yO3wz5XQteU1ETNZ00euUEl4ylVVmH2NM4Dh0KDjEhbhHlCM0iCfLUo7jhjC7dmS+hMdPUb+Tg==}
     peerDependencies:
       '@tiptap/core': ^2.7.0
-
-  '@tiptap/extension-collaboration-cursor@2.7.2':
-    resolution: {integrity: sha512-Ps5DiyD4vQpnRx/YH3WG+rc1x13PitVNB+WjwME4DNdnJezbev6aifp8qsdRAxjC1vBqhe8bOg6zHZWI/LwB5A==}
-    peerDependencies:
-      '@tiptap/core': ^2.7.0
-      y-prosemirror: 1.2.9
 
   '@tiptap/extension-color@2.7.2':
     resolution: {integrity: sha512-PFblz3384reTN0v4niNSkwIit06SQEgdwXQDBnuuyh4Stwb5sf+Pv2znvUR9O0g52RoI0qwbXG+QFiWYoo6Sww==}
@@ -5166,16 +5159,6 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
 
-  y-prosemirror@1.2.9:
-    resolution: {integrity: sha512-fThGIVmSqrqnG/ckywEGlHM9ElfILC4TcMZd5zxWPe/i+UuP97TEr4swsopRKG3Y+KHBVt4Y/5NVBC3AAsUoUg==}
-    engines: {node: '>=16.0.0', npm: '>=8.0.0'}
-    peerDependencies:
-      prosemirror-model: ^1.7.1
-      prosemirror-state: ^1.2.3
-      prosemirror-view: ^1.9.10
-      y-protocols: ^1.0.1
-      yjs: ^13.5.38
-
   y-protocols@1.0.6:
     resolution: {integrity: sha512-vHRF2L6iT3rwj1jub/K5tYcTT/mEYDUppgNPXwp8fmLpui9f7Yeq3OEtTLVF012j39QnV+KEQpNqoN7CWU7Y9Q==}
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
@@ -5265,7 +5248,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@arco-iconbox/react-atom-ui@0.0.4': {}
+  '@arco-iconbox/react-atom-ui@0.0.4(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -6571,11 +6556,6 @@ snapshots:
   '@tiptap/extension-code@2.9.1(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))':
     dependencies:
       '@tiptap/core': 2.7.2(@tiptap/pm@2.7.2)
-
-  '@tiptap/extension-collaboration-cursor@2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(y-prosemirror@1.2.9(prosemirror-model@1.23.0)(prosemirror-state@1.4.3)(prosemirror-view@1.35.0)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))':
-    dependencies:
-      '@tiptap/core': 2.7.2(@tiptap/pm@2.7.2)
-      y-prosemirror: 1.2.9(prosemirror-model@1.23.0)(prosemirror-state@1.4.3)(prosemirror-view@1.35.0)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
 
   '@tiptap/extension-color@2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/extension-text-style@2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2)))':
     dependencies:
@@ -10397,15 +10377,6 @@ snapshots:
   ws@8.18.0: {}
 
   xtend@4.0.2: {}
-
-  y-prosemirror@1.2.9(prosemirror-model@1.23.0)(prosemirror-state@1.4.3)(prosemirror-view@1.35.0)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18):
-    dependencies:
-      lib0: 0.2.98
-      prosemirror-model: 1.23.0
-      prosemirror-state: 1.4.3
-      prosemirror-view: 1.35.0
-      y-protocols: 1.0.6(yjs@13.6.18)
-      yjs: 13.6.18
 
   y-protocols@1.0.6(yjs@13.6.18):
     dependencies:

@@ -1,6 +1,6 @@
 {
     "name": "@easykit/editor",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "keywords": [
         "easykit",
         "design",
@@ -35,7 +35,6 @@
         "@tiptap/extension-character-count": "2.7.2",
         "@tiptap/extension-code-block": "2.7.2",
         "@tiptap/extension-code-block-lowlight": "2.7.2",
-        "@tiptap/extension-collaboration-cursor": "2.7.2",
         "@tiptap/extension-color": "2.7.2",
         "@tiptap/extension-document": "2.7.2",
         "@tiptap/extension-dropcursor": "2.7.2",
