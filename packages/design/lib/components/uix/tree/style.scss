@@ -1,0 +1,39 @@
+.clover-tree {
+    .rc-tree-treenode {
+        @apply w-full px-1 py-1.5 rounded-sm relative;
+        @apply hover:bg-[var(--action-hover)] hover:text-primary;
+        @apply focus:bg-[rgba(31,30,36,0.08)] focus:border-[#bfbfc3] focus:shadow-[0_0_0_1px_#fff,0_0_0_3px_rgba(var(--primary))];
+        @apply flex justify-start items-center;
+    }
+    .rc-tree-treenode span.rc-tree-switcher,
+    .rc-tree-treenode span.rc-tree-checkbox,
+    .rc-tree-treenode span.rc-tree-iconEle {
+        @apply bg-none w-5 h-5 mr-0 ml-0.5;
+    }
+    .rc-tree-treenode .rc-tree-node-content-wrapper {
+        @apply ml-3 flex-1 h-auto w-0 flex-shrink-0;
+    }
+    .rc-tree-node-selected {
+        @apply bg-transparent shadow-none opacity-100;
+    }
+    .rc-tree-treenode.drop-target {
+        @apply bg-primary/20;
+    }
+    .rc-tree-treenode.drop-container ~ .rc-tree-treenode {
+        @apply border-none;
+    }
+    .rc-tree-treenode.drop-container {
+        //@apply before:absolute before:w-[3px] before:top-1 before:bottom-1 before:left-1 before:bg-primary before:rounded-md;
+        //@apply border-none;
+    }
+    .rc-tree-treenode.dragging {
+        @apply opacity-50;
+    }
+    .rc-tree-title {
+        @apply w-full;
+    }
+    .rc-tree-treenode-selected {
+        @apply before:absolute before:w-[3px] before:top-1 before:bottom-1 before:left-1 before:bg-primary before:rounded-md;
+        @apply text-primary bg-[rgba(31,30,36,0.08)] font-bold;
+    }
+}

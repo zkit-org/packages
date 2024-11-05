@@ -144,3 +144,5 @@ export {Tooltip} from './components/uix/tooltip';
 export type { TooltipProps } from './components/uix/tooltip';
 export {Empty} from './components/uix/empty';
 export type { EmptyProps } from './components/uix/empty';
+export { Tree } from "./components/uix/tree";
+export type { TreeProps, TreeData } from "./components/uix/tree";
