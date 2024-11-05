@@ -6,10 +6,7 @@
             "@/*": [
                 "./src/*"
             ],
-            "@easykit/design/*": [
-                "./lib/*"
-            ],
-            "@easykit/design": [
+            "@easykit/editor": [
                 "./lib/index.ts"
             ]
         },
@@ -19,8 +16,11 @@
     },
     "include": [
         "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
+        "global.d.ts",
+        "lib/**/*.ts",
+        "lib/**/*.tsx",
+        "src/**/*.ts",
+        "src/**/*.tsx",
         ".next/types/**/*.ts"
     ],
     "exclude": [

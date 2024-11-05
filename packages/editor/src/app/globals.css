@@ -1,0 +1,5 @@
+@import "@easykit/design/style.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
