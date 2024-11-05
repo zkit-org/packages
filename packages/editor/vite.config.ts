@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from "path";
 import dts from 'vite-plugin-dts'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import pkg from "./package.json";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -43,6 +44,7 @@ export default defineConfig({
                 "react-dom",
                 "react/jsx-runtime",
                 "@easykit/design",
+                ...Object.keys(pkg.dependencies)
             ],
             output: {
                 entryFileNames: '[name].js',
