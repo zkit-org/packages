@@ -28,14 +28,6 @@ export default defineConfig({
             "@easykit/editor": path.resolve(__dirname, "./lib/"),
         }
     },
-    optimizeDeps: {
-        include: [
-            'prosemirror-state',
-            'prosemirror-transform',
-            'prosemirror-model',
-            'prosemirror-view'
-        ]
-    },
     build: {
         lib: {
             entry: {
@@ -52,7 +44,7 @@ export default defineConfig({
                 "react-dom",
                 "react/jsx-runtime",
                 "@easykit/design",
-                ...Object.keys(pkg.dependencies),
+                "i18next",
             ],
             output: {
                 entryFileNames: '[name].js',
