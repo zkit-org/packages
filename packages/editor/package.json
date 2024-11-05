@@ -82,5 +82,8 @@
         "@types/uuid": "10.0.0"
     },
     "module": "./index.js",
-    "types": "./index.d.ts"
+    "types": "./index.d.ts",
+    "publishConfig": {
+        "access": "public"
+    }
 }
