@@ -2,18 +2,18 @@ import {
     AlertDialog as UIAlertDialog,
     AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@easykit/design/components/ui/alert-dialog";
-import {FC, useContext, useState} from "react";
+import {FC, ReactNode, useContext, useState} from "react";
 import { render as ReactDOMRender } from '@easykit/design/lib';
 import {Button} from "@easykit/design/components/uix/button";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import get from "lodash/get"
 
 export interface ConfirmProps {
-    title?: string;
-    description?: string;
+    title: ReactNode;
+    description: ReactNode;
     cancelText?: string;
     okText?: string;
-    onOk?: () => boolean | void | Promise<boolean|void> ;
+    onOk?: () => boolean | void | Promise<boolean|void>;
     onCancel?: () => void;
     open?: boolean;
     confirmLoading?: boolean;
@@ -23,8 +23,8 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
     const {
         description,
         title,
-        onOk = () => {},
-        onCancel = () => {},
+        onOk,
+        onCancel,
     } = props;
 
     const config = useContext(UIXContext);
@@ -45,7 +45,7 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
                     variant={"outline"}
                     onClick={() => {
                         setOpen(false);
-                        onCancel();
+                        onCancel?.();
                     }}
                 >
                     {cancelText}
@@ -54,7 +54,7 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
                     loading={loading}
                     onClick={async () => {
                         setLoading(true);
-                        const result = onOk();
+                        const result = onOk?.();
                         let value: boolean|void;
                         if(result instanceof Promise) {
                             value = (await result);
