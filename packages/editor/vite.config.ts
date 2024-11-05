@@ -44,7 +44,7 @@ export default defineConfig({
                 "react-dom",
                 "react/jsx-runtime",
                 "@easykit/design",
-                ...Object.keys(pkg.dependencies)
+                ...Object.keys(pkg.dependencies).filter((key) => !["@tiptap/pm"].includes(key))
             ],
             output: {
                 entryFileNames: '[name].js',
