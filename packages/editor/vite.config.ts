@@ -28,6 +28,14 @@ export default defineConfig({
             "@easykit/editor": path.resolve(__dirname, "./lib/"),
         }
     },
+    optimizeDeps: {
+        include: [
+            'prosemirror-state',
+            'prosemirror-transform',
+            'prosemirror-model',
+            'prosemirror-view'
+        ]
+    },
     build: {
         lib: {
             entry: {
