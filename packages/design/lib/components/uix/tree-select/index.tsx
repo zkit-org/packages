@@ -1,4 +1,4 @@
-import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData} from "@easykit/design";
+import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData, Spin} from "@easykit/design";
 import {forwardRef, ReactNode, useEffect, useMemo, useRef, useState} from "react";
 import {CaretSortIcon, Cross2Icon} from "@radix-ui/react-icons";
 import { Button } from "@easykit/design/components/ui/button";
@@ -9,6 +9,7 @@ export type TreeSelectProps = {
     clearable?: boolean;
     value?: string;
     onChange?: (value?: string) => void;
+    loading?: boolean;
 }
 
 const getTitleFromTreeData = (treeData: TreeData[], key: string): ReactNode => {
@@ -30,7 +31,8 @@ const getTitleFromTreeData = (treeData: TreeData[], key: string): ReactNode => {
 export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props, ref) => {
     const {
         value, onChange,
-        className, treeData, clearable = false
+        className, treeData, clearable = false,
+        loading = false,
     } = props;
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
@@ -56,7 +58,7 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
     }, [value])
 
     return <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild disabled={loading}>
             <Button
                 ref={containerRef}
                 variant="outline"
@@ -66,20 +68,23 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
                     "justify-between min-w-[150px] items-center h-9 py-1 px-2 group align-middle hover:bg-secondary/40",
                     className,
                 )}
+                disabled={loading}
             >
                 <div className={"flex justify-center items-center flex-1"}>
                     <div className={"flex-1 flex"}>{showValue}</div>
-                    <div className={"flex items-center"}>
-                        <CaretSortIcon className={cn("h-4 w-4 block", showClear ? "group-hover:hidden" : "")} />
-                        <Cross2Icon
-                            onClick={(e) => {
-                                setSelectedKeys([]);
-                                onChange?.(undefined);
-                                e.stopPropagation();
-                            }}
-                            className={cn("h-4 w-4 hidden", showClear ? "group-hover:block" : "")}
-                        />
-                    </div>
+                    {
+                        loading ? <Spin/> : <div className={"flex items-center"}>
+                            <CaretSortIcon className={cn("h-4 w-4 block", showClear ? "group-hover:hidden" : "")}/>
+                            <Cross2Icon
+                                onClick={(e) => {
+                                    setSelectedKeys([]);
+                                    onChange?.(undefined);
+                                    e.stopPropagation();
+                                }}
+                                className={cn("h-4 w-4 hidden", showClear ? "group-hover:block" : "")}
+                            />
+                        </div>
+                    }
                 </div>
             </Button>
         </PopoverTrigger>
@@ -91,7 +96,7 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
                 onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
                 selectedKeys={selectedKeys}
                 onSelect={(selectedKeys, {selected}) => {
-                    if(selected) {
+                    if (selected) {
                         onChange?.(selectedKeys[0] as string);
                         setSelectedKeys(selectedKeys as string[]);
                     }

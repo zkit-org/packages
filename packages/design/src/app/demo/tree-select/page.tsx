@@ -8,6 +8,7 @@ const Page = () => {
 
     return <div className={"p-4"}>
         <TreeSelect
+            loading={false}
             clearable={true}
             onChange={setValue}
             value={value}
