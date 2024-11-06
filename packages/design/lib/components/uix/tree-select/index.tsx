@@ -1,5 +1,5 @@
 import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData} from "@easykit/design";
-import {FC, ReactNode, useEffect, useMemo, useRef, useState} from "react";
+import {forwardRef, ReactNode, useEffect, useMemo, useRef, useState} from "react";
 import {CaretSortIcon, Cross2Icon} from "@radix-ui/react-icons";
 import { Button } from "@easykit/design/components/ui/button";
 
@@ -27,7 +27,7 @@ const getTitleFromTreeData = (treeData: TreeData[], key: string): ReactNode => {
     }
 }
 
-export const TreeSelect: FC<TreeSelectProps> = (props) => {
+export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props, ref) => {
     const {
         value, onChange,
         className, treeData, clearable = false
@@ -101,4 +101,4 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
             />
         </PopoverContent>
     </Popover>
-}
+});
