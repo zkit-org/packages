@@ -146,3 +146,5 @@ export {Empty} from './components/uix/empty';
 export type { EmptyProps } from './components/uix/empty';
 export { Tree } from "./components/uix/tree";
 export type { TreeProps, TreeData } from "./components/uix/tree";
+export { TreeSelect } from "./components/uix/tree-select";
+export type { TreeSelectProps } from "./components/uix/tree-select";

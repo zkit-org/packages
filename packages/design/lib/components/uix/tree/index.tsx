@@ -7,17 +7,17 @@ import {TriangleDownIcon, TriangleRightIcon} from "@radix-ui/react-icons";
 export type TreeData = {
     key: string;
     title: ReactNode;
-    children: TreeData[];
+    children?: TreeData[];
 } & BasicDataNode;
 
-export type TreeProps = RCTreeProps<TreeData> & {
+export type TreeProps = Omit<RCTreeProps<TreeData>, "prefixCls"> & {
     prefixCls?: string;
 };
 
 export const Tree = forwardRef<RCTree<TreeData>, TreeProps>((props, ref) => {
     return <RCTree<TreeData>
         ref={ref}
-        className={"clover-tree"}
+        prefixCls={"rc-tree"}
         showIcon={false}
         dropIndicatorRender={({ dropPosition, dropLevelOffset, indent }) => {
             return <div
