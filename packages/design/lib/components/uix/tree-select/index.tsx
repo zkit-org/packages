@@ -1,4 +1,4 @@
-import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData, Spin} from "@easykit/design";
+import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData, Spin, ScrollArea} from "@easykit/design";
 import {forwardRef, ReactNode, useEffect, useMemo, useRef, useState} from "react";
 import {CaretSortIcon, Cross2Icon} from "@radix-ui/react-icons";
 import { Button } from "@easykit/design/components/ui/button";
@@ -89,22 +89,22 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
                 </div>
             </Button>
         </PopoverTrigger>
-        <PopoverContent
-            className="p-0" style={{width: size.width}}
-        >
-            <Tree
-                expandedKeys={expandedKeys}
-                onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
-                selectedKeys={selectedKeys}
-                onSelect={(selectedKeys, {selected}) => {
-                    if (selected) {
-                        onChange?.(selectedKeys[0] as string);
-                        setSelectedKeys(selectedKeys as string[]);
-                    }
-                    setOpen(false);
-                }}
-                treeData={treeData}
-            />
+        <PopoverContent className="p-0" style={{width: size.width}}>
+            <ScrollArea className={"flex flex-col max-h-[50vh]"}>
+                <Tree
+                    expandedKeys={expandedKeys}
+                    onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
+                    selectedKeys={selectedKeys}
+                    onSelect={(selectedKeys, {selected}) => {
+                        if (selected) {
+                            onChange?.(selectedKeys[0] as string);
+                            setSelectedKeys(selectedKeys as string[]);
+                        }
+                        setOpen(false);
+                    }}
+                    treeData={treeData}
+                />
+            </ScrollArea>
         </PopoverContent>
     </Popover>
 });
