@@ -2,6 +2,7 @@ import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData, Sp
 import {forwardRef, ReactNode, useEffect, useMemo, useRef, useState} from "react";
 import {CaretSortIcon, Cross2Icon} from "@radix-ui/react-icons";
 import { Button } from "@easykit/design/components/ui/button";
+import classNames from "classnames";
 
 export type TreeSelectProps = {
     className?: string;
@@ -11,6 +12,7 @@ export type TreeSelectProps = {
     onChange?: (value?: string) => void;
     loading?: boolean;
     placeholder?: string;
+    contentClassName?: string;
 }
 
 const getTitleFromTreeData = (treeData: TreeData[], key: string): ReactNode => {
@@ -33,7 +35,7 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
     const {
         value, onChange,
         className, treeData, clearable = false,
-        loading = false, placeholder,
+        loading = false, placeholder, contentClassName
     } = props;
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
@@ -90,7 +92,7 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
             </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" style={{width: size.width}}>
-            <ScrollArea className={"flex flex-col max-h-[50vh]"}>
+            <ScrollArea className={classNames("flex flex-col max-h-[30vh]", contentClassName)}>
                 <Tree
                     expandedKeys={expandedKeys}
                     onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
