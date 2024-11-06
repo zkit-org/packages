@@ -10,6 +10,7 @@ export type TreeSelectProps = {
     value?: string;
     onChange?: (value?: string) => void;
     loading?: boolean;
+    placeholder?: string;
 }
 
 const getTitleFromTreeData = (treeData: TreeData[], key: string): ReactNode => {
@@ -32,7 +33,7 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
     const {
         value, onChange,
         className, treeData, clearable = false,
-        loading = false,
+        loading = false, placeholder,
     } = props;
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
@@ -45,9 +46,9 @@ export const TreeSelect = forwardRef<HTMLSelectElement, TreeSelectProps>((props,
         if(selectedKeys.length > 0) {
             return getTitleFromTreeData(treeData, selectedKeys[0]);
         }else{
-            return <span className={"text-secondary-foreground/50"}>{"请选择"}</span>
+            return <span className={"text-secondary-foreground/50"}>{placeholder}</span>
         }
-    }, [treeData, selectedKeys])
+    }, [treeData, selectedKeys, placeholder])
 
     useEffect(() => {
         if(value) {
