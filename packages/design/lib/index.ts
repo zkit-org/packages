@@ -148,3 +148,5 @@ export { Tree } from "./components/uix/tree";
 export type { TreeProps, TreeData } from "./components/uix/tree";
 export { TreeSelect } from "./components/uix/tree-select";
 export type { TreeSelectProps } from "./components/uix/tree-select";
+export { TreeTable } from "./components/uix/tree-table";
+export type { TreeTableProps } from "./components/uix/tree-table";
