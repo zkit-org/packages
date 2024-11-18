@@ -66,4 +66,7 @@ export default {
             }
         ]
     },
+    Empty: {
+        text: "暂无数据"
+    }
 }

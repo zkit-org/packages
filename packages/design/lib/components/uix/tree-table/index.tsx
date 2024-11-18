@@ -1,4 +1,5 @@
 import {
+    Empty, EmptyProps,
     Spin,
     Table,
     TableBody,
@@ -11,7 +12,6 @@ import {renderRow} from "@easykit/design/components/uix/tree-table/utils";
 import uniq from "lodash/uniq";
 import remove from "lodash/remove";
 import cloneDeep from "lodash/cloneDeep";
-import {DEFAULT_CHILDREN_PROPERTY} from "@easykit/design/components/uix/tree-table/config";
 
 export type TreeTableColumn<TData> = {
     className?: string;
@@ -33,6 +33,7 @@ export type TreeTableProps<TData> = {
     defaultExpandedKeys?: string[];
     onExpand?: (expandedKeys: string[]) => void;
     loading?: boolean;
+    emptyProps?: EmptyProps;
 }
 
 export function TreeTable <TData> (props: TreeTableProps<TData>) {
@@ -42,6 +43,7 @@ export function TreeTable <TData> (props: TreeTableProps<TData>) {
         showHeader = true,
         defaultExpandedKeys = [],
         loading = false,
+        emptyProps,
     } = props;
     const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultExpandedKeys);
 
@@ -76,6 +78,10 @@ export function TreeTable <TData> (props: TreeTableProps<TData>) {
                 })}
             </TableBody>
         </Table>
-        { loading ? <div className={"absolute top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-white/50"}><Spin /></div> : null }
+        {
+            loading ?
+                <div className={"absolute top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-white/50"}><Spin /></div> :
+                !(data && data.length > 0) ? <Empty {...(emptyProps??{})} /> : null
+        }
     </div>
 }
