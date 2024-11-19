@@ -77,7 +77,7 @@ export const FormItem: FC<FieldItem> = (props) => {
     />;
 }
 
-export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFormReturn> | undefined) {
+export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFormReturn|undefined>) {
     const {
         schema = null,
         defaultValues,
