@@ -8,17 +8,18 @@ import {
     FormMessage,
 } from "@easykit/design/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {ControllerRenderProps, DefaultValues, SubmitHandler, useForm, UseFormReturn} from "react-hook-form"
+import {ControllerRenderProps, DefaultValues, SubmitHandler, useForm} from "react-hook-form"
 import {
     FC,
     PropsWithChildren,
     ReactElement,
     ReactNode,
     cloneElement,
-    FormHTMLAttributes,
+    FormHTMLAttributes, forwardRef, useImperativeHandle,
+    Ref,
 } from "react";
-import type { Control, FieldValues, WatchObserver } from "react-hook-form";
-import { useMemo, Children } from "react";
+import type {Control, FieldValues, WatchObserver} from "react-hook-form";
+import {useMemo, Children} from "react";
 import isObject from "lodash/isObject";
 import {ZodType} from "zod";
 import {cn} from "@easykit/design/lib";
@@ -41,13 +42,12 @@ export type FormProps<T> = FormHTMLAttributes<HTMLFormElement> & {
     onSubmit?: SubmitHandler<FieldValues>;
     className?: string;
     onValuesChange?: WatchObserver<FieldValues>,
-    formRef?: UseFormReturn<FieldValues>;
     stopPropagation?: boolean;
 }
 
 export const FormItem: FC<FieldItem> = (props) => {
     const render = (field: ControllerRenderProps) => {
-        if(Children.count(props.children) === 1) {
+        if (Children.count(props.children) === 1) {
             const ele = (props.children as ReactElement);
             return cloneElement(ele, {
                 ...ele.props,
@@ -62,22 +62,22 @@ export const FormItem: FC<FieldItem> = (props) => {
         control={props.control}
         name={props.name}
         render={(p) => {
-            const { field } = p;
+            const {field} = p;
             return <UIFormItem className={props.className}>
-                { props.label ? <FormLabel>{ props.label }</FormLabel> : null }
+                {props.label ? <FormLabel>{props.label}</FormLabel> : null}
                 <FormControl>
                     <div>
-                        { render(field) }
+                        {render(field)}
                     </div>
                 </FormControl>
-                { props.description ? <FormDescription>{props.description}</FormDescription> : null }
-                <FormMessage />
+                {props.description ? <FormDescription>{props.description}</FormDescription> : null}
+                <FormMessage/>
             </UIFormItem>
         }}
     />;
 }
 
-export const Form = function <T> (props: FormProps<T>) {
+export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<unknown> | undefined) {
     const {
         schema = null,
         defaultValues,
@@ -109,6 +109,8 @@ export const Form = function <T> (props: FormProps<T>) {
         })
     }, [props.children]);
 
+    useImperativeHandle(ref, () => form, [form]);
+
     return <UIForm {...form}>
         <form
             {...rest}
@@ -121,4 +123,4 @@ export const Form = function <T> (props: FormProps<T>) {
             { children }
         </form>
     </UIForm>
-}
+})
