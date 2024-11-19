@@ -8,7 +8,7 @@ import {
     FormMessage,
 } from "@easykit/design/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {ControllerRenderProps, DefaultValues, SubmitHandler, useForm} from "react-hook-form"
+import {ControllerRenderProps, DefaultValues, SubmitHandler, useForm, UseFormReturn} from "react-hook-form"
 import {
     FC,
     PropsWithChildren,
@@ -77,7 +77,7 @@ export const FormItem: FC<FieldItem> = (props) => {
     />;
 }
 
-export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<unknown> | undefined) {
+export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFormReturn> | undefined) {
     const {
         schema = null,
         defaultValues,
