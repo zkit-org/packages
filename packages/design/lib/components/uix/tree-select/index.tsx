@@ -1,4 +1,15 @@
-import {cn, Popover, PopoverTrigger, useSize, PopoverContent, Tree, TreeData, Spin, ScrollArea} from "@easykit/design";
+import {
+    cn,
+    Popover,
+    PopoverTrigger,
+    useSize,
+    PopoverContent,
+    Tree,
+    TreeData,
+    Spin,
+    ScrollArea,
+    Empty, EmptyProps
+} from "@easykit/design";
 import {FC, ReactNode, useEffect, useMemo, useRef, useState} from "react";
 import {CaretSortIcon, Cross2Icon} from "@radix-ui/react-icons";
 import { Button } from "@easykit/design/components/ui/button";
@@ -13,6 +24,7 @@ export type TreeSelectProps = {
     loading?: boolean;
     placeholder?: string;
     contentClassName?: string;
+    emptyProps?: EmptyProps;
 }
 
 const getTitleFromTreeData = (treeData: TreeData[], key: string): ReactNode => {
@@ -35,7 +47,8 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
     const {
         value, onChange,
         className, treeData, clearable = false,
-        loading = false, placeholder, contentClassName
+        loading = false, placeholder, contentClassName,
+        emptyProps
     } = props;
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
@@ -93,19 +106,21 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
         </PopoverTrigger>
         <PopoverContent className="p-0" style={{width: size.width}}>
             <ScrollArea className={classNames("flex flex-col max-h-[30vh]", contentClassName)}>
-                <Tree
-                    expandedKeys={expandedKeys}
-                    onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
-                    selectedKeys={selectedKeys}
-                    onSelect={(selectedKeys, {selected}) => {
-                        if (selected) {
-                            onChange?.(selectedKeys[0] as string);
-                            setSelectedKeys(selectedKeys as string[]);
-                        }
-                        setOpen(false);
-                    }}
-                    treeData={treeData}
-                />
+                {
+                    (treeData && treeData.length) ? <Tree
+                        expandedKeys={expandedKeys}
+                        onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
+                        selectedKeys={selectedKeys}
+                        onSelect={(selectedKeys, {selected}) => {
+                            if (selected) {
+                                onChange?.(selectedKeys[0] as string);
+                                setSelectedKeys(selectedKeys as string[]);
+                            }
+                            setOpen(false);
+                        }}
+                        treeData={treeData}
+                    /> : <Empty {...(emptyProps ?? {})} />
+                }
             </ScrollArea>
         </PopoverContent>
     </Popover>
