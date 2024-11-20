@@ -10,10 +10,42 @@ const Page = () => {
         <TreeSelect
             loading={false}
             clearable={true}
-            placeholder={"请选择"}
             onChange={setValue}
             value={value}
-            treeData={[]}
+            treeData={[
+                {
+                    key: "1",
+                    title: "1",
+                    children: [
+                        {
+                            key: "1-1",
+                            title: "1-1",
+                        },
+                        {
+                            key: "1-2",
+                            title: "1-2",
+                        }
+                    ],
+                },
+                {
+                    key: "2",
+                    title: "2",
+                    children: [
+                        {
+                            key: "2-1",
+                            title: "2-1",
+                        },
+                        {
+                            key: "2-2",
+                            title: "2-2",
+                        }
+                    ],
+                },
+                {
+                    key: "3",
+                    title: "3"
+                }
+            ]}
         />
     </div>;
 }
