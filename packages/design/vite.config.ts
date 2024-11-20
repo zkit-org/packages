@@ -40,6 +40,8 @@ export default defineConfig({
         rollupOptions: {
             external: [
                 "react", "react-dom",
+                "react-dom/client",
+                "react-dom/server",
                 "react/jsx-runtime",
                 "@arco-design/web-react",
                 "@arco-iconbox/react-atom-ui",
