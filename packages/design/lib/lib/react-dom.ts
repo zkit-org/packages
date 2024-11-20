@@ -1,12 +1,15 @@
 import { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 import { isObject } from './is';
+import {createRoot as reactDOMCreateRoot} from 'react-dom/client';
 
 type CreateRootFnType = (container: Element | DocumentFragment) => {
     render: (container: ReactElement) => void;
     unmount: () => void;
     _unmount: () => void;
 };
+
+const reactDOMCreateRootCopy = reactDOMCreateRoot as CreateRootFnType;
 
 const __SECRET_INTERNALS__ = '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED';
 
@@ -27,6 +30,7 @@ let copyRender: (
 };
 
 const isReact18 = Number(CopyReactDOM.version?.split('.')[0]) > 17;
+const isReact19 = Number(CopyReactDOM.version?.split('.')[0]) > 18;
 
 const updateUsingClientEntryPoint = (skipWarning?: boolean) => {
     // https://github.com/facebook/react/blob/17806594cc28284fe195f918e8d77de3516848ec/packages/react-dom/npm/client.js#L10
@@ -43,7 +47,22 @@ try {
     //
 }
 
-if (isReact18) {
+if(isReact19) {
+    copyRender = (app: ReactElement, container: Element | DocumentFragment) => {
+        updateUsingClientEntryPoint(true);
+        const root = reactDOMCreateRootCopy(container);
+        updateUsingClientEntryPoint(false);
+
+        root.render(app);
+
+        root._unmount = function () {
+            setTimeout(() => {
+                root?.unmount?.();
+            });
+        };
+        return root;
+    };
+} else if (isReact18) {
     copyRender = (app: ReactElement, container: Element | DocumentFragment) => {
         updateUsingClientEntryPoint(true);
         const root = createRoot(container);
