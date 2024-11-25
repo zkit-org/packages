@@ -3,11 +3,12 @@ import { Checkbox as UICheckbox } from "@easykit/design/components/ui/checkbox";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { cn } from "@easykit/design/lib";
 import { MinusIcon } from "@radix-ui/react-icons";
+import classNames from "classnames";
 
-export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
-    indeterminate?: "true" | "false";
+export type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, "onChange"> & {
+    indeterminate?: boolean;
     label?: string;
-    field?: "true" | "false";
+    field?: boolean;
     value?: boolean;
     onChange?: (value: boolean) => void;
 }
@@ -19,17 +20,17 @@ export const Checkbox = forwardRef<
     const {
         value,
         checked,
-        field = "false",
+        field = false,
         onCheckedChange,
         onChange,
-        indeterminate, label
+        indeterminate,
+        label,
+        ...rest
     } = props;
-    const indeterminateValue = (indeterminate === "true");
-    const idRef = useRef(Date.now());
 
-    const v = useMemo(() => field === "true" ? value : checked, [value, checked, field]);
+    const v = useMemo(() => field ? value : checked, [value, checked, field]);
     const handleChange = useCallback((checked: boolean) => {
-        if(field === "true") {
+        if(field) {
             onChange?.(checked);
         }else{
             onCheckedChange?.(checked);
@@ -37,28 +38,27 @@ export const Checkbox = forwardRef<
     }, [field, onCheckedChange, onChange]);
 
     const checkbox = <UICheckbox
+        {...rest}
         ref={ref}
-        id={idRef.current?.toString()}
         checked={v}
         onCheckedChange={(checked) => handleChange(checked as boolean)}
-        {...props}
         className={cn(
-            indeterminateValue && "bg-primary text-primary-foreground",
-            indeterminateValue && "flex items-center justify-center",
+            indeterminate && "bg-primary text-primary-foreground",
+            indeterminate && "flex items-center justify-center",
             props.className
         )}
     >
-        {indeterminateValue && <MinusIcon className="h-4 w-4"/>}
+        {indeterminate && <MinusIcon className="h-4 w-4"/>}
     </UICheckbox>;
     if(!label)
         return checkbox;
-    return <div className={"flex justify-start items-center space-x-1"}>
-        { checkbox }
-        <label
-            htmlFor={idRef.current?.toString()}
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-            {label}
-        </label>
-    </div>
+    return <label
+        className={classNames(
+            "inline-flex justify-start items-center space-x-1",
+            "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+        )}
+    >
+        {checkbox}
+        <span>{label}</span>
+    </label>
 })
