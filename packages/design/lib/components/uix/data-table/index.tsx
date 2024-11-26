@@ -45,7 +45,7 @@ export interface StickyColumnProps {
 
 export type DataTableColumn<TData> = ColumnDef<TData, unknown> & {
     className?: string;
-    formatters?: string[];
+    formatters?: ([string, any[]] | string)[];
 }
 
 export interface DataTableProps<TData> {
