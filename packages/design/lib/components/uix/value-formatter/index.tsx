@@ -1,8 +1,18 @@
 import {FC, forwardRef, PropsWithChildren} from "react";
 import * as BUILT_IN from '@easykit/design/lib/formatters';
 
-export const formatValue = (all: any[], formatters: string[], v: any) => {
-    const merged: any = {...BUILT_IN, ...all};
+export type Formatters = ([string, any[]] | string)[];
+export type FunctionMap = Record<string, Function>;
+
+const _handles: FunctionMap = {};
+
+export const register = (handles: FunctionMap) => {
+    Object.assign(_handles, handles);
+}
+
+export const formatValue = (v: any, formatters: string[], all?: FunctionMap) => {
+    const merged: any = {...BUILT_IN, ..._handles, ...(all ?? {})};
+    console.log('merged',merged);
     const fallback = ((v: any, ...p: any[]) => (v));
     let params: any[] = [];
 
@@ -28,18 +38,18 @@ export const formatValue = (all: any[], formatters: string[], v: any) => {
 export interface ValueFormatterProps extends PropsWithChildren {
     value?: any;
     formatters?: any[];
-    handles?: Function[];
+    handles?: FunctionMap;
 }
 
 export const ValueFormatter: FC<ValueFormatterProps> = forwardRef((props, ref) => {
     const {
-        handles = [],
+        handles,
         formatters = [],
         value,
         children
     } = props;
     let v = value === 0 ? value : (value || children);
-    if(!formatters.includes("defaultValue"))formatters.push('defaultValue');
-    v = formatValue(handles, formatters, v);
+    if(!formatters.includes("defaultValue")) formatters.push('defaultValue');
+    v = formatValue(v, formatters, handles);
     return <>{v}</>
 })

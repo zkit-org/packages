@@ -32,7 +32,7 @@ import isArray from "lodash/isArray";
 import {isString} from "lodash";
 import {DotsHorizontalIcon} from "@radix-ui/react-icons";
 import "./style.css";
-import { formatValue } from "@easykit/design/components/uix/value-formatter";
+import {Formatters, formatValue, FunctionMap} from "@easykit/design/components/uix/value-formatter";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import { LayoutIcon } from "@radix-ui/react-icons";
 import get from "lodash/get";
@@ -45,7 +45,7 @@ export interface StickyColumnProps {
 
 export type DataTableColumn<TData> = ColumnDef<TData, unknown> & {
     className?: string;
-    formatters?: ([string, any[]] | string)[];
+    formatters?: Formatters;
 }
 
 export interface DataTableProps<TData> {
@@ -62,7 +62,7 @@ export interface DataTableProps<TData> {
     load?: (params?: any) => Promise<any>;
     filter?: FiltersProps;
     pagination?: PaginationProps | boolean;
-    cellFormatters?: Function [],
+    cellHandles?: FunctionMap,
     empty?: string;
     showHeader?: boolean;
     onRowClick?: (row: Row<TData>) => void;
@@ -135,7 +135,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
         loading,
         pagination,
         load,
-        cellFormatters = [],
+        cellHandles,
         showHeader = true,
         autoHidePagination = true,
     } = props;
@@ -348,8 +348,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
                                     const render = ctx.renderValue;
                                     const formatters = (cell.column.columnDef as any)['formatters'] || [];
                                     ctx.renderValue = () => {
-                                        if(!formatters.includes("defaultValue")) formatters.push('defaultValue');
-                                        return formatValue(cellFormatters, formatters, render());
+                                        return formatValue(render(), formatters, cellHandles);
                                     }
                                     const content = flexRender(cell.column.columnDef.cell, ctx);
                                     return <TableCell

@@ -126,7 +126,7 @@ export { Switch } from "./components/uix/switch";
 export type { SwitchProps } from "./components/uix/switch";
 export { Loading } from "./components/uix/loading";
 export type { LoadingProps } from "./components/uix/loading";
-export { ValueFormatter } from "./components/uix/value-formatter";
+export { ValueFormatter, register } from "./components/uix/value-formatter";
 export type { ValueFormatterProps } from "./components/uix/value-formatter";
 export { Pagination } from "./components/uix/pagination";
 export type { PaginationProps } from "./components/uix/pagination";
