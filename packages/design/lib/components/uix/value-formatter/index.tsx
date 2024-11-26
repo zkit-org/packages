@@ -12,7 +12,6 @@ export const register = (handles: FunctionMap) => {
 
 export const formatValue = (v: any, formatters: string[], all?: FunctionMap) => {
     const merged: any = {...BUILT_IN, ..._handles, ...(all ?? {})};
-    console.log('merged',merged);
     const fallback = ((v: any, ...p: any[]) => (v));
     let params: any[] = [];
 
