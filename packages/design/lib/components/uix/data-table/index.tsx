@@ -286,7 +286,8 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
         {
             showToolbar ? <div className={cn(
                 "border-0 border-solid border-b border-secondary pb-2",
-                "flex justify-between items-end",
+                "flex items-end",
+                filter ? "justify-between" : "justify-end"
             )}>
                 {
                     filter ? <Filters
