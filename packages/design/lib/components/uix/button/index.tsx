@@ -8,6 +8,7 @@ export interface ButtonProps extends UIButtonProps {
     loading?: boolean;
     long?: boolean;
     htmlType?: "submit" | "reset" | "button" | undefined;
+    wrapper?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -16,6 +17,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         long = false,
         disabled = false,
         className,
+        wrapper = true,
         ...rest
     } = props;
 
@@ -26,6 +28,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         disabled={loading || disabled}
     >
         { loading ? <Spin /> : null }
-        <span>{ props.children }</span>
+        { wrapper ? <span>{props.children}</span> : props.children }
     </UIButton>
 });
