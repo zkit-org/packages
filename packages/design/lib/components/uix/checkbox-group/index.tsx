@@ -1,9 +1,10 @@
-import { FC, forwardRef, useState } from "react";
+import {FC, forwardRef, ReactNode, useState} from "react";
 import { Checkbox } from "@easykit/design/components/uix/checkbox";
 import remove from 'lodash/remove';
+import classNames from "classnames";
 
 export interface CheckboxGroupOptionProps {
-    label: string;
+    label: ReactNode;
     value: string;
     disabled?: boolean;
 }
@@ -12,14 +13,17 @@ export interface CheckboxGroupProps {
     options?: CheckboxGroupOptionProps[];
     value?: string[];
     onChange?: (value: string[]) => void;
+    itemClassName?: string;
+    className?: string;
 }
 
 export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => {
     const {
-        options = []
+        options = [],
+        itemClassName,
+        className
     } = props;
 
-    const [labelKey, setLabelKey] = useState<number>(Date.now());
     const [checkedValues, setCheckedValues] = useState<string[]>(props.value || []);
 
     const onCheckedChange = (value: string, checked: boolean) => {
@@ -32,23 +36,20 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => 
         props.onChange?.([...checkedValues]);
     }
 
-    return <div className={"space-x-2 space-y-2 flex justify-start items-center -m-2"}>
+    return <div className={classNames("space-x-2 space-y-2 flex flex-wrap justify-start items-center -m-2", className)}>
         <span />
         {
             options.map((option) => {
-                return <div key={option.value} className={"flex justify-center items-center"}>
+                return <label
+                    key={option.value}
+                    className={classNames("flex justify-start items-center", "ml-1 space-x-1", itemClassName)}
+                >
                     <Checkbox
                         checked={checkedValues.includes(option.value)}
-                        id={`${labelKey}-${option.value}`}
                         onCheckedChange={(checked: boolean) => onCheckedChange(option.value, checked)}
                     />
-                    <label
-                        htmlFor={`${labelKey}-${option.value}`}
-                        className={"ml-1"}
-                    >
-                        { option.label }
-                    </label>
-                </div>
+                    <span>{option.label}</span>
+                </label>
             })
         }
     </div>

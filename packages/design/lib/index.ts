@@ -120,6 +120,8 @@ export { ComboSelect } from './components/uix/combo-select';
 export type { ComboSelectProps, ComboSelectOptionProps } from './components/uix/combo-select';
 export { Checkbox } from "./components/uix/checkbox";
 export type { CheckboxProps } from "./components/uix/checkbox";
+export { CheckboxGroup } from "./components/uix/checkbox-group";
+export type { CheckboxGroupProps } from "./components/uix/checkbox-group";
 export { SimpleRadioGroup } from "./components/uix/radio-group";
 export type { SimpleRadioGroupProps, SimpleRadioGroupOptionProps } from "./components/uix/radio-group";
 export { Switch } from "./components/uix/switch";

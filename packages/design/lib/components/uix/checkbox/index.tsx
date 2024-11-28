@@ -1,4 +1,4 @@
-import {ElementRef, forwardRef, ComponentPropsWithoutRef, useRef, useMemo, useCallback} from "react";
+import {ElementRef, forwardRef, ComponentPropsWithoutRef, useRef, useMemo, useCallback, ReactNode} from "react";
 import { Checkbox as UICheckbox } from "@easykit/design/components/ui/checkbox";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { cn } from "@easykit/design/lib";
@@ -7,10 +7,11 @@ import classNames from "classnames";
 
 export type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, "onChange"> & {
     indeterminate?: boolean;
-    label?: string;
+    label: ReactNode;
     field?: boolean;
     value?: boolean;
     onChange?: (value: boolean) => void;
+    children: ReactNode;
 }
 
 export const Checkbox = forwardRef<
@@ -25,6 +26,7 @@ export const Checkbox = forwardRef<
         onChange,
         indeterminate,
         label,
+        children,
         ...rest
     } = props;
 
@@ -36,6 +38,8 @@ export const Checkbox = forwardRef<
             onCheckedChange?.(checked);
         }
     }, [field, onCheckedChange, onChange]);
+
+    const content = useMemo(() => children || label, [children, label])
 
     const checkbox = <UICheckbox
         {...rest}
@@ -50,7 +54,7 @@ export const Checkbox = forwardRef<
     >
         {indeterminate && <MinusIcon className="h-4 w-4"/>}
     </UICheckbox>;
-    if(!label)
+    if(!content)
         return checkbox;
     return <label
         className={classNames(
@@ -59,6 +63,6 @@ export const Checkbox = forwardRef<
         )}
     >
         {checkbox}
-        <span>{label}</span>
+        <span>{content}</span>
     </label>
 })
