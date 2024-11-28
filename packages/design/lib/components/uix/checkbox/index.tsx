@@ -49,7 +49,7 @@ export const Checkbox = forwardRef<
         className={cn(
             indeterminate && "bg-primary text-primary-foreground",
             indeterminate && "flex items-center justify-center",
-            props.className
+            !content && props.className
         )}
     >
         {indeterminate && <MinusIcon className="h-4 w-4"/>}
@@ -60,6 +60,7 @@ export const Checkbox = forwardRef<
         className={classNames(
             "inline-flex justify-start items-center space-x-1",
             "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+            props.className,
         )}
     >
         {checkbox}

@@ -11,6 +11,7 @@ const Page = () => {
 
     return <div className={"p-4"}>
         <CheckboxGroup
+            checkboxClassName={"mt-2"}
             options={[
                 {
                     label: "Option 1",

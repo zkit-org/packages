@@ -14,6 +14,7 @@ export interface CheckboxGroupProps {
     value?: string[];
     onChange?: (value: string[]) => void;
     itemClassName?: string;
+    checkboxClassName?: string;
     className?: string;
 }
 
@@ -21,7 +22,8 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => 
     const {
         options = [],
         itemClassName,
-        className
+        className,
+        checkboxClassName
     } = props;
 
     const [checkedValues, setCheckedValues] = useState<string[]>(props.value || []);
@@ -45,6 +47,7 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => 
                     className={classNames("flex justify-start items-center", "ml-1 space-x-1", itemClassName)}
                 >
                     <Checkbox
+                        className={checkboxClassName}
                         checked={checkedValues.includes(option.value)}
                         onCheckedChange={(checked: boolean) => onCheckedChange(option.value, checked)}
                     />
