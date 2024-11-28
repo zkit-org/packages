@@ -7,11 +7,11 @@ import classNames from "classnames";
 
 export type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, "onChange"> & {
     indeterminate?: boolean;
-    label: ReactNode;
+    label?: ReactNode;
     field?: boolean;
     value?: boolean;
     onChange?: (value: boolean) => void;
-    children: ReactNode;
+    children?: ReactNode;
 }
 
 export const Checkbox = forwardRef<
