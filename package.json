@@ -50,7 +50,9 @@
         "vite-plugin-node-polyfills": "^0.22.0",
         "zod": "3.23.8",
         "zod-i18n-map": "2.27.0",
-        "zustand": "4.5.4"
+        "zustand": "4.5.4",
+        "@arco-iconbox/react-clover": "0.0.28",
+        "next-themes": "0.4.4"
     },
     "devDependencies": {
         "@types/gulp": "4.0.17",

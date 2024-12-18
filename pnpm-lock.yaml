@@ -18,6 +18,9 @@ importers:
 
   .:
     dependencies:
+      '@arco-iconbox/react-clover':
+        specifier: 0.0.28
+        version: 0.0.28
       '@easykit/design':
         specifier: workspace:./packages/design/dist
         version: link:packages/design/dist
@@ -72,6 +75,9 @@ importers:
       next:
         specifier: 15.0.3
         version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)(sass@1.77.6)
+      next-themes:
+        specifier: 0.4.4
+        version: 0.4.4(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
       node-rsa:
         specifier: 1.1.1
         version: 1.1.1
@@ -533,6 +539,9 @@ packages:
     resolution: {integrity: sha512-gYBxZRGfVNcGrJu3MGYK6Xtgf9m+oobn/OL8QnqmI6/2zv6JmWwccI+4fMtvDfeh5U7sgfyK9wYh1ftn95Wlpg==}
     peerDependencies:
       react: 19.0.0-rc.1
+
+  '@arco-iconbox/react-clover@0.0.28':
+    resolution: {integrity: sha512-JZHx/deixnALfrDyOkSPPbOoicSRmZ4o+jmLEbkFxRARRlFRbXzEbq/ktkO6HoNnsp5iS8re+Gsogd5G4NuETA==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -4098,6 +4107,12 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
+  next-themes@0.4.4:
+    resolution: {integrity: sha512-LDQ2qIOJF0VnuVrrMSMLrWGjRMkq+0mpgl6e0juCLqdJ+oo8Q84JRWT6Wh11VDQKkMMe+dVzDKLWs5n87T+PkQ==}
+    peerDependencies:
+      react: 19.0.0-rc.1
+      react-dom: 19.0.0-rc.1
+
   next@15.0.3:
     resolution: {integrity: sha512-ontCbCRKJUIoivAdGB34yCaOcPgYXr9AAkV/IwqFfWWTXEPUgLYkSkqBhIk9KK7gGmgjc64B+RdoeIDM13Irnw==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
@@ -5451,6 +5466,8 @@ snapshots:
   '@arco-iconbox/react-atom-ui@0.0.4(react@19.0.0-rc.1)':
     dependencies:
       react: 19.0.0-rc.1
+
+  '@arco-iconbox/react-clover@0.0.28': {}
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -9334,6 +9351,11 @@ snapshots:
   nanoid@5.0.8: {}
 
   natural-compare@1.4.0: {}
+
+  next-themes@0.4.4(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1):
+    dependencies:
+      react: 19.0.0-rc.1
+      react-dom: 19.0.0-rc.1(react@19.0.0-rc.1)
 
   next@15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)(sass@1.77.6):
     dependencies:

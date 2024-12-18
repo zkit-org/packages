@@ -1,10 +1,15 @@
 'use client';
 
-import {Input} from "@easykit/design";
+import {Button, Input} from "@easykit/design";
 
 const Page = () => {
     return <div className={"p-4"}>
-        <Input />
+        <div>
+            <Input />
+        </div>
+        <div>
+            <Button>按钮</Button>
+        </div>
     </div>;
 }
 
