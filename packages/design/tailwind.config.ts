@@ -8,6 +8,7 @@ const config: Config = {
         "./src/**/*.{js,ts,jsx,tsx,mdx}",
         "./lib/**/*.{js,ts,jsx,tsx,mdx}",
     ],
+    darkMode: 'class',
     plugins: [
         ta,
     ],

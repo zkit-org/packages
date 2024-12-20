@@ -21,7 +21,6 @@ import {
     Checkbox, cn,
     Dropdown,
     DropdownMenuItemProps,
-    FilterItemProps,
     Filters,
     FiltersProps,
     Pagination, PaginationProps,
@@ -52,7 +51,6 @@ export interface DataTableProps<TData> {
     autoHidePagination?: boolean;
     columns: DataTableColumn<TData>[];
     data: TData[];
-    filters?: FilterItemProps[];
     showColumnVisibility?: boolean;
     stickyColumns?: StickyColumnProps[];
     checkbox?: boolean;
@@ -388,7 +386,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
                     />
                 }
             </div>
-            { loading ? <div className={"absolute top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-white/50"}><Spin /></div> : null }
+            { loading ? <div className={"absolute z-50 top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-white/50 dark:!bg-black/5"}><Spin /></div> : null }
         </div>
     </>
 }

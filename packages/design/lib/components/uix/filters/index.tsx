@@ -84,6 +84,6 @@ export const Filters: FC<FiltersProps> = (props) => {
                 }
             </div>
         </form>
-        { loading ? <div className={"absolute top-0 right-0 bottom-0 left-0 bg-white/50"} /> : null }
+        { loading ? <div className={"absolute top-0 right-0 bottom-0 left-0 bg-white/50 dark:!bg-black/5"} /> : null }
     </div>
 }
