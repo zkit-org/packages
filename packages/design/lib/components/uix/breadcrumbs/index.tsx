@@ -34,7 +34,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
             Children.map(children, (child, index) => {
                 const ele = child as ReactElement;
                 if(!ele) return null;
-                return cloneElement(ele, {...ele.props, last: index === size - 1})
+                return cloneElement<any>(ele, {...(ele as any).props, last: index === size - 1})
             })
         }
     </div>

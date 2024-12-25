@@ -79,14 +79,14 @@ if(isReact19) {
     };
 } else {
     copyRender = function (app: ReactElement, container: Element | DocumentFragment) {
-        CopyReactDOM.render(app, container);
+        (CopyReactDOM as any).render(app, container);
 
         return {
             render: (app: ReactElement) => {
-                CopyReactDOM.render(app, container);
+                (CopyReactDOM as any).render(app, container);
             },
             _unmount() {
-                CopyReactDOM.unmountComponentAtNode(container);
+                (CopyReactDOM as any).unmountComponentAtNode(container);
             },
         };
     };

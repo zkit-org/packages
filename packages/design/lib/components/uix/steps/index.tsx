@@ -59,8 +59,8 @@ export const Steps: FC<StepsProps> = (props) => {
         {
             Children.map(props.children, (child, index) => {
                 const c = child as ReactElement;
-                return cloneElement(c, {
-                    ...c.props,
+                return cloneElement<any>(c, {
+                    ...(c as any).props,
                     index,
                     last: index === size - 1,
                     status: index < current! ? 'finish' : index === current ? 'process' : 'wait',

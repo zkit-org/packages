@@ -31,7 +31,7 @@ const renderItem = (item: FilterItemProps, form: {control: Control}) => {
             <Controller
                 name={item.field}
                 control={form.control}
-                render={({ field }) => cloneElement(ele, {...ele.props, ...field, value: field.value})}
+                render={({ field }) => cloneElement<any>(ele, {...(ele as any).props, ...field, value: field.value})}
             />
         </div>
     </div>

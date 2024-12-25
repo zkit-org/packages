@@ -49,8 +49,8 @@ export const FormItem: FC<FieldItem> = (props) => {
     const render = (field: ControllerRenderProps) => {
         if (Children.count(props.children) === 1) {
             const ele = (props.children as ReactElement);
-            return cloneElement(ele, {
-                ...ele.props,
+            return cloneElement<any>(ele, {
+                ...(ele as any).props,
                 ...field,
                 value: field.value === 0 ? 0 : (field.value || ''), // a component is changing an uncontrolled input to be controlled
             })
@@ -99,8 +99,8 @@ export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFor
             if(isObject(child) && ('type' in (child as ReactElement))) {
                 const ele = (child as ReactElement);
                 if(ele.type === FormItem) {
-                    return cloneElement(ele, {
-                        ...ele.props,
+                    return cloneElement<any>(ele, {
+                        ...(ele as any).props,
                         control: form.control
                     })
                 }

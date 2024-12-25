@@ -5,7 +5,7 @@ export interface Size {
     height: number;
 }
 
-export const useSize = (ref: RefObject<HTMLElement>) => {
+export const useSize = (ref: RefObject<HTMLElement|null>) => {
     const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
     const resize = () => {

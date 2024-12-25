@@ -105,7 +105,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
                                     <span />
                                     {
                                         selectedValues.map((v) => {
-                                            const label = options.find((option) => option.value === v)?.label;
+                                            const label = options.find((option: any) => option.value === v)?.label;
                                             return label ? <div className={"bg-secondary py-[3px] px-2 rounded mb-1 mr-1"} key={v}>{label}</div> : null
                                         })
                                     }
@@ -115,7 +115,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
                                 </div>
                             }
                         </> : <>
-                            <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
+                            <span>{valueState ? options.find((option: any) => option.value === valueState)?.label : placeholderDom}</span>
                         </>
                     }
                 </div>
@@ -151,7 +151,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
                 }
                 <CommandList>
                     {
-                        !loading ? options.map((option) => {
+                        !loading ? options.map((option: any) => {
                             const isSelected = selectedValues.includes(option.value)
                             return <CommandItem
                                 key={option.value}
