@@ -6,8 +6,6 @@ import {useState} from "react";
 const Page = () => {
     const [checkedKeys, setCheckedKeys] = useState<string[]>(['3', '2-2']);
 
-    console.log(checkedKeys);
-
     return <div className={"p-4"}>
         <Tree
             checkedKeys={checkedKeys}
