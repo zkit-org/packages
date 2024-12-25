@@ -10,7 +10,7 @@ const Page = () => {
     }, []);
 
     return <div className={"p-4"}>
-        <Checkbox field={true} onChange={onChange} label={"test"}>Test</Checkbox>
+        <Checkbox field={true} onChange={onChange} indeterminate={true} label={"test"}>Test</Checkbox>
     </div>
 }
 
