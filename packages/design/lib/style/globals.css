@@ -43,7 +43,7 @@
 
         --radius: 0.5rem;
 
-        --action-hover: rgba(38, 50, 56, 0.05);
+        --action-hover: rgba(0, 0, 0, 0.08);
     }
 
     .dark {
@@ -84,7 +84,7 @@
         --input: 0 0% 14.9%;
         --ring: 0 0% 83.1%;
 
-        --action-hover: hsl(var(--secondary));
+        --action-hover: rgba(255,255,255,0.08);
     }
 
     *,
