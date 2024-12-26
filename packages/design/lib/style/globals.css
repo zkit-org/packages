@@ -98,6 +98,9 @@
     html{
         @apply bg-background text-foreground;
     }
+    svg, img {
+        display: inline-block;
+    }
 }
 
 @layer components {
