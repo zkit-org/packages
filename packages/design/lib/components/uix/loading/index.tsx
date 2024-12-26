@@ -17,6 +17,6 @@ export const Loading: FC<LoadingProps> = (props) => {
         props.className
     )}>
         { props.children }
-        { loading ? <div className={"absolute top-0 left-0 bottom-0 right-0 bg-white/50 flex justify-center items-center"}><Spin /></div> : null }
+        { loading ? <div className={"absolute top-0 left-0 bottom-0 right-0 bg-white/50 dark:!bg-black/5 flex justify-center items-center"}><Spin /></div> : null }
     </div>
 }
