@@ -114,9 +114,10 @@
         @apply dark:active:border-black/10 dark:active:shadow-[0_0_0_1px_hsl(var(--secondary)),0_0_0_3px_rgba(var(--primary))];
     }
     .action-active {
-        @apply text-primary bg-[rgba(31,30,36,0.08)] dark:bg-secondary font-bold;
+        @apply text-primary bg-[var(--action-hover)] font-bold;
     }
     .action-effect-disabled {
-        @apply opacity-50 cursor-not-allowed hover:bg-transparent focus:bg-transparent active:bg-transparent focus:shadow-none active:shadow-none focus:border-transparent active:border-transparent;
+        @apply opacity-50 cursor-not-allowed focus:bg-transparent active:bg-transparent focus:shadow-none active:shadow-none focus:border-transparent active:border-transparent;
+        @apply hover:bg-transparent;
     }
 }

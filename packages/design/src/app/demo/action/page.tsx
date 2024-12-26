@@ -6,9 +6,9 @@ const Page = () => {
 
     return <div className={"p-4"}>
         <div className={"p-4 bg-secondary"}>
-            <div className={"w-8 h-8 action-effect action-effect-active"}>1</div>
+            <button disabled={true} className={"w-8 h-8 action-effect action-effect-active action-active action-effect-disabled"}>1</button>
         </div>
-        <div className={"w-8 h-8 action-effect action-effect-active"}>1</div>
+        <button disabled={true} className={"w-8 h-8 action-effect action-effect-active action-active action-effect-disabled"}>1</button>
         <Button>Test</Button>
     </div>
 }
