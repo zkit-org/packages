@@ -35,8 +35,8 @@ export const tailwindConfig = {
                     foreground: "hsl(var(--secondary-foreground))",
                 },
                 destructive: {
-                    DEFAULT: "hsl(var(--destructive))",
-                    foreground: "hsl(var(--destructive-foreground))",
+                    DEFAULT: "rgba(var(--destructive))",
+                    foreground: "rgba(var(--destructive-foreground))",
                 },
                 muted: {
                     DEFAULT: "hsl(var(--muted))",
