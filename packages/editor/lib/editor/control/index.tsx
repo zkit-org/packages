@@ -13,7 +13,7 @@ export type EditorControllerProps = {
     limit?: number;
     editor: Editor | null;
     handleId: string;
-    appendTo: RefObject<HTMLElement>;
+    appendTo: RefObject<HTMLElement|null>;
     data: NodeData;
 }
 

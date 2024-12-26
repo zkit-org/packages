@@ -1,5 +1,5 @@
 import { BubbleMenu as BaseBubbleMenu, useEditorState } from '@tiptap/react'
-import React, { useCallback, useRef } from 'react'
+import React, {ReactElement, useCallback, useRef} from 'react'
 import { Instance, sticky } from 'tippy.js'
 import { v4 as uuid } from 'uuid'
 
@@ -10,7 +10,7 @@ import { MenuProps } from '../../../menus/types'
 import { getRenderContainer } from '../../../utils'
 import {i18n} from "../../../utils/locale";
 
-export const ImageBlockMenu = ({ editor, appendTo }: MenuProps): JSX.Element => {
+export const ImageBlockMenu = ({ editor, appendTo }: MenuProps): ReactElement => {
     const menuRef = useRef<HTMLDivElement>(null)
     const tippyInstance = useRef<Instance | null>(null)
 

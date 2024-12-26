@@ -1,5 +1,5 @@
 import { BubbleMenu as BaseBubbleMenu } from '@tiptap/react'
-import React, { useCallback } from 'react'
+import React, {ReactElement, useCallback} from 'react'
 import * as PopoverMenu from '../../../../ui/PopoverMenu'
 
 import { Toolbar } from '../../../../ui/Toolbar'
@@ -8,7 +8,7 @@ import { Icon } from '../../../../ui/Icon'
 import { MenuProps, ShouldShowProps } from '../../../../menus/types'
 import {i18n} from "../../../../utils/locale";
 
-export const TableColumnMenu = React.memo(({ editor, appendTo }: MenuProps): JSX.Element => {
+export const TableColumnMenu = React.memo(({ editor, appendTo }: MenuProps): ReactElement => {
     const shouldShow = useCallback(
         ({ view, state, from }: ShouldShowProps) => {
             if (!state) {
