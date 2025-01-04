@@ -6,6 +6,7 @@ export interface Group {
     name: string
     title: string
     commands: Command[]
+    position?: 'start' | 'end'
 }
 
 export interface Command {

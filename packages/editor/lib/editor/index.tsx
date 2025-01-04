@@ -4,13 +4,17 @@ import { EditorContent } from '@tiptap/react'
 import {forwardRef, useRef, useImperativeHandle} from "react";
 import {EditorController} from "./control";
 import {Editor as EditorInstance, EditorEvents} from '@tiptap/core';
-import {useEditor} from "./hooks";
+import {useEditor} from './hooks';
+import {Extensions} from '@tiptap/core';
+import {SlashCommandProps} from './extension/slash-command';
 
 export type EditorProps = {
     limit?: number;
     value?: string;
     onChange?: (value: string) => void;
     onCreate?: (props: EditorEvents['create']) => void;
+    extensions?: Extensions;
+    slashCommandProps?: SlashCommandProps;
 }
 
 export type EditorRef = {
@@ -22,11 +26,15 @@ export const Editor = forwardRef<EditorRef, EditorProps>((props, ref) => {
         limit,
         value, onChange,
         onCreate,
+        extensions,
+        slashCommandProps,
     } = props;
     const menuContainerRef = useRef<HTMLDivElement>(null);
     const [editor, data, handleId] = useEditor({
         limit, value, onChange,
-        onCreate
+        onCreate,
+        extensions,
+        slashCommandProps
     });
 
     useImperativeHandle(ref, () => ({

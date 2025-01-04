@@ -10,6 +10,7 @@ export { Superscript } from '@tiptap/extension-superscript';
 export { Table, TableCell, TableHeader, TableRow } from './table';
 export { FocusClasses as Focus } from '@tiptap/extension-focus'
 export { Dropcursor } from '@tiptap/extension-dropcursor';
+export { History } from '@tiptap/extension-history'
 
 export { TaskItem } from './task-item';
 export { TaskList } from './task-list';

@@ -3,18 +3,20 @@
     .editor {
         :global {
             .tiptap {
-                @apply outline-none pt-[1px] -mt-[1px];
+                @apply outline-none pt-[1px] -mt-[1px] caret-foreground;
                 p.is-empty::before {
-                    color: #adb5bd;
+                    color: hsl(var(--muted-foreground) / 0.5);
                     content: attr(data-placeholder);
                     float: left;
                     height: 0;
                     pointer-events: none;
                 }
-                blockquote.is-empty:not(.is-editor-empty):before {
+                blockquote.is-empty:before {
+                    color: hsl(var(--muted-foreground) / 0.5);
                     content: attr(data-placeholder);
                 }
-                blockquote+figcaption.is-empty:not(.is-editor-empty):before {
+                blockquote+figcaption.is-empty:before {
+                    color: hsl(var(--muted-foreground) / 0.5);
                     content: attr(data-placeholder);
                 }
                 td, li{

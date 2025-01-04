@@ -33,17 +33,8 @@ export default {
     },
     slashCommand: {
         group: {
-            ai: "AI",
             format: "格式",
             insert: "插入",
-        },
-        aiWriter: {
-            title: "内容生成",
-            description: "让AI完成你的想法",
-        },
-        aiImage: {
-            title: "图片生成",
-            description: "从文本生成图像",
         },
         heading1: {
             title: "标题一",

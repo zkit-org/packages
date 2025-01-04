@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/plugin/locales";
-import "./globals.css";
+import {MainLayout} from '@/components/layout/main';
+import {ReactNode} from 'react';
 
 export const metadata: Metadata = {
     title: "Editor Playground",
@@ -9,12 +10,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
     children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning={true}>
             <body>
-                {children}
+                <MainLayout>{children}</MainLayout>
             </body>
         </html>
     );

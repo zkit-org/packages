@@ -6,15 +6,26 @@ import tippy from 'tippy.js'
 
 import {getGroups} from './groups'
 import { MenuList } from './MenuList'
+import {Group} from './types';
 
 const extensionName = 'slashCommand'
 
 let popup: any
 
+export type SlashCommandProps = {
+    groups?: Group[];
+}
+
 export const SlashCommand = Extension.create({
     name: extensionName,
 
     priority: 200,
+
+    addOptions(): SlashCommandProps {
+        return {
+            groups: [],
+        }
+    },
 
     onCreate() {
         popup = tippy('body', {
@@ -37,6 +48,7 @@ export const SlashCommand = Extension.create({
     },
 
     addProseMirrorPlugins() {
+        const { groups: extendGroups } = this.options as SlashCommandProps;
         return [
             Suggestion({
                 editor: this.editor,
@@ -76,7 +88,11 @@ export const SlashCommand = Extension.create({
                     view.focus()
                 },
                 items: ({ query }: { query: string }) => {
-                    const withFilteredCommands = getGroups().map(group => ({
+                    const presetsGroups = getGroups();
+                    const startGroups = extendGroups?.filter(group => group.position === 'start') || [];
+                    const endGroups = extendGroups?.filter(group => group.position === 'end') || [];
+                    const all = [...startGroups, ...presetsGroups, ...endGroups]
+                    const withFilteredCommands = all.map(group => ({
                         ...group,
                         commands: group.commands
                             .filter(item => {

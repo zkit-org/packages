@@ -56,14 +56,7 @@ export const BlockquoteFigure = Figure.extend({
                         content: [
                             {
                                 type: 'quote',
-                                content: selectionContent.content.toJSON() || [
-                                    {
-                                        type: 'paragraph',
-                                        attrs: {
-                                            textAlign: 'left'
-                                        },
-                                    },
-                                ],
+                                content: selectionContent.content.toJSON() || [],
                             },
                             {
                                 type: 'quoteCaption',

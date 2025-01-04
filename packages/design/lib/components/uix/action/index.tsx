@@ -1,28 +1,46 @@
-import {FC, HTMLAttributes} from "react";
-import {cn} from "@easykit/design/lib";
+import {FC, HTMLAttributes, PropsWithChildren} from "react";
+import classNames from "classnames";
 
-export interface ActionProps extends HTMLAttributes<HTMLDivElement>{
-    className?: string;
+export type ActionProps = PropsWithChildren<HTMLAttributes<HTMLButtonElement>> & {
+    theme?: 'dark' | 'light';
+    active?: boolean;
     disabled?: boolean;
-}
+    elType?: 'button' | 'span';
+};
 
 export const Action: FC<ActionProps> = (props) => {
     const {
+        theme = 'dark',
+        active = false,
         disabled = false,
-        onClick
+        elType = "button",
+        ...rest
     } = props;
-    return <div
-        className={cn(
-            "h-9 rounded-sm flex justify-center items-center cursor-pointer px-2",
-            "hover:bg-[var(--action-hover)]",
-            disabled && "opacity-30",
-            props.className,
-        )}
-        onClick={(e) => {
-            if(disabled) return;
-            onClick && onClick(e);
-        }}
+
+    const elProps = {
+        ...rest,
+        disabled,
+        className: classNames(
+            "p-2 flex justify-center items-center rounded-sm border border-transparent border-solid",
+            theme === 'light' && "hover:bg-white/20",
+            theme === 'light' && "focus:bg-white/30 focus:border-white/30",
+            theme === 'light' && "active:bg-white/30 active:border-white/30",
+            theme === 'dark' && "action-effect action-effect-active",
+            (active && theme === 'light') && "bg-white/20",
+            (active && theme === 'dark') && "action-active",
+            disabled && "action-effect-disabled",
+            props.className
+        )
+    }
+
+    return elType === "button" ? <button
+        {...elProps}
+        type={"button"}
     >
         { props.children }
-    </div>
+    </button> : <span
+        {...elProps}
+    >
+        {props.children}
+    </span>
 }

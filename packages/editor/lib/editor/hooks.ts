@@ -10,7 +10,7 @@ import {
     Selection, Subscript, Superscript, Table, TableCell, TableHeader, TableRow,
     TaskItem,
     TaskList, TextAlign, TextStyle, TrailingNode, Underline,
-    UniqueId
+    UniqueId, History
 } from "./extension";
 import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -18,10 +18,10 @@ import GlobalDragHandle from "./extension/global-drag-handle";
 import {common, createLowlight} from "lowlight";
 import Typography from "@tiptap/extension-typography";
 import Placeholder from "@tiptap/extension-placeholder";
-import SlashCommand from "./extension/slash-command";
+import SlashCommand, {SlashCommandProps} from './extension/slash-command';
 import {useHandleId} from "./control/drag-handle/use.handle.id";
 import {NodeData, useData} from "./control/drag-handle/use.data";
-import {Editor as EditorInstance, JSONContent, EditorEvents} from '@tiptap/core';
+import {Editor as EditorInstance, JSONContent, EditorEvents, Extensions} from '@tiptap/core';
 import { useCallback } from 'react';
 import { Node as ProseMirrorNode } from '@tiptap/pm/model'
 import {i18n} from "./utils/locale";
@@ -33,6 +33,8 @@ export type UseEditorProps = {
     onReadOnlyChange?: (value: string) => void;
     editable?: boolean;
     onCreate?: (props: EditorEvents['create']) => void;
+    extensions?: Extensions;
+    slashCommandProps?: SlashCommandProps;
 }
 
 const updateAttrById = (json: JSONContent, id: string, attr: string, value: any) => {
@@ -57,7 +59,11 @@ export const getJSONString = (editor: EditorInstance): string => {
 const UNIQUE_ATTRIBUTE_NAME = "id";
 
 export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, string] => {
-    const {onReadOnlyChange, value,onCreate, onChange, limit, editable = true} = props;
+    const {
+        onReadOnlyChange, value,onCreate, onChange,
+        limit, editable = true,
+        extensions = [], slashCommandProps,
+    } = props;
     const handleId = useHandleId();
     const data = useData();
 
@@ -136,6 +142,9 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
                 includeChildren: true,
                 showOnlyCurrent: false,
                 placeholder: ({node}) => {
+                    if(node.type.name === "blockquoteFigure") {
+                        return "";
+                    }
                     if(node.type.name === 'quoteCaption') {
                         return i18n("placeholder.quoteCaption");
                     }
@@ -145,7 +154,7 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
                     return i18n("placeholder.default");
                 },
             }),
-            SlashCommand,
+            SlashCommand.configure(slashCommandProps),
             Focus,
             Figcaption,
             BlockquoteFigure,
@@ -166,6 +175,8 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
                 ],
                 injectNodeName: false,
             }),
+            History,
+            ...extensions,
         ],
         immediatelyRender: false,
         content: value ? JSON.parse(value) : value,

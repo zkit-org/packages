@@ -4,16 +4,17 @@
 
 .ProseMirror {
     --margin-y: 1rem;
+    @apply selection:bg-muted;
 }
 /** 图片上传 start **/
 .ProseMirror .node-imageUpload {
     transition: border .16s cubic-bezier(.45,.05,.55,.95);
-    @apply rounded-lg border-2 border-dotted border-primary/30;
-    @apply hover:border-primary/50;
+    @apply rounded-lg border-2 border-dotted border-foreground/20;
+    @apply hover:border-foreground/40;
 }
 .ProseMirror .node-imageUpload.has-focus,
 .ProseMirror .node-imageUpload:has(.is-active) {
-    @apply border-primary/50;
+    @apply border-foreground/50;
 }
 /** 图片上传 end **/
 
@@ -67,23 +68,11 @@
 
 /* 代码块，代码段 start */
 .ProseMirror code {
-    @apply rounded-sm caret-white bg-black/80 text-white shadow-sm;
+    @apply rounded-sm caret-white bg-black/80 text-white shadow-sm px-1 py-0.5 selection:bg-white/20;
     font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-}
-.ProseMirror code::-moz-selection {
-    background-color: hsla(0,0%,100%,.3)
-}
-.ProseMirror code::selection {
-    background-color: hsla(0,0%,100%,.3)
 }
 .ProseMirror pre {
     @apply my-[var(--margin-y)] rounded-lg border border-black/10 bg-black/80 p-4 text-white caret-white;
-}
-.ProseMirror pre ::-moz-selection {
-    background-color: hsla(0,0%,100%,.2)
-}
-.ProseMirror pre ::selection {
-    background-color: hsla(0,0%,100%,.2)
 }
 .ProseMirror pre code {
     @apply bg-transparent p-0 text-inherit shadow-none;
@@ -223,10 +212,10 @@
     border-color: rgba(0,0,0,.1)
 }
 .ProseMirror table td,.ProseMirror table th {
+    @apply border;
     position: relative;
     min-width: 100px;
     border-width: 1px;
-    border-color: rgba(0,0,0,.1);
     padding: .5rem;
     text-align: left;
     vertical-align: top
@@ -262,88 +251,79 @@
     content: ""
 }
 .ProseMirror table .selectedCell {
+    @apply border bg-muted/30;
     border-style: double;
-    border-color: rgba(0,0,0,.2);
-    background-color: rgba(0,0,0,.05)
 }
 .ProseMirror table .grip-column,.ProseMirror table .grip-row {
+    @apply bg-muted/50;
     position: absolute;
     z-index: 10;
     display: flex;
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0,0,0,.05)
 }
 .ProseMirror table .grip-column {
+    @apply border-l border-b;
     left: 0;
     top: -.75rem;
     margin-left: -1px;
     height: .75rem;
     width: calc(100% + 1px);
-    border-left-width: 1px;
-    border-color: rgba(0,0,0,.2)
 }
 .ProseMirror table .grip-column.selected:before,.ProseMirror table .grip-column:hover:before {
     content: "";
     width: .625rem
 }
 .ProseMirror table .grip-column:hover {
-    background-color: rgba(0,0,0,.1)
+    @apply bg-muted;
 }
 .ProseMirror table .grip-column:hover:before {
-    border-bottom: 2px;
-    border-color: rgba(0,0,0,.6);
-    border-style: dotted
-}
-.ProseMirror table .grip-column.first {
-    border-top-left-radius: .125rem;
-    border-color: transparent
+    @apply border-b-2 border-dotted border-foreground/40;
 }
 .ProseMirror table .grip-column.last {
     border-top-right-radius: .125rem
 }
 .ProseMirror table .grip-column.selected {
-    @apply shadow border-black/30;
+    @apply shadow-sm border-border;
 }
 .ProseMirror table .grip-column.selected:before {
-    border-bottom-width: 2px;
-    border-style: dotted
+    @apply border-b-2 border-dotted border-foreground/60;
+}
+.ProseMirror table .grip-column.first {
+    @apply border-l-transparent;
+    border-top-left-radius: .125rem;
 }
 .ProseMirror table .grip-row {
+    @apply border-t border-r;
     left: -.75rem;
     top: 0;
     margin-top: -1px;
     height: calc(100% + 1px);
     width: .75rem;
-    border-top-width: 1px;
-    border-color: rgba(0,0,0,.2)
 }
 .ProseMirror table .grip-row.selected:before,.ProseMirror table .grip-row:hover:before {
     height: .625rem;
     content: ""
 }
 .ProseMirror table .grip-row:hover {
-    background-color: rgba(0,0,0,.1)
+    @apply bg-muted;
 }
 .ProseMirror table .grip-row:hover:before {
-    border-left: 2px;
-    border-color: rgba(0,0,0,.6);
-    border-style: dotted
+    @apply border-l-2 border-dotted border-foreground/40;
+}
+.ProseMirror table .grip-row.selected {
+    @apply shadow-sm border-border;
+}
+.ProseMirror table .grip-row.selected:before {
+    @apply border-l-2 border-dotted border-foreground/60;
 }
 .ProseMirror table .grip-row.first {
+    @apply border-t-transparent;
     border-top-left-radius: .125rem;
-    border-color: transparent
 }
 .ProseMirror table .grip-row.last {
     border-bottom-left-radius: .125rem
-}
-.ProseMirror table .grip-row.selected {
-    @apply shadow border-black/30;
-}
-.ProseMirror table .grip-row.selected:before {
-    border-left-width: 2px;
-    border-style: dotted
 }
 /**  表格 end  **/
 
@@ -435,18 +415,16 @@
     margin-top: 0;
 }
 .ProseMirror [data-type=horizontalRule].ProseMirror-selectednode {
-    background-color: rgba(0,0,0,.05)
+    @apply bg-muted;
 }
 .ProseMirror [data-type=horizontalRule].ProseMirror-selectednode hr {
-    border-top-color: rgba(0,0,0,.3)
+    @apply border-t border-foreground/50;
 }
 .ProseMirror [data-type=horizontalRule]:hover:not(.ProseMirror [data-type=horizontalRule].ProseMirror-selectednode) {
-    background-color: rgba(0,0,0,.05)
+    @apply bg-muted/60;
 }
 .ProseMirror [data-type=horizontalRule] hr {
-    border-width: 1px 0 0;
-    border-color: rgba(0,0,0,.2);
-    background-color: rgba(0,0,0,.8)
+    @apply border-t border-foreground/30;
 }
 
 .ProseMirror {
@@ -462,14 +440,6 @@
 
 .ProseMirror .selection {
     display: inline
-}
-
-.ProseMirror ::-moz-selection {
-    background-color: rgba(0,0,0,.1)
-}
-
-.ProseMirror .selection,.ProseMirror ::selection {
-    background-color: rgba(0,0,0,.1)
 }
 
 .ProseMirror>.react-renderer {

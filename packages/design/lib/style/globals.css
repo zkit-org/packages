@@ -87,19 +87,21 @@
         --action-hover: rgba(255,255,255,0.08);
     }
 
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: hsl(var(--border));
-    }
+
 
     html{
         @apply bg-background text-foreground;
-    }
-    svg, img {
-        display: inline-block;
+
+        *,
+        ::after,
+        ::before,
+        ::backdrop,
+        ::file-selector-button {
+            border-color: hsl(var(--border));
+        }
+        svg, img {
+            display: inline-block;
+        }
     }
 }
 

@@ -3,28 +3,6 @@ import {i18n} from "../../utils/locale";
 
 export const getGroups = (): Group[] => [
     {
-        name: 'ai',
-        title: i18n("slashCommand.group.ai"),
-        commands: [
-            {
-                name: 'aiWriter',
-                label: i18n("slashCommand.aiWriter.title"),
-                iconName: 'Sparkles',
-                description: i18n("slashCommand.aiWriter.description"),
-                shouldBeHidden: editor => editor.isActive('columns'),
-                action: editor => editor.chain().focus()//.setAiWriter().run(),
-            },
-            {
-                name: 'aiImage',
-                label: i18n("slashCommand.aiImage.title"),
-                iconName: 'Sparkles',
-                description: i18n("slashCommand.aiImage.description"),
-                shouldBeHidden: editor => editor.isActive('columns'),
-                action: editor => editor.chain().focus()//.setAiImage().run(),
-            },
-        ],
-    },
-    {
         name: 'format',
         title: i18n("slashCommand.group.format"),
         commands: [
