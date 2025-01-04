@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tippy /> props.plugins 1`] = `
+Array [
+  Object {
+    "defaultValue": "",
+    "fn": [Function],
+    "name": "className",
+  },
+  Object {
+    "fn": [Function],
+  },
+]
+`;
+
+exports[`<Tippy /> render prop 1`] = `
+<div
+  data-escaped=""
+  data-placement="top"
+  data-reference-hidden=""
+>
+  Hello
+</div>
+`;
+
+exports[`<Tippy /> render prop preserve popperOptions 1`] = `
+Object {
+  "modifiers": Array [
+    Object {
+      "enabled": true,
+      "fn": [Function],
+      "name": "x",
+      "phase": "main",
+    },
+    Object {
+      "enabled": true,
+      "fn": [Function],
+      "name": "$$tippyReact",
+      "phase": "beforeWrite",
+      "requires": Array [
+        "computeStyles",
+      ],
+    },
+  ],
+  "strategy": "fixed",
+}
+`;
