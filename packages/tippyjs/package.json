@@ -100,5 +100,8 @@
   "bugs": {
     "url": "https://github.com/atomiks/tippyjs-react/issues"
   },
-  "homepage": "https://github.com/atomiks/tippyjs-react#readme"
+  "homepage": "https://github.com/atomiks/tippyjs-react#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
