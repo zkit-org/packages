@@ -1,9 +1,9 @@
-import { Extension } from '@tiptap/core';
-import { NodeSelection, Plugin, PluginKey, TextSelection } from '@tiptap/pm/state';
-import { Fragment, Slice, Node, ResolvedPos } from '@tiptap/pm/model';
+import {Extension} from '@tiptap/core';
+import {NodeSelection, Plugin, PluginKey, TextSelection} from '@tiptap/pm/state';
+import {Fragment, Node, ResolvedPos, Slice} from '@tiptap/pm/model';
 
 // @ts-ignore
-import { __serializeForClipboard, EditorView } from '@tiptap/pm/view';
+import {__serializeForClipboard, EditorView} from '@tiptap/pm/view';
 
 export interface GlobalDragHandleOptions {
     /**
@@ -105,8 +105,7 @@ const getRootNode = (pos: number, view: EditorView, node: Element, uniqueId: str
                     node = n;
                 }
             })
-            const resolvedPos = node ? (node as Node).resolve(0) : root;
-            return resolvedPos;
+            return node ? (node as Node).resolve(0) : root;
         }
     }
     return root;
@@ -131,7 +130,7 @@ export function DragHandlePlugin(options: GlobalDragHandleOptions & {pluginKey: 
         const dragNode = view.state.doc.resolve(draggedNodePos);
         if(
             ["tableCell", "tableRow"].includes(dragNode.node().type.name) ||
-            node.matches("div.tableWrapper, li")
+            node.matches("div.tableWrapper, li, blockquote")
         ) {
             draggedNodePos = rootNodePos(draggedNodePos, view) - 1;
         }else{
