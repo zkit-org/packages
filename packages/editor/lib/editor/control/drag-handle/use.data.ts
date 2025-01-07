@@ -17,7 +17,7 @@ export const useData = (): NodeData => {
     const handleNodeChange = useCallback((node: ResolvedPos, nodePos: number) => {
         setCurrentNode(node)
         setCurrentPos(nodePos)
-    }, [setCurrentNode],)
+    }, [setCurrentNode, setCurrentPos])
 
     return {
         currentNode,

@@ -23,7 +23,6 @@ export const useContentActions = (editor: Editor, resolvedPos: ResolvedPos, node
         if(["imageBlock", "imageUpload", "horizontalRule"].includes(currentNode?.type.name)) {
             currentPos = nodePos;
         }
-
         editor
             .chain()
             .setMeta('hideDragHandle', true)
@@ -37,7 +36,7 @@ export const useContentActions = (editor: Editor, resolvedPos: ResolvedPos, node
             currentPos = nodePos;
         }
         editor.chain().setMeta('hideDragHandle', true).setNodeSelection(currentPos).deleteSelection().run()
-    }, [editor, currentNodePos])
+    }, [editor, currentNodePos, nodePos])
 
     const handleAdd = useCallback(() => {
         const nodePos = resolvedPos?.depth == 0 ? resolvedPos.pos + 1 : resolvedPos.after(1);
@@ -60,7 +59,7 @@ export const useContentActions = (editor: Editor, resolvedPos: ResolvedPos, node
             })
             .focus(focusPos)
             .run()
-    }, [currentNode, currentNodePos, editor])
+    }, [currentNode, currentNodePos, editor, nodePos])
 
     return {
         resetTextFormatting,
