@@ -80,6 +80,7 @@ export {
     RadioGroup,
     RadioGroupItem,
 } from "./components/ui/radio-group";
+export * from "./components/ui/navigation-menu";
 
 // extend
 export { Divider } from "./components/uix/divider";
