@@ -191,7 +191,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
                             align={"end"}
                             asChild={true}
                         >
-                            <Action className={"w-6 h-6 p-0"}>
+                            <Action className={"w-6 h-6 !p-0"}>
                                 <DotsHorizontalIcon />
                             </Action>
                         </Dropdown>
@@ -297,7 +297,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
                 }
                 {
                     showVisibilityControl ? <Dropdown align={"end"} items={columnSettings} asChild={true}>
-                        <Action className={"w-9 h-9"}>
+                        <Action className={"w-9 h-9 !p-0"}>
                             <LayoutIcon className={"w-[18px] h-[18px]"}/>
                         </Action>
                     </Dropdown> : null
