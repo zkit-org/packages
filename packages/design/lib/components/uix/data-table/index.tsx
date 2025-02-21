@@ -189,6 +189,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
                             items={items as DropdownMenuItemProps[]}
                             onItemClick={(item) => onRowActionClick(item, row)}
                             align={"end"}
+                            asChild={true}
                         >
                             <Action className={"w-6 h-6 p-0"}>
                                 <DotsHorizontalIcon />
