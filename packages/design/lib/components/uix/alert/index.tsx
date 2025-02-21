@@ -2,7 +2,7 @@ import {
     AlertDialog as UIAlertDialog,
     AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@easykit/design/components/ui/alert-dialog";
-import {FC, ReactNode, useContext, useState} from "react";
+import {FC, ReactNode, useContext, useMemo, useState} from "react";
 import { render as ReactDOMRender } from '@easykit/design/lib';
 import {Button} from "@easykit/design/components/uix/button";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
@@ -80,24 +80,26 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
 }
 
 export const useAlert = () => {
-    return {
-        confirm: (props: ConfirmProps) => {
-            let root: any;
-            const div = document.createElement('div');
-            document.body.appendChild(div);
-            const close = () => {
-                setTimeout(() => {
-                    root = root?._unmount();
-                    if (div.parentNode) {
-                        div.parentNode.removeChild(div);
-                    }
-                }, 200);
+    return useMemo(() => {
+        return {
+            confirm: (props: ConfirmProps) => {
+                let root: any;
+                const div = document.createElement('div');
+                document.body.appendChild(div);
+                const close = () => {
+                    setTimeout(() => {
+                        root = root?._unmount();
+                        if (div.parentNode) {
+                            div.parentNode.removeChild(div);
+                        }
+                    }, 200);
+                }
+                const onCancel = () => {
+                    close();
+                    props.onCancel?.();
+                }
+                root = ReactDOMRender(<AlertDialog {...props} open={true} onCancel={onCancel} />, div);
             }
-            const onCancel = () => {
-                close();
-                props.onCancel?.();
-            }
-            root = ReactDOMRender(<AlertDialog {...props} open={true} onCancel={onCancel} />, div);
         }
-    }
+    }, [])
 }
