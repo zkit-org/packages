@@ -295,7 +295,7 @@ export function DataTable <TData> (props: DataTableProps<TData>) {
                     /> : null
                 }
                 {
-                    showVisibilityControl ? <Dropdown align={"end"} items={columnSettings}>
+                    showVisibilityControl ? <Dropdown align={"end"} items={columnSettings} asChild={true}>
                         <Action className={"w-9 h-9"}>
                             <LayoutIcon className={"w-[18px] h-[18px]"}/>
                         </Action>
