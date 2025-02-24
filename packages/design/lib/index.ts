@@ -14,13 +14,7 @@ export { useToast } from "./components/ui/use-toast"
 export { ScrollArea, ScrollBar } from "./components/ui/scroll-area";
 export { Tabs, TabsContent, TabsList, TabsTrigger, } from "./components/ui/tabs"
 export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter, TableCaption } from "./components/ui/table";
-export {
-    DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent,
-    DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
-    DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger, DropdownMenuShortcut,
-} from "./components/ui/dropdown-menu";
+export * from "./components/ui/dropdown-menu";
 export { Separator } from "./components/ui/separator";
 export { Textarea } from "./components/ui/textarea";
 export { Badge } from "./components/ui/badge";
