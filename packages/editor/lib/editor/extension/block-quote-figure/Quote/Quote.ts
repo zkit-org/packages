@@ -1,31 +1,31 @@
-import { Node } from '@tiptap/core'
+import {Node} from '@tiptap/core'
 
 export const Quote = Node.create({
-    name: 'quote',
+  name: 'quote',
 
-    content: 'text*',
+  content: 'text*',
 
-    defining: true,
+  defining: true,
 
-    marks: '',
+  marks: '',
 
-    parseHTML() {
-        return [
-            {
-                tag: 'blockquote',
-            },
-        ]
-    },
+  parseHTML() {
+    return [
+      {
+        tag: 'blockquote',
+      },
+    ]
+  },
 
-    renderHTML({ HTMLAttributes }) {
-        return ['blockquote', HTMLAttributes, 0]
-    },
+  renderHTML({HTMLAttributes}) {
+    return ['blockquote', HTMLAttributes, 0]
+  },
 
-    addKeyboardShortcuts() {
-        return {
-            Backspace: () => false,
-        }
-    },
+  addKeyboardShortcuts() {
+    return {
+      Backspace: () => false,
+    }
+  },
 })
 
 export default Quote

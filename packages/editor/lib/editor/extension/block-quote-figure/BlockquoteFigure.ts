@@ -1,10 +1,9 @@
-import { mergeAttributes } from '@tiptap/core'
-import { Figure } from '../figure';
-import { Quote } from './Quote'
-import { QuoteCaption } from './QuoteCaption'
+import {mergeAttributes} from '@tiptap/core'
+import {Figure} from '../figure';
+import {Quote} from './Quote'
+import {QuoteCaption} from './QuoteCaption'
 
 declare module '@tiptap/core' {
-  // eslint-disable-next-line no-unused-vars
   interface Commands<ReturnType> {
     blockquoteFigure: {
       setBlockquote: () => ReturnType
@@ -13,61 +12,61 @@ declare module '@tiptap/core' {
 }
 
 export const BlockquoteFigure = Figure.extend({
-    name: 'blockquoteFigure',
+  name: 'blockquoteFigure',
 
-    group: 'block',
+  group: 'block',
 
-    content: 'quote quoteCaption',
+  content: 'quote quoteCaption',
 
-    isolating: true,
+  isolating: true,
 
-    addExtensions() {
-        return [Quote, QuoteCaption]
-    },
+  addExtensions() {
+    return [Quote, QuoteCaption]
+  },
 
-    renderHTML({ HTMLAttributes }) {
-        return ['figure', mergeAttributes(HTMLAttributes, { 'data-type': this.name }), ['div', {}, 0]]
-    },
+  renderHTML({HTMLAttributes}) {
+    return ['figure', mergeAttributes(HTMLAttributes, {'data-type': this.name}), ['div', {}, 0]]
+  },
 
-    addKeyboardShortcuts() {
-        return {
-            Enter: () => false,
-        }
-    },
+  addKeyboardShortcuts() {
+    return {
+      Enter: () => false,
+    }
+  },
 
-    addAttributes() {
-        return {
-            ...this.parent?.(),
-        }
-    },
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+    }
+  },
 
-    addCommands() {
-        return {
-            setBlockquote:
+  addCommands() {
+    return {
+      setBlockquote:
         () =>
-            ({ state, chain }) => {
-                const position = state.selection.$from.start()
-                const selectionContent = state.selection.content()
+          ({state, chain}) => {
+            const position = state.selection.$from.start()
+            const selectionContent = state.selection.content()
 
-                return chain()
-                    .focus()
-                    .insertContent({
-                        type: this.name,
-                        content: [
-                            {
-                                type: 'quote',
-                                content: selectionContent.content.toJSON() || [],
-                            },
-                            {
-                                type: 'quoteCaption',
-                            },
-                        ],
-                    })
-                    .focus(position + 1)
-                    .run()
-            },
-        }
-    },
+            return chain()
+              .focus()
+              .insertContent({
+                type: this.name,
+                content: [
+                  {
+                    type: 'quote',
+                    content: selectionContent.content.toJSON() || [],
+                  },
+                  {
+                    type: 'quoteCaption',
+                  },
+                ],
+              })
+              .focus(position + 1)
+              .run()
+          },
+    }
+  },
 })
 
 export default BlockquoteFigure

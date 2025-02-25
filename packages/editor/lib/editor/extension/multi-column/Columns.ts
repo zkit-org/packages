@@ -1,65 +1,65 @@
 import {Node} from '@tiptap/core'
 
 export enum ColumnLayout {
-    SidebarLeft = 'sidebar-left',
-    SidebarRight = 'sidebar-right',
-    TwoColumn = 'two-column',
+  SidebarLeft = 'sidebar-left',
+  SidebarRight = 'sidebar-right',
+  TwoColumn = 'two-column',
 }
 
 declare module '@tiptap/core' {
-    interface Commands<ReturnType> {
-        columns: {
-            setColumns: () => ReturnType
-            setLayout: (layout: ColumnLayout) => ReturnType
-        }
+  interface Commands<ReturnType> {
+    columns: {
+      setColumns: () => ReturnType
+      setLayout: (layout: ColumnLayout) => ReturnType
     }
+  }
 }
 
 export const Columns = Node.create({
-    name: 'columns',
+  name: 'columns',
 
-    group: 'columns',
+  group: 'columns',
 
-    content: 'column column',
+  content: 'column column',
 
-    defining: true,
+  defining: true,
 
-    isolating: true,
+  isolating: true,
 
-    addAttributes() {
-        return {
-            layout: {
-                default: ColumnLayout.TwoColumn,
-            },
-        }
-    },
+  addAttributes() {
+    return {
+      layout: {
+        default: ColumnLayout.TwoColumn,
+      },
+    }
+  },
 
-    addCommands() {
-        return {
-            setColumns:
-                () =>
-                    ({commands}) =>
-                        commands.insertContent(
-                            `<div data-type="columns"><div data-type="column" data-position="left"><p></p></div><div data-type="column" data-position="right"><p></p></div></div>`,
-                        ),
-            setLayout:
-                (layout: ColumnLayout) =>
-                    ({commands}) =>
-                        commands.updateAttributes('columns', {layout}),
-        }
-    },
+  addCommands() {
+    return {
+      setColumns:
+        () =>
+          ({commands}) =>
+            commands.insertContent(
+              `<div data-type="columns"><div data-type="column" data-position="left"><p></p></div><div data-type="column" data-position="right"><p></p></div></div>`,
+            ),
+      setLayout:
+        (layout: ColumnLayout) =>
+          ({commands}) =>
+            commands.updateAttributes('columns', {layout}),
+    }
+  },
 
-    renderHTML({HTMLAttributes}) {
-        return ['div', {'data-type': 'columns', class: `layout-${HTMLAttributes.layout}`}, 0]
-    },
+  renderHTML({HTMLAttributes}) {
+    return ['div', {'data-type': 'columns', class: `layout-${HTMLAttributes.layout}`}, 0]
+  },
 
-    parseHTML() {
-        return [
-            {
-                tag: 'div[data-type="columns"]',
-            },
-        ]
-    },
+  parseHTML() {
+    return [
+      {
+        tag: 'div[data-type="columns"]',
+      },
+    ]
+  },
 })
 
 export default Columns
