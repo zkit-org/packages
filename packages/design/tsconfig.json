@@ -1,29 +1,29 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "./src/*"
-            ],
-            "@easykit/design/*": [
-                "./lib/*"
-            ],
-            "@easykit/design": [
-                "./lib/index.ts"
-            ]
-        },
-        "jsx": "preserve",
-        "esModuleInterop": true,
-        "resolveJsonModule": true
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@easykit/design/*": [
+        "./lib/*"
+      ],
+      "@easykit/design": [
+        "./lib/index.ts"
+      ]
     },
-    "include": [
-        "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

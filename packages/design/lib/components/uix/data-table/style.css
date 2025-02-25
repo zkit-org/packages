@@ -1,26 +1,32 @@
 .data-table {
-    --sticky-row-hover-color: rgba(250, 250, 250, 1);
-    --sticky-row-selected-color: rgba(245, 245, 245, 1);
+  --sticky-row-hover-color: rgba(250, 250, 250, 1);
+  --sticky-row-selected-color: rgba(245, 245, 245, 1);
 }
+
 .dark .data-table {
-    --sticky-row-hover-color: #1c1c1c;
-    --sticky-row-selected-color: rgba(0, 0, 0, 0.2);
+  --sticky-row-hover-color: #1c1c1c;
+  --sticky-row-selected-color: rgba(0, 0, 0, 0.2);
 }
+
 .data-table tr {
-    @apply transition-none;
+  @apply transition-none;
 }
+
 .data-table tr th.table-sticky-row,
-.data-table tr td.table-sticky-row{
-    @apply p-0;
+.data-table tr td.table-sticky-row {
+  @apply p-0;
 }
+
 .data-table tr th.table-sticky-row .inner,
-.data-table tr td.table-sticky-row .inner{
-    @apply bg-background;
+.data-table tr td.table-sticky-row .inner {
+  @apply bg-background;
 }
+
 .data-table tr:hover th.table-sticky-row .inner,
-.data-table tr:hover td.table-sticky-row .inner{
-    @apply bg-[var(--sticky-row-hover-color)];
+.data-table tr:hover td.table-sticky-row .inner {
+  @apply bg-[var(--sticky-row-hover-color)];
 }
+
 .data-table tr[data-state=selected] td.table-sticky-row .inner {
-    @apply bg-[hsl(var(--muted))];
+  @apply bg-[hsl(var(--muted))];
 }
