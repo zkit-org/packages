@@ -8,6 +8,7 @@ import {
 } from "../../ui/card"
 import {PropsWithChildren, FC, ReactNode} from "react";
 import {cn} from "@easykit/design/lib";
+import classNames from "classnames";
 
 export interface CardProps extends PropsWithChildren {
   footer?: ReactNode;
@@ -16,6 +17,7 @@ export interface CardProps extends PropsWithChildren {
   className?: string;
   contentClassName?: string;
   onClick?: () => void;
+  shadow?: boolean;
 }
 
 export const Card: FC<CardProps> = (props) => {
@@ -24,12 +26,13 @@ export const Card: FC<CardProps> = (props) => {
     description = '',
     className,
     contentClassName,
-    footer
+    footer,
+    shadow = false,
   } = props;
 
   return <UICard
     onClick={props.onClick}
-    className={className}
+    className={classNames(shadow ? "shadow-none" : null, className)}
   >
     {
       title || description ? <CardHeader className={"pb-0"}>
