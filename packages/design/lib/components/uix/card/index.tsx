@@ -32,7 +32,7 @@ export const Card: FC<CardProps> = (props) => {
 
   return <UICard
     onClick={props.onClick}
-    className={classNames(shadow ? "shadow-none" : null, className)}
+    className={classNames(!shadow ? "shadow-none" : null, className)}
   >
     {
       title || description ? <CardHeader className={"pb-0"}>
