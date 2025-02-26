@@ -120,7 +120,7 @@ export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFor
         stopPropagation && e.stopPropagation();
         form.handleSubmit(onSubmit)(e);
       }}
-      className={cn("space-y-6", className)}
+      className={cn("space-y-4", className)}
     >
       {children}
     </form>
