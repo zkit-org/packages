@@ -35,6 +35,7 @@ import {Formatters, formatValue, FunctionMap} from "@easykit/design/components/u
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import {LayoutIcon} from "@radix-ui/react-icons";
 import get from "lodash/get";
+import classNames from "classnames";
 
 export interface StickyColumnProps {
   key: string;
@@ -49,6 +50,7 @@ export type DataTableColumn<TData> = ColumnDef<TData, unknown> & {
 
 export interface DataTableProps<TData> {
   autoHidePagination?: boolean;
+  inCard?: boolean;
   columns: DataTableColumn<TData>[];
   data: TData[];
   showColumnVisibility?: boolean;
@@ -72,7 +74,7 @@ export const getSticky = (id: string, leftStickyColumns: StickyColumnProps[], ri
     let offset = 0;
     let width = 0;
     let index = 0;
-    for (let col of leftStickyColumns) {
+    for (const col of leftStickyColumns) {
       index++;
       if (col.key === id) {
         width = col.size;
@@ -137,6 +139,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
     cellHandles,
     showHeader = true,
     autoHidePagination = true,
+    inCard = false,
   } = props;
 
   const config = useContext(UIXContext);
@@ -269,7 +272,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           onCheckedChange: (item, value) => column.toggleVisibility(value)
         }
       });
-  }, [columns, columnVisibility]);
+  }, [table, columns]);
 
   const showVisibilityControl = useMemo(() => showColumnVisibility && columnSettings.length, [showColumnVisibility, columnSettings])
 
@@ -306,7 +309,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
       </div> : null
     }
     <div className={"relative"}>
-      <Table className={"data-table"}>
+      <Table className={classNames("data-table", inCard ? "in-card" : null)}>
         <TableHeader className={cn(!showHeader && "hidden")}>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -321,9 +324,9 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                 return (
                   <TableHead
                     className={cn(
-                      sticky.enable ? "sticky table-sticky-row" : null,
-                      sticky.last ? "table-sticky-row-last" : null,
-                      sticky.first ? "table-sticky-row-first" : null,
+                      sticky.enable ? "sticky table-sticky-col" : null,
+                      sticky.last ? "table-sticky-col-last" : null,
+                      sticky.first ? "table-sticky-col-first" : null,
                       (header.column.columnDef as any)['className']
                     )}
                     style={sticky.enable ? {
@@ -359,9 +362,9 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                   return <TableCell
                     key={cell.id}
                     className={cn(
-                      sticky.enable ? "sticky table-sticky-row" : null,
-                      sticky.last ? "table-sticky-row-last" : null,
-                      sticky.first ? "table-sticky-row-first" : null,
+                      sticky.enable ? "sticky table-sticky-col" : null,
+                      sticky.last ? "table-sticky-col-last" : null,
+                      sticky.first ? "table-sticky-col-first" : null,
                     )}
                     style={sticky.enable ? {
                       zIndex: 10,
@@ -388,10 +391,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           showPagination && <Pagination
             {...(pagination as PaginationProps)}
             onChange={(page: number) => {
-              load && load({page}).then();
+              load?.({page}).then();
             }}
             onSizeChange={(size: number) => {
-              load && load({size, page: 1}).then();
+              load?.({size, page: 1}).then();
             }}
           />
         }
