@@ -43,8 +43,8 @@ export const Dialog: FC<DialogProps> = (props) => {
       autoFocus={false}
       showClose={closable}
       onCloseClick={onCancel}
-      onOverlayClick={maskClosable ? onCancel : () => {
-      }}
+      onOverlayClick={maskClosable ? onCancel : () => {}}
+      onClick={(e) => e.stopPropagation()}
       className={cn(className)}
       aria-describedby={undefined}
     >
