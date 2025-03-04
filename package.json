@@ -96,7 +96,8 @@
     "@typescript-eslint/type-utils": "8.25.0",
     "@typescript-eslint/utils": "8.25.0",
     "elliptic": "6.6.1",
-    "esbuild": "0.25.0"
+    "esbuild": "0.25.0",
+    "nanoid": "5.0.9"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
