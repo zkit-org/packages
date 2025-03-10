@@ -49,10 +49,16 @@ export const FormItem: FC<FieldItem> = (props) => {
   const render = (field: ControllerRenderProps) => {
     if (Children.count(props.children) === 1) {
       const ele = (props.children as ReactElement);
+      const onChangeOrigin = (ele as any).props.onChange;
+      const onChange = field.onChange;
+      const onChangeWrap = (e: any) => {
+        onChange(e);
+        onChangeOrigin?.(e);
+      }
       return cloneElement<any>(ele, {
         ...(ele as any).props,
         ...field,
-        value: field.value === 0 ? 0 : (field.value || ''), // a component is changing an uncontrolled input to be controlled
+        onChange: onChangeWrap
       })
     }
     return props.children;
@@ -66,9 +72,7 @@ export const FormItem: FC<FieldItem> = (props) => {
       return <UIFormItem className={props.className}>
         {props.label ? <FormLabel>{props.label}</FormLabel> : null}
         <FormControl>
-          <div>
-            {render(field)}
-          </div>
+          {render(field)}
         </FormControl>
         {props.description ? <FormDescription>{props.description}</FormDescription> : null}
         <FormMessage/>
@@ -77,7 +81,7 @@ export const FormItem: FC<FieldItem> = (props) => {
   />;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,react/display-name
+// eslint-disable-next-line react/display-name
 export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFormReturn | undefined>) {
   const {
     schema = null,
@@ -109,7 +113,7 @@ export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFor
       }
       return child;
     })
-  }, [props.children]);
+  }, [form.control, props.children]);
 
   useImperativeHandle(ref, () => form, [form]);
 
@@ -117,6 +121,7 @@ export const Form = forwardRef(function <T>(props: FormProps<T>, ref: Ref<UseFor
     <form
       {...rest}
       onSubmit={(e) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         stopPropagation && e.stopPropagation();
         form.handleSubmit(onSubmit)(e);
       }}

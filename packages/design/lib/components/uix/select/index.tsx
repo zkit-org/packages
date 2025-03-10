@@ -25,6 +25,7 @@ export interface SelectProps {
   alignOffset?: number;
 }
 
+// eslint-disable-next-line react/display-name,@typescript-eslint/no-unused-vars
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
   const {
     options = [],
