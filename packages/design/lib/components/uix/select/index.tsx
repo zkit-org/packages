@@ -5,8 +5,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select"
-import {forwardRef} from "react";
+import {forwardRef, ReactNode} from 'react';
 import {cn} from "@easykit/design/lib";
+import {Empty} from '@easykit/design/components/uix/empty';
 
 export interface SelectOptionProps {
   value: string;
@@ -23,6 +24,7 @@ export interface SelectProps {
   sideOffset?: number;
   align?: "start" | "center" | "end";
   alignOffset?: number;
+  empty?: ReactNode;
 }
 
 // eslint-disable-next-line react/display-name,@typescript-eslint/no-unused-vars
@@ -33,6 +35,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
     onChange,
     placeholder,
     className,
+    empty,
     ...rest
   } = props;
 
@@ -55,7 +58,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
       align={props.align}
       alignOffset={props.alignOffset}
     >
-      {options.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}
+      { (options && options.length) ? options.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>) : (empty || <Empty />) }
     </SelectContent>
   </UISelect>
 })
