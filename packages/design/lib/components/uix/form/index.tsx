@@ -58,7 +58,8 @@ export const FormItem: FC<FieldItem> = (props) => {
       return cloneElement<any>(ele, {
         ...(ele as any).props,
         ...field,
-        onChange: onChangeWrap
+        onChange: onChangeWrap,
+        value: field.value === 0 ? 0 : (field.value || ''), // a component is changing an uncontrolled input to be controlled
       })
     }
     return props.children;
