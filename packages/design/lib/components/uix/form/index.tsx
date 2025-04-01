@@ -23,6 +23,7 @@ import {useMemo, Children} from "react";
 import isObject from "lodash/isObject";
 import {ZodType} from "zod";
 import {cn} from "@easykit/design/lib";
+import classNames from 'classnames';
 
 export interface RenderProps extends ControllerRenderProps {
   placeholder?: string;
@@ -70,7 +71,7 @@ export const FormItem: FC<FieldItem> = (props) => {
     name={props.name}
     render={(p) => {
       const {field} = p;
-      return <UIFormItem className={props.className}>
+      return <UIFormItem className={classNames("flex flex-col", props.className)}>
         {props.label ? <FormLabel>{props.label}</FormLabel> : null}
         <FormControl>
           {render(field)}
