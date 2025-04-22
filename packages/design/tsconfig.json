@@ -7,10 +7,10 @@
         "./src/*"
       ],
       "@easykit/design/*": [
-        "./lib/*"
+        "./src/*"
       ],
       "@easykit/design": [
-        "./lib/index.ts"
+        "./src/index.ts"
       ]
     },
     "jsx": "preserve",

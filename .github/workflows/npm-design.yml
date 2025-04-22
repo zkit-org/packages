@@ -20,6 +20,6 @@ jobs:
       - run: npm i -g pnpm
       - run: pnpm i
       - run: pnpm build:design
-      - run: cd packages/design/dist/ && npm publish
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

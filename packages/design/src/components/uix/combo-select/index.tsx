@@ -4,16 +4,16 @@ import {FC, forwardRef, PropsWithRef, ReactNode, useContext, useEffect, useMemo,
 import {CaretSortIcon, CheckIcon, Cross2Icon, PlusCircledIcon} from "@radix-ui/react-icons";
 import {
   Command,
-  CommandEmpty, CommandGroup,
+  CommandEmpty,
   CommandInput,
   CommandItem,
-  CommandList, CommandSeparator
+  CommandList
 } from "@easykit/design/components/ui/command";
 import {cn} from "@easykit/design/lib";
 import {Spin} from "@easykit/design/components/uix/spin";
 import remove from 'lodash/remove';
 import cloneDeep from "lodash/cloneDeep";
-import {useSize} from "@easykit/design/components/hooks/resize";
+import {useSize} from "@easykit/design/hooks/resize";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import get from "lodash/get";
 import {Skeleton} from "@easykit/design/components/ui/skeleton";

@@ -11,12 +11,15 @@
     "build:editor": "pnpm --filter @easykit/editor run build"
   },
   "dependencies": {
+    "@arco-iconbox/react-clover": "0.0.28",
     "@easykit/design": "workspace:./packages/design/dist",
     "@radix-ui/react-checkbox": "1.1.1",
     "@radix-ui/react-icons": "1.3.0",
     "@radix-ui/react-popper": "^1.2.0",
+    "@tailwindcss/postcss": "4.1.4",
     "@types/sortablejs": "^1.15.8",
     "@vitejs/plugin-react": "4.3.2",
+    "autoprefixer": "10.4.19",
     "axios": "1.8.2",
     "bowser": "2.11.0",
     "classnames": "2.5.1",
@@ -27,38 +30,42 @@
     "javascript-time-ago": "2.5.10",
     "localforage": "1.10.0",
     "lodash": "4.17.21",
-    "next": "15.2.3",
+    "next": "15.3.1",
+    "next-themes": "0.4.4",
     "node-rsa": "1.1.1",
+    "postcss": "8.4.39",
     "qrcode": "1.5.3",
-    "react-copy-to-clipboard": "5.1.0",
     "react": "19.0.0",
+    "react-copy-to-clipboard": "5.1.0",
     "react-dom": "19.0.0",
     "react-resizable-panels": "2.0.20",
     "react-textarea-autosize": "8.5.3",
     "recoil": "0.7.7",
     "sass": "1.77.6",
     "sortablejs": "1.15.2",
-    "tailwindcss": "3.4.4",
+    "tailwind-merge": "3.2.0",
+    "tailwindcss": "4.1.4",
     "tailwindcss-animate": "1.0.7",
+    "tw-animate-css": "1.2.5",
     "tributejs": "5.1.3",
     "vite": "5.4.16",
     "vite-plugin-dts": "^4.2.3",
     "vite-plugin-node-polyfills": "^0.22.0",
     "zod": "3.23.8",
     "zod-i18n-map": "2.27.0",
-    "zustand": "4.5.4",
-    "@arco-iconbox/react-clover": "0.0.28",
-    "next-themes": "0.4.4"
+    "zustand": "4.5.4"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "15.1.7",
     "@types/gulp": "4.0.17",
     "@types/lodash": "4.17.6",
     "@types/node": "20.14.9",
     "@types/node-rsa": "1.1.4",
     "@types/qrcode": "1.5.5",
     "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.1",
     "@types/react-copy-to-clipboard": "5.0.7",
+    "@types/react-dom": "19.0.1",
     "@types/unescape-js": "1.0.2",
     "autoprefixer": "10.4.19",
     "chalk": "5.3.0",
@@ -66,8 +73,6 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
     "eslint-plugin-react-hooks": "5.1.0",
-    "@eslint/eslintrc": "^3",
-    "@next/eslint-plugin-next": "15.1.7",
     "find-yarn-workspace-root": "2.0.0",
     "fs-jetpack": "5.1.0",
     "gulp": "5.0.0",
@@ -82,7 +87,7 @@
   "resolutions": {
     "msgpackr": "1.10.1",
     "svgo": "3.0.2",
-    "next": "15.2.3",
+    "next": "15.3.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "@types/react": "19.0.1",
@@ -104,6 +109,9 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"
+    ],
+    "ignoredBuiltDependencies": [
+      "sharp"
     ]
   }
 }

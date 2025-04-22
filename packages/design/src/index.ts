@@ -1,10 +1,10 @@
 // utils
-export * from '@easykit/design/lib';
+export * from './lib';
 
 // hooks
-export * from './components/hooks';
+export * from './hooks';
 
-import "@easykit/design/style/globals.css";
+import "./assets/style/theme.css";
 
 // base
 export {Toaster} from './components/ui/toaster';
