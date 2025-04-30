@@ -4,8 +4,6 @@ export * from './lib';
 // hooks
 export * from './hooks';
 
-import "./assets/style/theme.css";
-
 // base
 export {Toaster} from './components/ui/toaster';
 export {Input} from './components/ui/input';

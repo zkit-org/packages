@@ -2,6 +2,7 @@
 import {ThemeProvider} from "next-themes";
 import {FC, PropsWithChildren} from "react";
 import {ThemeSwitcher} from "@/components/theme-switcher";
+import "@/assets/style/theme.css";
 
 export const MainLayout: FC<PropsWithChildren> = (props) => {
   return <ThemeProvider
