@@ -29,6 +29,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      "@/lib/utils": path.resolve(__dirname, "./src/lib/utils"),
       "@easykit/design": path.resolve(__dirname, "./src/"),
     }
   },

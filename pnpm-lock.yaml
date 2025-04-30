@@ -32,7 +32,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-clover':
         specifier: 0.0.28
-        version: 0.0.28(react@19.0.0)
+        version: 0.0.28
       '@easykit/design':
         specifier: workspace:./packages/design/dist
         version: link:packages/design/dist
@@ -240,7 +240,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-atom-ui':
         specifier: 0.0.4
-        version: 0.0.4(react@19.0.0)
+        version: 0.0.4
       '@emotion/react':
         specifier: 11.11.4
         version: 11.11.4(@types/react@19.0.1)(react@19.0.0)
@@ -541,13 +541,9 @@ packages:
 
   '@arco-iconbox/react-atom-ui@0.0.4':
     resolution: {integrity: sha512-gYBxZRGfVNcGrJu3MGYK6Xtgf9m+oobn/OL8QnqmI6/2zv6JmWwccI+4fMtvDfeh5U7sgfyK9wYh1ftn95Wlpg==}
-    peerDependencies:
-      react: 19.0.0
 
   '@arco-iconbox/react-clover@0.0.28':
     resolution: {integrity: sha512-JZHx/deixnALfrDyOkSPPbOoicSRmZ4o+jmLEbkFxRARRlFRbXzEbq/ktkO6HoNnsp5iS8re+Gsogd5G4NuETA==}
-    peerDependencies:
-      react: 19.0.0
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -5511,13 +5507,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@arco-iconbox/react-atom-ui@0.0.4(react@19.0.0)':
-    dependencies:
-      react: 19.0.0
+  '@arco-iconbox/react-atom-ui@0.0.4': {}
 
-  '@arco-iconbox/react-clover@0.0.28(react@19.0.0)':
-    dependencies:
-      react: 19.0.0
+  '@arco-iconbox/react-clover@0.0.28': {}
 
   '@babel/code-frame@7.26.2':
     dependencies:
