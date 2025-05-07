@@ -98,7 +98,7 @@ export type {AvatarProps} from './components/uix/avatar';
 export {Dropdown} from './components/uix/dropdown';
 export type {DropdownProps, DropdownMenuItemProps} from './components/uix/dropdown';
 export {DataTable} from './components/uix/data-table';
-export type {DataTableProps} from './components/uix/data-table';
+export type {DataTableProps, DataTableColumn} from './components/uix/data-table';
 export {Filters} from './components/uix/filters';
 export type {FiltersProps, FilterItemProps} from './components/uix/filters';
 export {Select} from './components/uix/select';
