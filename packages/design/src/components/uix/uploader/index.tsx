@@ -25,8 +25,8 @@ export type UploaderProps = PropsWithChildren<{
 }> & DropzoneOptions;
 
 const initFile = (file: File & any) => {
-  !file.uid && (file.uid = uuidv4());
-  !file.status && (file.status = "done")
+  file.uid ??= uuidv4();
+  file.status ??= "done";
   return file;
 }
 
@@ -61,7 +61,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
         }),
       ];
       setFiles(newFiles)
-      onChange && onChange(newFiles);
+      onChange?.(newFiles);
     }
   });
 
@@ -89,12 +89,12 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
       file.status = "done";
       file.response = response;
       setFiles([...files]);
-      onChange && onChange([...files]);
+      onChange?.([...files]);
     }).catch((error) => {
       file.status = "error";
       file.error = error;
       setFiles([...files]);
-      onChange && onChange([...files]);
+      onChange?.([...files]);
     });
   }
 
@@ -107,7 +107,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
       }
     });
     setFiles([...files]);
-    onChange && onChange([...files]);
+    onChange?.([...files]);
   }
 
   const renderFile = (file: File & any) => {
@@ -131,9 +131,9 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
         )}
         onClick={() => {
           remove(files, (item: File & any) => item.uid === file.uid);
-          file._controller && file._controller.abort();
+          file._controller?.abort();
           setFiles([...files]);
-          onChange && onChange([...files]);
+          onChange?.([...files]);
         }}
       >
         <Cross2Icon/>

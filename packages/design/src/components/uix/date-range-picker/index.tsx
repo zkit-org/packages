@@ -71,3 +71,5 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     </Popover>
   </div>;
 });
+
+DateRangePicker.displayName = "DateRangePicker";

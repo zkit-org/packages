@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {FC, useContext, useEffect, useState} from "react";
 import {Button} from "@easykit/design/components/uix/button";
 import {ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon} from "@radix-ui/react-icons";
@@ -10,8 +11,8 @@ export interface PaginationProps {
   total: number;
   page: number;
   size: number;
-  onChange?: Function;
-  onSizeChange?: Function;
+  onChange?: (page: number) => void;
+  onSizeChange?: (size: number) => void;
   sizeOptions?: number[];
 }
 
@@ -106,7 +107,7 @@ export const Pagination: FC<PaginationProps> = (props) => {
         value={pageValue} onChange={handleChange} type="text" className={"w-12 h-9 px-2 rounded"}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            onChange && onChange(Number(pageValue));
+            onChange?.(Number(pageValue));
           }
         }}
       />

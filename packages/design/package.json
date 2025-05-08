@@ -1,6 +1,6 @@
 {
   "name": "@easykit/design",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "keywords": [
     "easykit",
     "design",
@@ -16,7 +16,7 @@
     "url": "https://github.com/zkit-org/packages.git"
   },
   "scripts": {
-    "dev": "next dev -p 4000",
+    "dev": "next dev -p 4000 --turbopack",
     "build": "tsc && vite build",
     "build:next": "next build",
     "start": "next start",
@@ -60,6 +60,7 @@
     "is-hotkey": "0.2.0",
     "lodash": "4.17.21",
     "lucide-react": "0.400.0",
+    "next-themes": "0.4.4",
     "rc-tree": "5.12.4",
     "react-day-picker": "8.10.1",
     "react-dropzone": "14.2.3",
@@ -69,11 +70,13 @@
     "slate": "0.103.0",
     "slate-history": "0.100.0",
     "slate-react": "0.106.0",
-    "uuid": "10.0.0"
+    "sonner": "^2.0.3",
+    "uuid": "10.0.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
-    "@types/uuid": "10.0.0",
-    "@tailwindcss/vite": "^4.1.4"
+    "@tailwindcss/vite": "^4.1.4",
+    "@types/uuid": "10.0.0"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

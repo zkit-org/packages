@@ -1,6 +1,6 @@
 import {createContext, FC, PropsWithChildren} from "react";
 import omit from "lodash/omit";
-import {Toaster} from "@easykit/design/components/ui/toaster";
+import {Toaster} from "@easykit/design/components/ui/sonner";
 import zhCN from "@easykit/design/assets/locales/zh-CN";
 
 export interface UIXContextProps {

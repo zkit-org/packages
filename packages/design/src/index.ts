@@ -5,10 +5,9 @@ export * from './lib';
 export * from './hooks';
 
 // base
-export {Toaster} from './components/ui/toaster';
+export {Toaster} from './components/ui/sonner';
 export {Input} from './components/ui/input';
-export type {InputProps} from './components/ui/input';
-export {useToast} from "./components/ui/use-toast"
+export {toast} from "sonner"
 export {ScrollArea, ScrollBar} from "./components/ui/scroll-area";
 export {Tabs, TabsContent, TabsList, TabsTrigger,} from "./components/ui/tabs"
 export {
@@ -44,10 +43,7 @@ export {
   BreadcrumbSeparator,
 } from "./components/ui/breadcrumb"
 export {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-  HoverCardArrow,
+  HoverCard, HoverCardTrigger, HoverCardContent
 } from "./components/ui/hover-card";
 export {
   ResizableHandle,

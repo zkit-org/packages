@@ -31,7 +31,7 @@ export function renderRow<TData>(props: RenderRowProps<TData>): ReactNode {
     return [
       <TableRow key={key}>
         {columns.map((col, index) => {
-          const content = col.render ? col.render(item[col.dataKey], item) : <>{item[col.dataKey]}</>;
+          const content = col.render ? col.render(item[col.dataKey], item) : <>{String(item[col.dataKey])}</>;
           return <TableCell key={col.dataKey as string} className={col.className}>
             {
               index === 0 ? <div className={"flex justify-start items-center"}>

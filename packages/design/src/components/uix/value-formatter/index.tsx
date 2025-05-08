@@ -2,7 +2,7 @@ import {FC, forwardRef, PropsWithChildren} from "react";
 import * as BUILT_IN from '@easykit/design/lib/formatters';
 
 export type Formatters = ([string, any[]] | string)[];
-export type FunctionMap = Record<string, Function>;
+export type FunctionMap = Record<string, (value: any, ...args: any[]) => any>;
 
 const _handles: FunctionMap = {};
 
@@ -12,6 +12,7 @@ export const register = (handles: FunctionMap) => {
 
 export const formatValue = (v: any, formatters: string[], all?: FunctionMap) => {
   const merged: any = {...BUILT_IN, ..._handles, ...(all ?? {})};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fallback = ((v: any, ...p: any[]) => (v));
   let params: any[] = [];
 
@@ -27,7 +28,7 @@ export const formatValue = (v: any, formatters: string[], all?: FunctionMap) => 
     }
     try {
       v = call(v, ...params);
-    } catch (e) {
+    } catch {
       console.log('formatter error', filter);
     }
   });

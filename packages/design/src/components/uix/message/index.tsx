@@ -1,21 +1,21 @@
-import {useToast} from "@easykit/design/components/ui/use-toast"
+import {toast} from "sonner"
 import {useMemo} from "react";
 
 export const useMessage = () => {
-  const {toast} = useToast();
   return useMemo(() => {
     return {
       success: (message?: string) => {
-        toast({
-          description: message,
-        })
+        toast.success(message)
       },
       error: (message?: string) => {
-        toast({
-          variant: "destructive",
-          description: message,
-        })
+        toast.error(message)
+      },
+      warning: (message?: string) => {
+        toast.warning(message)
+      },
+      info: (message?: string) => {
+        toast.info(message)
       }
     }
-  }, [toast])
+  }, [])
 };

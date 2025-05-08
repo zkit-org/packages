@@ -1,4 +1,4 @@
-import {ElementRef, forwardRef, ComponentPropsWithoutRef, useRef, useMemo, useCallback, ReactNode} from "react";
+import {ComponentRef, forwardRef, ComponentPropsWithoutRef, useMemo, useCallback, ReactNode} from "react";
 import {Checkbox as UICheckbox} from "@easykit/design/components/ui/checkbox";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import {cn} from "@easykit/design/lib";
@@ -15,7 +15,7 @@ export type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof CheckboxPrimiti
 }
 
 export const Checkbox = forwardRef<
-  ElementRef<typeof UICheckbox>,
+  ComponentRef<typeof UICheckbox>,
   CheckboxProps
 >((props, ref) => {
   const {
@@ -67,3 +67,5 @@ export const Checkbox = forwardRef<
     <span>{content}</span>
   </label>
 })
+
+Checkbox.displayName = "Checkbox";

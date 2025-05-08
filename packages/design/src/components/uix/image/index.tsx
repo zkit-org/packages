@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import {ImgHTMLAttributes, FC} from "react";
 
-export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-}
+export type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
 
 export const Image: FC<ImageProps> = (props) => {
   const {

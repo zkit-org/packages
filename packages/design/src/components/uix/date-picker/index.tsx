@@ -20,6 +20,7 @@ export type DatePickerProps = {
   allowClear?: boolean,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, ref) => {
   const {
     preset = false,
@@ -93,3 +94,5 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, re
     </PopoverContent>
   </Popover>;
 });
+
+DatePicker.displayName = "DatePicker";

@@ -1,6 +1,6 @@
 import {Popover, PopoverContent, PopoverTrigger} from "@easykit/design/components/ui/popover";
 import {Button} from "@easykit/design/components/ui/button";
-import {FC, forwardRef, PropsWithRef, ReactNode, useContext, useEffect, useMemo, useRef, useState} from "react";
+import {FC, forwardRef, ComponentPropsWithRef, ReactNode, useContext, useEffect, useMemo, useRef, useState} from "react";
 import {CaretSortIcon, CheckIcon, Cross2Icon, PlusCircledIcon} from "@radix-ui/react-icons";
 import {
   Command,
@@ -27,7 +27,7 @@ export interface ComboSelectOptionProps<Data> {
 
 type SearchFunction = (value: string) => Promise<void> | void;
 
-export interface ComboSelectProps extends PropsWithRef<any> {
+export interface ComboSelectProps extends ComponentPropsWithRef<any> {
   options?: ComboSelectOptionProps<any>[];
   placeholder?: string;
   searchPlaceholder?: string;
@@ -52,7 +52,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
     placeholder,
     searchPlaceholder,
     className,
-    onChange = (v: string | string[]) => {
+    onChange = () => {
     },
     value,
     loading = false,
@@ -60,13 +60,13 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
     clearable = true,
     limit = Number.MAX_VALUE,
     search = false,
-    onSearch = async (value: string) => {
+    onSearch = async () => {
     }
   } = props;
 
   const config = useContext(UIXContext);
   const empty = props.empty || get(config.locale, "ComboSelect.empty");
-  const clearText = props.clearText || get(config.locale, "ComboSelect.clearText");
+  // const clearText = props.clearText || get(config.locale, "ComboSelect.clearText");
 
   const [open, setOpen] = useState(false)
   const containerRef = useRef(null);
@@ -161,7 +161,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, ref) => {
               return <CommandItem
                 key={option.value}
                 value={option.value}
-                onSelect={(cv) => {
+                onSelect={() => {
                   const currentValue = option.value;
                   if (multiple) {
                     if (isSelected) {

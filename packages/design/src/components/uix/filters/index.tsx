@@ -59,7 +59,7 @@ export const Filters: FC<FiltersProps> = (props) => {
   const resetText = props.resetText || get(config.locale, "Filters.resetText");
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    load && load({
+    load?.({
       ...(data || {}),
       page: 1
     }).then();
@@ -74,7 +74,7 @@ export const Filters: FC<FiltersProps> = (props) => {
           items && items.length ? <div className={"m-2 my-1 flex justify-start items-center flex-1"}>
             <Button disabled={loading} type={"submit"}>{searchText}</Button>
             <Button disabled={loading} type={"reset"} className={"ml-2"} variant={"secondary"} onClick={() => {
-              load && load({
+              load?.({
                 ...(defaultValues || {}),
                 page: 1
               }).then();

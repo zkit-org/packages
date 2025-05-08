@@ -15,6 +15,7 @@ export default defineConfig({
         "./src/components/uix/**/*",
         "./src/assets/**/*",
         "./src/lib/**/*",
+        "./src/hooks/**/*",
         "./src/index.ts",
         "types.d.ts"
       ]
@@ -29,6 +30,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      "@": path.resolve(__dirname, "./src"),
       "@/lib/utils": path.resolve(__dirname, "./src/lib/utils"),
       "@easykit/design": path.resolve(__dirname, "./src/"),
     }
