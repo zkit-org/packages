@@ -48,9 +48,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
       "w-[180px]",
       className
     )}>
-      <SelectValue placeholder={placeholder}>
-        {options.find((option) => option.value === value)?.label}
-      </SelectValue>
+      <SelectValue placeholder={placeholder} />
     </SelectTrigger>
     <SelectContent
       side={props.side}

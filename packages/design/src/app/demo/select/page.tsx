@@ -5,7 +5,10 @@ import {Select} from "@easykit/design";
 const Page = () => {
   return <div className={"p-4"}>
     <Select
-      placeholder="Select a fruit"  
+      placeholder="Select a fruit"
+      onChange={(value) => {
+        console.log(value);
+      }}
       options={[
         {
           label: "Apple",
