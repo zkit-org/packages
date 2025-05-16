@@ -42,7 +42,7 @@ export const Card: FC<CardProps> = (props) => {
     }
     <CardContent
       className={cn(
-        "p-6",
+        "px-6",
         contentClassName,
       )}
     >
