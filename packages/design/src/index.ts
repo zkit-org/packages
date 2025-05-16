@@ -62,17 +62,14 @@ export {
 } from "./components/ui/sheet"
 export {Skeleton} from "./components/ui/skeleton";
 export {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "./components/ui/alert";
-export {
   RadioGroup,
   RadioGroupItem,
 } from "./components/ui/radio-group";
 export * from "./components/ui/navigation-menu";
 
 // extend
+export {Alert} from "./components/uix/alert";
+export type {AlertProps} from './components/uix/alert';
 export {Divider} from "./components/uix/divider";
 export type {DividerProps} from './components/uix/divider';
 export {Button} from './components/uix/button';
@@ -125,8 +122,8 @@ export {Pagination} from "./components/uix/pagination";
 export type {PaginationProps} from "./components/uix/pagination";
 export {ConfigProvider} from "./components/uix/config-provider";
 export type {ConfigProviderProps} from "./components/uix/config-provider";
-export {useAlert} from "./components/uix/alert";
-export type {ConfirmProps} from "./components/uix/alert";
+export {useAlert} from "./components/uix/alert-dialog";
+export type {ConfirmProps} from "./components/uix/alert-dialog";
 export {DateRangePicker} from "./components/uix/date-range-picker";
 export type {DateRangePickerProps} from "./components/uix/date-range-picker";
 export {Uploader} from "./components/uix/uploader";

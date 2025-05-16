@@ -1,7 +1,7 @@
 'use client';
 
 import * as z from "zod";
-import {Button, Form, FormItem, Select} from '@easykit/design';
+import {Alert, Button, Form, FormItem, Select} from '@easykit/design';
 import {useCallback, useRef} from 'react';
 import {UseFormReturn} from 'react-hook-form';
 
@@ -27,7 +27,7 @@ const Page = () => {
         projectId: "1",
       }}
     >
-      <FormItem name="teamId" label={"团队"}>
+      <FormItem name="teamId" label={"团队"} description="请选择团队">
         <Select
           placeholder={"请选择"}
           options={[
@@ -40,11 +40,12 @@ const Page = () => {
               value: "2",
             }
           ]}
-          onChange={(e) => {
+          onChange={() => {
             formRef.current?.setValue("projectId", "");
           }}
         />
       </FormItem>
+      <Alert className={"bg-secondary text-secondary-foreground"} description="将会同时创建名为“默认项目”的初始项目。"/>
       <FormItem name="projectId" label={"团队"}>
         <Select
           placeholder={"请选择"}

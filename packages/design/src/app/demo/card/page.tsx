@@ -6,7 +6,7 @@ const Page = () => {
   return (
     <div className="p-4">
       <Card title="Card Title" description="Card Description">
-        内容哦
+        Content Demo
       </Card>
     </div>
   );
