@@ -1,8 +1,8 @@
 import { Alert as UIAlert, AlertDescription as UIAlertDescription, AlertTitle as UIAlertTitle } from "../../ui/alert";
 
 export type AlertProps = React.ComponentProps<typeof UIAlert> & {
-  title?: string;
-  description?: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   icon?: React.ReactNode;
   children?: React.ReactNode;
   titleClassName?: string;
