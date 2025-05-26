@@ -1,6 +1,7 @@
 export const dynamic = 'force-static'
 
-export async function GET() {
+// biome-ignore lint/suspicious/useAwait: <explanation>
+export async function GET() { 
   return Response.json([
     {
       label: 'Option 1',

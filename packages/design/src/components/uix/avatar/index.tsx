@@ -1,9 +1,5 @@
-import * as React from 'react';
-import {
-  Avatar as UIAvatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@easykit/design/components/ui/avatar"
+import { AvatarFallback, AvatarImage, Avatar as UIAvatar } from '@easykit/design/components/ui/avatar'
+import type * as React from 'react'
 import {useMemo} from "react";
 
 export interface AvatarProps extends React.PropsWithChildren {

@@ -1,8 +1,10 @@
 // utils
-export * from './lib';
+// biome-ignore lint/performance/noReExportAll: <explanation>
+export * from './lib'
 
 // hooks
-export * from './hooks';
+// biome-ignore lint/performance/noReExportAll: <explanation>
+export * from './hooks'
 
 // base
 export {Toaster} from './components/ui/sonner';
@@ -13,7 +15,8 @@ export {Tabs, TabsContent, TabsList, TabsTrigger,} from "./components/ui/tabs"
 export {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter, TableCaption
 } from "./components/ui/table";
-export * from "./components/ui/dropdown-menu";
+// biome-ignore lint/performance/noReExportAll: <explanation>
+export * from './components/ui/dropdown-menu'
 export {Separator} from "./components/ui/separator";
 export {Textarea} from "./components/ui/textarea";
 export {Badge} from "./components/ui/badge";
@@ -65,7 +68,8 @@ export {
   RadioGroup,
   RadioGroupItem,
 } from "./components/ui/radio-group";
-export * from "./components/ui/navigation-menu";
+// biome-ignore lint/performance/noReExportAll: <explanation>
+export * from './components/ui/navigation-menu'
 
 // extend
 export {Alert} from "./components/uix/alert";

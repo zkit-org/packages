@@ -1,8 +1,8 @@
-import {Button as UIButton} from "@easykit/design/components/ui/button";
-import {cn} from '@easykit/design/lib';
+import { Button as UIButton } from '@easykit/design/components/ui/button'
 import {Spin} from "@easykit/design/components/uix/spin";
+import { cn } from '@easykit/design/lib'
 import {forwardRef} from "react";
-import {ComponentProps} from "react";
+import type { ComponentProps } from 'react'
 export interface ButtonProps extends ComponentProps<typeof UIButton> {
   loading?: boolean;
   long?: boolean;

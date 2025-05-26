@@ -1,6 +1,6 @@
-import {RadioGroup as UIRadioGroup, RadioGroupItem} from "@easykit/design/components/ui/radio-group";
 import {Label} from "@easykit/design/components/ui/label";
-import {FC, forwardRef, PropsWithChildren, useState} from "react";
+import { RadioGroupItem, RadioGroup as UIRadioGroup } from '@easykit/design/components/ui/radio-group'
+import { type FC, type PropsWithChildren, forwardRef, useState } from 'react'
 
 export interface SimpleRadioGroupOptionProps {
   label: string;
@@ -13,14 +13,8 @@ export interface SimpleRadioGroupProps extends PropsWithChildren {
   options?: SimpleRadioGroupOptionProps[];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,react/display-name
 export const SimpleRadioGroup: FC<SimpleRadioGroupProps> = forwardRef((props, ref) => {
-  const {
-    options = [],
-    value,
-    onChange = () => {
-    }
-  } = props;
+  const { options = [], value, onChange } = props
 
   const [labelKey] = useState(Date.now());
 

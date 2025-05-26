@@ -1,56 +1,59 @@
-import {FC, forwardRef, PropsWithChildren} from "react";
-import * as BUILT_IN from '@easykit/design/lib/formatters';
+// biome-ignore lint/style/noNamespaceImport: <explanation>
+import * as BUILT_IN from '@easykit/design/lib/formatters'
+import { type FC, type PropsWithChildren, forwardRef } from 'react'
 
-export type Formatters = ([string, any[]] | string)[];
-export type FunctionMap = Record<string, (value: any, ...args: any[]) => any>;
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type Formatters = ([string, any[]] | string)[]
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type FunctionMap = Record<string, (value: any, ...args: any[]) => any>
 
-const _handles: FunctionMap = {};
+const _handles: FunctionMap = {}
 
 export const register = (handles: FunctionMap) => {
-  Object.assign(_handles, handles);
+  Object.assign(_handles, handles)
 }
 
-export const formatValue = (v: any, formatters: string[], all?: FunctionMap) => {
-  const merged: any = {...BUILT_IN, ..._handles, ...(all ?? {})};
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const fallback = ((v: any, ...p: any[]) => (v));
-  let params: any[] = [];
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const formatValue = (v: any, formatters: Formatters, all?: FunctionMap) => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const merged: any = { ...BUILT_IN, ..._handles, ...(all ?? {}) }
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const fallback = (v: any, ...p: any[]) => v
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  let params: any[] = []
+  let result = v
 
-  formatters.forEach((filter: any) => {
-    let call = fallback;
+  for (const filter of formatters) {
+    let call = fallback
     if (typeof filter === 'string') {
-      call = merged[filter] || fallback;
+      call = merged[filter] || fallback
     } else if (typeof filter === 'function') {
-      call = filter;
+      call = filter
     } else if (typeof filter === 'object' && filter.length) {
-      call = merged[filter[0]] || fallback;
-      params = filter[1];
+      call = merged[filter[0]] || fallback
+      params = filter[1]
     }
     try {
-      v = call(v, ...params);
+      result = call(result, ...params)
     } catch {
-      console.log('formatter error', filter);
+      console.log('formatter error', filter)
     }
-  });
-  return v;
+  }
+  return result
 }
 
 export interface ValueFormatterProps extends PropsWithChildren {
-  value?: any;
-  formatters?: any[];
-  handles?: FunctionMap;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  value?: any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  formatters?: any[]
+  handles?: FunctionMap
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,react/display-name
-export const ValueFormatter: FC<ValueFormatterProps> = forwardRef((props, ref) => {
-  const {
-    handles,
-    formatters = [],
-    value,
-    children
-  } = props;
-  let v = value === 0 ? value : (value || children);
-  if (!formatters.includes("defaultValue")) formatters.push('defaultValue');
-  v = formatValue(v, formatters, handles);
+export const ValueFormatter: FC<ValueFormatterProps> = forwardRef((props, _ref) => {
+  const { handles, formatters = [], value, children } = props
+  let v = value === 0 ? value : value || children
+  if (!formatters.includes('defaultValue')) formatters.push('defaultValue')
+  v = formatValue(v, formatters, handles)
   return <>{v}</>
 })

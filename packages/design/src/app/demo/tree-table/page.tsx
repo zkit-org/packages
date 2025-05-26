@@ -3,11 +3,11 @@
 import {TreeTable} from "@easykit/design";
 
 type Invoice = {
-  invoice: string;
-  paymentStatus: string;
-  totalAmount: string;
-  paymentMethod: string;
-  children?: Invoice[];
+  invoice: string
+  paymentStatus: string
+  totalAmount: string
+  paymentMethod: string
+  children?: Invoice[]
 }
 
 const invoices: Invoice[] = [
@@ -68,21 +68,23 @@ const invoices: Invoice[] = [
 ]
 
 const Page = () => {
-  return <TreeTable<Invoice>
-    rowKey={"invoice"}
-    showHeader={false}
-    data={invoices}
-    columns={[
-      {
-        title: "No.",
-        dataKey: "invoice",
-      },
-      {
-        title: "Payment Status",
-        dataKey: "paymentStatus",
-      }
-    ]}
-  />
+  return (
+    <TreeTable<Invoice>
+      rowKey="invoice"
+      showHeader={false}
+      data={invoices}
+      columns={[
+        {
+          title: 'No.',
+          dataKey: 'invoice',
+        },
+        {
+          title: 'Payment Status',
+          dataKey: 'paymentStatus',
+        },
+      ]}
+    />
+  )
 }
 
 export default Page;

@@ -1,22 +1,26 @@
 import {
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialog as UIAlertDialog,
-  AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
-} from "@easykit/design/components/ui/alert-dialog";
-import {FC, ReactNode, useContext, useMemo, useState} from "react";
-import {render as ReactDOMRender} from '@easykit/design/lib';
+} from '@easykit/design/components/ui/alert-dialog'
 import {Button} from "@easykit/design/components/uix/button";
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import { render as ReactDOMRender } from '@easykit/design/lib'
 import get from "lodash/get"
+import { type FC, type ReactNode, useContext, useMemo, useState } from 'react'
 
 export interface ConfirmProps {
-  title: ReactNode;
-  description: ReactNode;
-  cancelText?: string;
-  okText?: string;
-  onOk?: () => boolean | void | Promise<boolean | void>;
-  onCancel?: () => void;
-  open?: boolean;
-  confirmLoading?: boolean;
+  title: ReactNode
+  description: ReactNode
+  cancelText?: string
+  okText?: string
+  onOk?: () => boolean | undefined | Promise<boolean | undefined>
+  onCancel?: () => void
+  open?: boolean
+  confirmLoading?: boolean
 }
 
 const AlertDialog: FC<ConfirmProps> = (props) => {
@@ -34,49 +38,51 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
   const [open, setOpen] = useState(props.open);
   const [loading, setLoading] = useState(false);
 
-  return <UIAlertDialog {...props} open={open}>
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>{title}</AlertDialogTitle>
-        <AlertDialogDescription>{description}</AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <Button
-          variant={"outline"}
-          onClick={() => {
-            setOpen(false);
-            onCancel?.();
-          }}
-        >
-          {cancelText}
-        </Button>
-        <Button
-          loading={loading}
-          onClick={async () => {
-            setLoading(true);
-            const result = onOk?.();
-            let value: boolean | void;
-            if (result instanceof Promise) {
-              value = (await result);
-              if (typeof value === 'undefined') {
-                value = true;
+  return (
+    <UIAlertDialog {...props} open={open}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setOpen(false)
+              onCancel?.()
+            }}
+          >
+            {cancelText}
+          </Button>
+          <Button
+            loading={loading}
+            onClick={async () => {
+              setLoading(true)
+              const result = onOk?.()
+              let value: boolean | undefined
+              if (result instanceof Promise) {
+                value = await result
+                if (typeof value === 'undefined') {
+                  value = true
+                }
+              } else if (typeof result === 'undefined') {
+                value = true
+              } else {
+                value = result
               }
-            } else if (typeof result === 'undefined') {
-              value = true;
-            } else {
-              value = result;
-            }
-            setLoading(false);
-            if (value) {
-              setOpen(false);
-            }
-          }}
-        >
-          {okText}
-        </Button>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </UIAlertDialog>
+              setLoading(false)
+              if (value) {
+                setOpen(false)
+              }
+            }}
+          >
+            {okText}
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </UIAlertDialog>
+  )
 }
 
 export const useAlert = () => {
@@ -95,7 +101,7 @@ export const useAlert = () => {
           }, 200);
         }
         const onCancel = () => {
-          close();
+          close()
           props.onCancel?.();
         }
         root = ReactDOMRender(<AlertDialog {...props} open={true} onCancel={onCancel}/>, div);

@@ -1,12 +1,12 @@
-import {FC, HTMLAttributes, PropsWithChildren} from "react";
 import classNames from "classnames";
+import type { FC, HTMLAttributes, PropsWithChildren } from 'react'
 
 export type ActionProps = PropsWithChildren<HTMLAttributes<HTMLButtonElement>> & {
-  theme?: 'dark' | 'light';
-  active?: boolean;
-  disabled?: boolean;
-  elType?: 'button' | 'span';
-};
+  theme?: 'dark' | 'light'
+  active?: boolean
+  disabled?: boolean
+  elType?: 'button' | 'span'
+}
 
 export const Action: FC<ActionProps> = (props) => {
   const {
@@ -33,14 +33,11 @@ export const Action: FC<ActionProps> = (props) => {
     )
   }
 
-  return elType === "button" ? <button
-    {...elProps}
-    type={"button"}
-  >
-    {props.children}
-  </button> : <span
-    {...elProps}
-  >
-    {props.children}
-  </span>
+  return elType === 'button' ? (
+    <button {...elProps} type="button">
+      {props.children}
+    </button>
+  ) : (
+    <span {...elProps}>{props.children}</span>
+  )
 }

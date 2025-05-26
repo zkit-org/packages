@@ -1,7 +1,7 @@
-import {FC, forwardRef, ReactNode, useState} from "react";
-import {Checkbox} from "@easykit/design/components/uix/checkbox";
-import remove from 'lodash/remove';
+import { Checkbox } from '@easykit/design/components/uix/checkbox'
 import classNames from "classnames";
+import remove from 'lodash/remove'
+import { type FC, type ReactNode, forwardRef, useState } from 'react'
 
 export interface CheckboxGroupOptionProps {
   label: ReactNode;
@@ -18,43 +18,42 @@ export interface CheckboxGroupProps {
   className?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,react/display-name
 export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => {
-  const {
-    options = [],
-    itemClassName,
-    className,
-    checkboxClassName
-  } = props;
+  const { options = [], itemClassName, className, checkboxClassName } = props
 
-  const [checkedValues, setCheckedValues] = useState<string[]>(props.value || []);
+  const [checkedValues, setCheckedValues] = useState<string[]>(props.value || [])
 
   const onCheckedChange = (value: string, checked: boolean) => {
     if (checked) {
       checkedValues.push(value)
     } else {
-      remove(checkedValues, (v) => v === value);
+      remove(checkedValues, (v) => v === value)
     }
-    setCheckedValues([...checkedValues]);
-    props.onChange?.([...checkedValues]);
+    setCheckedValues([...checkedValues])
+    props.onChange?.([...checkedValues])
   }
 
-  return <div className={classNames("space-x-2 space-y-2 flex flex-wrap justify-start items-center -m-2", className)}>
-    <span/>
-    {
-      options.map((option) => {
-        return <label
-          key={option.value}
-          className={classNames("flex justify-start items-center", "ml-1 space-x-1", itemClassName)}
-        >
-          <Checkbox
-            className={checkboxClassName}
-            checked={checkedValues.includes(option.value)}
-            onCheckedChange={(checked: boolean) => onCheckedChange(option.value, checked)}
-          />
-          <span>{option.label}</span>
-        </label>
-      })
-    }
-  </div>
+  return (
+    <div className={classNames('-m-2 flex flex-wrap items-center justify-start space-x-2 space-y-2', className)}>
+      <span />
+      {options.map((option) => {
+        const id = `checkbox-group-${option.value}`
+        return (
+          <label
+            key={option.value}
+            htmlFor={id}
+            className={classNames('flex items-center justify-start', 'ml-1 space-x-1', itemClassName)}
+          >
+            <Checkbox
+              id={id}
+              className={checkboxClassName}
+              checked={checkedValues.includes(option.value)}
+              onCheckedChange={(checked: boolean) => onCheckedChange(option.value, checked)}
+            />
+            <span>{option.label}</span>
+          </label>
+        )
+      })}
+    </div>
+  )
 });

@@ -1,13 +1,15 @@
 import {
-  Dialog as UIDialog,
-  DialogDescription, DialogFooter,
-  DialogHeader, DialogContent,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-} from "@easykit/design/components/ui/dialog";
-import {FC, PropsWithChildren} from "react";
-import * as React from "react";
-import {cn} from "@easykit/design/lib";
+  Dialog as UIDialog,
+} from '@easykit/design/components/ui/dialog'
 import {Spin} from "@easykit/design/components/uix/spin";
+import { cn } from '@easykit/design/lib'
+import type { FC, PropsWithChildren } from 'react'
+import type * as React from 'react'
 
 export type EventCallback = () => void;
 
@@ -27,8 +29,7 @@ export interface DialogProps extends PropsWithChildren {
 export const Dialog: FC<DialogProps> = (props) => {
   const {
     visible,
-    onCancel = () => {
-    },
+    onCancel,
     maskClosable = true,
     className,
     closable = true,
@@ -36,36 +37,34 @@ export const Dialog: FC<DialogProps> = (props) => {
     description,
     footer,
     loading = false,
-  } = props;
+  } = props
 
-  return <UIDialog open={visible}>
-    <DialogContent
-      autoFocus={false}
-      showClose={closable}
-      onCloseClick={onCancel}
-      onOverlayClick={maskClosable ? onCancel : () => {}}
-      onClick={(e) => e.stopPropagation()}
-      className={cn(className)}
-      aria-describedby={undefined}
-    >
-      {
-        title || description ? <DialogHeader>
-          {title ? <DialogTitle>{title}</DialogTitle> : null}
-          {description ? <DialogDescription>{description}</DialogDescription> : null}
-        </DialogHeader> : null
-      }
-      <div className={"my-2"}>
-        {props.children}
-      </div>
-      {
-        footer ? <DialogFooter>
-          {footer}
-        </DialogFooter> : null
-      }
-      {loading ? <div className={cn(
-        "absolute top-0 bottom-0 right-0 left-0 bg-white/50",
-        "flex justify-center items-center"
-      )}><Spin/></div> : null}
-    </DialogContent>
-  </UIDialog>
+  return (
+    <UIDialog open={visible}>
+      <DialogContent
+        autoFocus={false}
+        showClose={closable}
+        onCloseClick={onCancel}
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+        onOverlayClick={maskClosable ? onCancel : () => {}}
+        onClick={(e) => e.stopPropagation()}
+        className={cn(className)}
+        aria-describedby={undefined}
+      >
+        {title || description ? (
+          <DialogHeader>
+            {title ? <DialogTitle>{title}</DialogTitle> : null}
+            {description ? <DialogDescription>{description}</DialogDescription> : null}
+          </DialogHeader>
+        ) : null}
+        <div className="my-2">{props.children}</div>
+        {footer ? <DialogFooter>{footer}</DialogFooter> : null}
+        {loading ? (
+          <div className={cn('absolute top-0 right-0 bottom-0 left-0 bg-white/50', 'flex items-center justify-center')}>
+            <Spin />
+          </div>
+        ) : null}
+      </DialogContent>
+    </UIDialog>
+  )
 }

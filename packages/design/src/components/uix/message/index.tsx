@@ -1,5 +1,5 @@
-import {toast} from "sonner"
 import {useMemo} from "react";
+import { toast } from 'sonner'
 
 export const useMessage = () => {
   return useMemo(() => {
@@ -8,7 +8,7 @@ export const useMessage = () => {
         toast.success(message)
       },
       error: (message?: string) => {
-        toast.error(message)
+        toast.error(message) 
       },
       warning: (message?: string) => {
         toast.warning(message)

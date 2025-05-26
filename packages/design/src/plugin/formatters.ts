@@ -1,7 +1,8 @@
 import {register} from "@easykit/design";
 
 register({
-  join: (v: any[], s = "|") => {
-    return v.join(s);
-  }
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  join: (v: any[], s = '|') => {
+    return v.join(s)
+  },
 })

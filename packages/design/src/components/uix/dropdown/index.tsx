@@ -1,6 +1,6 @@
-import {PropsWithChildren, FC, ReactNode, MouseEvent} from "react";
 import {
-  DropdownMenu, DropdownMenuCheckboxItem,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -11,8 +11,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@easykit/design/components/ui/dropdown-menu"
+} from '@easykit/design/components/ui/dropdown-menu'
 import {cn} from "@easykit/design/lib";
+import type { FC, MouseEvent, PropsWithChildren, ReactNode } from 'react'
 
 type Align = "start" | "center" | "end";
 
@@ -51,69 +52,53 @@ type Callback = {
 }
 
 const renderItem = (item: DropdownMenuItemProps, call: Callback) => {
-  const clickCall = item.onItemClick || call.onItemClick;
-  const checkedCall = item.onCheckedChange || call.onCheckedChange;
-  if (item.type === "label") {
+  const clickCall = item.onItemClick || call.onItemClick
+  const checkedCall = item.onCheckedChange || call.onCheckedChange
+  if (item.type === 'label') {
     return <DropdownMenuLabel key={item.id}>{item.label}</DropdownMenuLabel>
-  } else if (item.type === "separator") {
-    return <DropdownMenuSeparator key={item.id}/>
-  } else if (item.type === "checkbox") {
-    return <DropdownMenuCheckboxItem
-      key={item.id}
-      className="capitalize"
-      checked={item.checked}
-      onCheckedChange={(value) => checkedCall?.(item, value)}
-    >
-      {item.label}
-    </DropdownMenuCheckboxItem>
-  } else {
-    if (item.children && item.children.length) {
-      return <DropdownMenuSub key={item.id}>
+  }
+  if (item.type === 'separator') {
+    return <DropdownMenuSeparator key={item.id} />
+  }
+  if (item.type === 'checkbox') {
+    return (
+      <DropdownMenuCheckboxItem
+        key={item.id}
+        className="capitalize"
+        checked={item.checked}
+        onCheckedChange={(value) => checkedCall?.(item, value)}
+      >
+        {item.label}
+      </DropdownMenuCheckboxItem>
+    )
+  }
+  if (item.children?.length) {
+    return (
+      <DropdownMenuSub key={item.id}>
         <DropdownMenuSubTrigger>{item.label}</DropdownMenuSubTrigger>
         <DropdownMenuPortal>
-          <DropdownMenuSubContent>
-            {item.children.map((child) => renderItem(child, call))}
-          </DropdownMenuSubContent>
+          <DropdownMenuSubContent>{item.children.map((child) => renderItem(child, call))}</DropdownMenuSubContent>
         </DropdownMenuPortal>
       </DropdownMenuSub>
-    } else {
-      return <DropdownMenuItem onClick={(e) => clickCall?.(item, e)} key={item.id} disabled={item.disabled}>
-        {item.label}
-        {item.shortcut && <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>}
-      </DropdownMenuItem>
-    }
+    )
   }
+  return (
+    <DropdownMenuItem onClick={(e) => clickCall?.(item, e)} key={item.id} disabled={item.disabled}>
+      {item.label}
+      {item.shortcut && <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>}
+    </DropdownMenuItem>
+  )
 }
 
 export const Dropdown: FC<DropdownProps> = (props) => {
-  const {
-    items = [],
-    onItemClick = () => {
-    },
-    onCheckedChange = () => {
-    },
-    align,
-    asChild,
-    hideOnEmpty = true,
-    open,
-    modal = false,
-  } = props;
-  if (!(items && items.length) && hideOnEmpty) return null;
-  return <DropdownMenu
-    modal={modal}
-    open={open}
-    onOpenChange={props.onOpenChange}
-  >
-    <DropdownMenuTrigger asChild={asChild}>
-      {props.children}
-    </DropdownMenuTrigger>
-    <DropdownMenuContent
-      align={align}
-      className={cn(
-        props.className
-      )}
-    >
-      {items.filter((item) => !item.hidden).map((child) => renderItem(child, {onItemClick, onCheckedChange}))}
-    </DropdownMenuContent>
-  </DropdownMenu>;
+  const { items = [], onItemClick, onCheckedChange, align, asChild, hideOnEmpty = true, open, modal = false } = props
+  if (!items?.length && hideOnEmpty) return null
+  return (
+    <DropdownMenu modal={modal} open={open} onOpenChange={props.onOpenChange}>
+      <DropdownMenuTrigger asChild={asChild}>{props.children}</DropdownMenuTrigger>
+      <DropdownMenuContent align={align} className={cn(props.className)}>
+        {items.filter((item) => !item.hidden).map((child) => renderItem(child, { onItemClick, onCheckedChange }))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }

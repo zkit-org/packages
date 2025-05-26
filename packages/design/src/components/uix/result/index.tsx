@@ -1,13 +1,13 @@
-import {Cross2Icon, CheckIcon} from "@radix-ui/react-icons";
-import {PropsWithChildren, FC, ReactNode} from "react";
 import {cn} from "@easykit/design/lib";
-import {InfoCircledIcon, ExclamationTriangleIcon} from "@radix-ui/react-icons";
+import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
+import { ExclamationTriangleIcon, InfoCircledIcon } from '@radix-ui/react-icons'
+import type { FC, PropsWithChildren, ReactNode } from 'react'
 
 export interface ResultProps extends PropsWithChildren {
-  status: 'success' | 'error' | 'info' | 'warning';
-  title?: string;
-  subTitle?: string;
-  extra?: ReactNode;
+  status: 'success' | 'error' | 'info' | 'warning'
+  title?: string
+  subTitle?: string
+  extra?: ReactNode
 }
 
 const ICON_MAP = {
@@ -27,20 +27,24 @@ export const Result: FC<ResultProps> = (props) => {
 
   const Icon = ICON_MAP[status];
 
-  return <div className={"flex justify-center items-center flex-col"}>
-    {
-      Icon ? <div className={cn(
-        'w-12 h-12 flex justify-center items-center rounded-full',
-        status === 'success' ? 'bg-success text-success-foreground' : null,
-        status === 'error' ? 'bg-error text-error-foreground' : null,
-        status === 'info' ? 'bg-secondary text-secondary-foreground' : null,
-        status === 'warning' ? 'bg-warning text-warning-foreground' : null,
-      )}>
-        <Icon className={"w-6 h-6"}/>
-      </div> : null
-    }
-    {title ? <div className={"text-lg mt-4"}>{title}</div> : null}
-    {subTitle ? <div className={"mt-4 text-gray-500"}>{subTitle}</div> : null}
-    {extra ? <div className={"mt-4"}>{extra}</div> : null}
-  </div>
+  return (
+    <div className="flex flex-col items-center justify-center">
+      {Icon ? (
+        <div
+          className={cn(
+            'flex h-12 w-12 items-center justify-center rounded-full',
+            status === 'success' ? 'bg-success text-success-foreground' : null,
+            status === 'error' ? 'bg-error text-error-foreground' : null,
+            status === 'info' ? 'bg-secondary text-secondary-foreground' : null,
+            status === 'warning' ? 'bg-warning text-warning-foreground' : null
+          )}
+        >
+          <Icon className="h-6 w-6" />
+        </div>
+      ) : null}
+      {title ? <div className="mt-4 text-lg">{title}</div> : null}
+      {subTitle ? <div className="mt-4 text-gray-500">{subTitle}</div> : null}
+      {extra ? <div className="mt-4">{extra}</div> : null}
+    </div>
+  )
 };

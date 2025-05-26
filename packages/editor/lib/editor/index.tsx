@@ -21,7 +21,6 @@ export type EditorRef = {
   editor: EditorInstance | null;
 }
 
-// eslint-disable-next-line react/display-name
 export const Editor = forwardRef<EditorRef, EditorProps>((props, ref) => {
   const {
     limit,

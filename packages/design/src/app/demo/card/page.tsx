@@ -9,7 +9,7 @@ const Page = () => {
         Content Demo
       </Card>
     </div>
-  );
+  )
 };
 
 export default Page;

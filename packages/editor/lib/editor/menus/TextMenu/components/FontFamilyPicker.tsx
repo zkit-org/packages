@@ -36,7 +36,7 @@ const getFontFamilies = () =>
   getFontFamilyGroups().flatMap(group => [group.options]).flat()
 
 export type FontFamilyPickerProps = {
-  onChange: (value: string) => void // eslint-disable-line no-unused-vars
+  onChange: (value: string) => void
   value: string
 }
 

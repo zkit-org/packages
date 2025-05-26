@@ -1,13 +1,14 @@
+import type { ComponentProps, ReactNode } from 'react'
 import { Alert as UIAlert, AlertDescription as UIAlertDescription, AlertTitle as UIAlertTitle } from "../../ui/alert";
 
-export type AlertProps = React.ComponentProps<typeof UIAlert> & {
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  icon?: React.ReactNode;
-  children?: React.ReactNode;
-  titleClassName?: string;
-  descriptionClassName?: string;
-};
+export type AlertProps = ComponentProps<typeof UIAlert> & {
+  title?: ReactNode
+  description?: ReactNode
+  icon?: ReactNode
+  children?: ReactNode
+  titleClassName?: string
+  descriptionClassName?: string
+}
 
 export const Alert = (props: AlertProps) => {
   const {

@@ -14,14 +14,14 @@ const initialParams = {
   keyword: '',
   type: 'all',
   page: 1,
-  size: 20
+  size: 20,
 }
 
 const Page = () => {
   const [loading] = useState(false);
 
-  return <div className={"p-4"}>
-    <Card className={"shadow-none"}>
+  return <div className="p-4">
+    <Card className="shadow-none">
       <DataTable<Project>
         checkbox={true}
         inCard={true}
@@ -29,12 +29,12 @@ const Page = () => {
           items: [
             {
               field: 'keyword',
-              render: () => <Input placeholder={"请输入关键词"}/>,
+              render: () => <Input placeholder="请输入关键词"/>,
             },
             {
               field: 'teamId',
               label: "所属团队",
-              render: () => <Input placeholder={"请输入关键词"}/>,
+              render: () => <Input placeholder="请输入关键词"/>,
             },
           ],
           defaultValues: initialParams,

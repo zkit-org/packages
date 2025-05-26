@@ -1,32 +1,29 @@
-import {useEffect, useState, RefObject} from "react";
+import { type RefObject, useCallback, useEffect, useState } from 'react'
 
 export interface Size {
-  width: number;
-  height: number;
+  width: number
+  height: number
 }
 
 export const useSize = (ref: RefObject<HTMLElement | null>) => {
   const [size, setSize] = useState<Size>({width: 0, height: 0});
 
-  const resize = () => {
+  const resize = useCallback(() => {
     setSize({
       width: ref.current?.offsetWidth || 0,
-      height: ref.current?.offsetHeight || 0
-    });
-  }
+      height: ref.current?.offsetHeight || 0,
+    })
+  }, [ref])
 
   useEffect(() => {
-    const ro = new ResizeObserver(entries => {
-      for (const {} of entries) {
-        resize();
-      }
-    });
-    // 观察一个或多个元素
-    ref.current && ro.observe(ref.current);
-    return () => {
-      ro.disconnect();
+    const ro = new ResizeObserver(resize)
+    if (ref.current) {
+      ro.observe(ref.current)
     }
-  }, []);
+    return () => {
+      ro.disconnect()
+    }
+  }, [ref, resize])
 
   return size;
 }
