@@ -27,7 +27,7 @@
 }
 
 .ProseMirror [data-type=blockquoteFigure] blockquote,
-.ProseMirror > blockquote blockquote {
+.ProseMirror > blockquote blockquote { 
   @apply m-0;
 }
 
@@ -119,7 +119,7 @@
   @apply text-[rgb(94,234,212)];
 }
 
-.ProseMirror pre .hljs-emphasis {
+.ProseMirror pre .hljs-emphasis { 
   font-style: italic
 }
 
@@ -245,8 +245,7 @@
 /* 空 end */
 
 /**  表格 start  **/
-.ProseMirror .tableWrapper {
-}
+/* .ProseMirror .tableWrapper {} */
 
 .ProseMirror table {
   margin-top: 1rem;

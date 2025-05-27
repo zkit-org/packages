@@ -1,4 +1,4 @@
-import {mergeAttributes, Node} from '@tiptap/core'
+import { Node, mergeAttributes } from '@tiptap/core'
 
 export interface TaskListOptions {
   /**
@@ -6,14 +6,16 @@ export interface TaskListOptions {
    * @default 'taskItem'
    * @example 'myCustomTaskItem'
    */
-  itemTypeName: string,
+  itemTypeName: string
 
   /**
    * The HTML attributes for a task list node.
    * @default {}
    * @example { class: 'foo' }
    */
-  HTMLAttributes: Record<string, any>,
+
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  HTMLAttributes: Record<string, any>
 }
 
 declare module '@tiptap/core' {

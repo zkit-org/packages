@@ -1,6 +1,6 @@
+import classNames from 'classnames'
 import {icons} from 'lucide-react'
-import {memo} from 'react'
-import classNames from "classnames";
+import { memo } from 'react'
 
 export type IconProps = {
   name: keyof typeof icons
@@ -15,7 +15,7 @@ export const Icon = memo(({name, className, strokeWidth}: IconProps) => {
     return null
   }
 
-  return <IconComponent className={classNames('w-4 h-4', className)} strokeWidth={strokeWidth || 2.5}/>
+  return <IconComponent className={classNames('h-4 w-4', className)} strokeWidth={strokeWidth || 2.5} />
 })
 
 Icon.displayName = 'Icon'

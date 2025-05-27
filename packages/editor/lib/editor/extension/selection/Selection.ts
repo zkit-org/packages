@@ -6,7 +6,7 @@ export const Selection = Extension.create({
   name: 'selection',
 
   addProseMirrorPlugins() {
-    const {editor} = this
+    const { editor } = this
 
     return [
       new Plugin({

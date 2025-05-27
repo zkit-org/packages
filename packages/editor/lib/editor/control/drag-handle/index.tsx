@@ -1,12 +1,12 @@
-import {Action} from "../../../components/action";
+import { Dropdown } from '@easykit/design'
 import {HamburgerMenuIcon, PlusIcon} from "@radix-ui/react-icons";
-import {Editor} from '@tiptap/react'
-import {FC, useEffect, useRef, useState} from "react";
-import {NodeData} from "./use.data";
-import {useContentActions} from "./use.content.actions";
-import {Dropdown} from "@easykit/design";
+import type { Editor } from '@tiptap/react'
 import classNames from "classnames";
+import { type FC, useEffect, useRef, useState } from 'react'
+import { Action } from '../../../components/action'
 import {i18n} from "../../utils/locale";
+import { useContentActions } from './use.content.actions'
+import type { NodeData } from './use.data'
 
 export type DragHandleControlProps = {
   className?: string;
@@ -16,71 +16,71 @@ export type DragHandleControlProps = {
 }
 
 export const DragHandleControl: FC<DragHandleControlProps> = (props) => {
-  const {editor, data} = props;
-  const handleRef = useRef<HTMLDivElement>(null);
+  const { editor, data } = props
+  const handleRef = useRef<HTMLDivElement>(null)
   const actions = useContentActions(editor!, data.currentNode!, data.currentPos!)
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setMenuOpen(false);
-  }, [data.currentNode, data.hidden]);
+    setMenuOpen(false)
+  }, [data.currentNode, data.hidden])
 
-  const actionClassName = "w-7 h-7 !p-0";
-  return <div ref={handleRef} id={props.id} className={"absolute bg-black !left-0"} style={{top: -1000}}>
-    <div className={"absolute right-0 pr-3 space-x-1 flex"}>
-      <Action className={actionClassName} onClick={actions.handleAdd}>
-        <PlusIcon/>
-      </Action>
-      <div className={"relative"}>
-        <Action
-          className={classNames(actionClassName, "relative z-1")}
-          onClick={() => setMenuOpen(true)}
-        >
-          <HamburgerMenuIcon/>
+  const actionClassName = 'w-7 h-7 !p-0'
+  return (
+    <div ref={handleRef} id={props.id} className="!left-0 absolute bg-black" style={{ top: -1000 }}>
+      <div className="absolute right-0 flex space-x-1 pr-3">
+        <Action className={actionClassName} onClick={actions.handleAdd}>
+          <PlusIcon />
         </Action>
-        <Dropdown
-          modal={false}
-          open={menuOpen}
-          onOpenChange={setMenuOpen}
-          className={data.hidden ? "hidden" : ""}
-          items={[
-            {
-              label: i18n("dragHandle.actions.clear"),
-              type: "item",
-              id: "clear-formatting",
-            },
-            {
-              label: i18n("dragHandle.actions.duplicate"),
-              type: "item",
-              id: "duplicate",
-            },
-            {
-              type: "separator",
-              id: "separator"
-            },
-            {
-              label: i18n("dragHandle.actions.delete"),
-              type: "item",
-              id: "delete",
-            }
-          ]}
-          align={"start"}
-          asChild={true}
-          onItemClick={(item) => {
-            if (item.id === 'clear-formatting') {
-              actions.resetTextFormatting();
-            } else if (item.id === 'duplicate') {
-              actions.duplicateNode();
-            } else if (item.id === 'delete') {
-              actions.deleteNode();
-            }
-          }}
-        >
-          <Action className={classNames(actionClassName, "absolute invisible z-0 top-0 left-0")}>
-            <HamburgerMenuIcon/>
+        <div className="relative">
+          <Action className={classNames(actionClassName, 'relative z-1')} onClick={() => setMenuOpen(true)}>
+            <HamburgerMenuIcon />
           </Action>
-        </Dropdown>
+          <Dropdown
+            modal={false}
+            open={menuOpen}
+            onOpenChange={setMenuOpen}
+            className={data.hidden ? 'hidden' : ''}
+            items={[
+              {
+                label: i18n('dragHandle.actions.clear'),
+                type: 'item',
+                id: 'clear-formatting',
+              },
+              {
+                label: i18n('dragHandle.actions.duplicate'),
+                type: 'item',
+                id: 'duplicate',
+              },
+              {
+                type: 'separator',
+                id: 'separator',
+              },
+              {
+                label: i18n('dragHandle.actions.delete'),
+                type: 'item',
+                id: 'delete',
+              },
+            ]}
+            align="start"
+            asChild={true}
+            onItemClick={(item) => {
+              if (item.id === 'clear-formatting') {
+                actions.resetTextFormatting()
+              } else if (item.id === 'duplicate') {
+                actions.duplicateNode()
+              } else if (item.id === 'delete') {
+                actions.deleteNode()
+              }
+            }}
+          >
+            <Action className={classNames(actionClassName, 'invisible absolute top-0 left-0 z-0')}>
+              <HamburgerMenuIcon />
+            </Action>
+          </Dropdown>
+        </div>
       </div>
     </div>
-  </div>
+  )
 }

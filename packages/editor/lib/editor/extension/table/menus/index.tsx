@@ -1,2 +1,2 @@
-export * from './TableColumn'
-export * from './TableRow'
+export { TableColumnMenu } from './TableColumn'
+export { TableRowMenu } from './TableRow'

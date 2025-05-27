@@ -15,9 +15,9 @@ export const TableHeader = TiptapTableHeader.extend({
       },
       colwidth: {
         default: null,
-        parseHTML: element => {
+        parseHTML: (element) => {
           const colwidth = element.getAttribute('colwidth')
-          const value = colwidth ? colwidth.split(',').map(item => parseInt(item, 10)) : null
+          const value = colwidth ? colwidth.split(',').map((item) => Number.parseInt(item, 10)) : null
 
           return value
         },

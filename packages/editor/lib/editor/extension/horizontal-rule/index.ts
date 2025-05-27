@@ -1,1 +1,1 @@
-export * from './HorizontalRule'
+export { HorizontalRule } from './HorizontalRule'

@@ -1,10 +1,10 @@
-import {Editor} from '@tiptap/react'
+import type { Editor } from '@tiptap/react'
 
 export const getRenderContainer = (editor: Editor, nodeType: string) => {
   const {
     view,
     state: {
-      selection: {from},
+      selection: { from },
     },
   } = editor
 
@@ -14,8 +14,8 @@ export const getRenderContainer = (editor: Editor, nodeType: string) => {
   const element = innermostNode
 
   if (
-    (element && element.getAttribute('data-type') && element.getAttribute('data-type') === nodeType) ||
-    (element && element.classList && element.classList.contains(nodeType))
+    (element?.getAttribute('data-type') && element.getAttribute('data-type') === nodeType) ||
+    element?.classList?.contains(nodeType)
   ) {
     return element
   }

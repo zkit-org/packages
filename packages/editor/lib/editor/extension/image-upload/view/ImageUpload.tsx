@@ -1,4 +1,4 @@
-import {Editor, NodeViewWrapper} from '@tiptap/react'
+import { type Editor, NodeViewWrapper } from '@tiptap/react'
 import {useCallback} from 'react'
 
 import {ImageUploader} from './ImageUploader'
@@ -6,11 +6,12 @@ import {ImageUploader} from './ImageUploader'
 interface ImageUploadProps {
   editor: Editor
   getPos: () => number
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   HTMLAttributes: Record<string, any>
 }
 
 export const ImageUpload = (props: ImageUploadProps) => {
-  const {getPos, editor} = props;
+  const { getPos, editor } = props
   const onUpload = useCallback(
     (url: string) => {
       if (url) {
@@ -22,8 +23,8 @@ export const ImageUpload = (props: ImageUploadProps) => {
 
   return (
     <NodeViewWrapper {...props.HTMLAttributes}>
-      <div className="p-0 m-0" data-drag-handle>
-        <ImageUploader onUpload={onUpload}/>
+      <div className="m-0 p-0" data-drag-handle>
+        <ImageUploader onUpload={onUpload} />
       </div>
     </NodeViewWrapper>
   )

@@ -1,9 +1,9 @@
-import {DragEvent, useCallback, useEffect, useRef, useState} from 'react'
 import {useMessage} from "@easykit/design";
+import { type DragEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 export type UseUploaderProps = {
-  onUpload: (url: string) => void;
-  uploadImage?: (file: File) => Promise<string>;
+  onUpload: (url: string) => void
+  uploadImage?: (file: File) => Promise<string>
 }
 
 export const useUploader = ({onUpload, uploadImage}: UseUploaderProps) => {
@@ -14,15 +14,16 @@ export const useUploader = ({onUpload, uploadImage}: UseUploaderProps) => {
     async (file: File) => {
       setLoading(true)
       try {
-        const url = await uploadImage?.(file);
+        const url = await uploadImage?.(file)
         onUpload(url!)
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (errPayload: any) {
         const error = errPayload?.response?.data?.error || 'Something went wrong'
         msg.error(error)
       }
       setLoading(false)
     },
-    [onUpload],
+    [onUpload, msg]
   )
 
   return {loading, uploadFile}

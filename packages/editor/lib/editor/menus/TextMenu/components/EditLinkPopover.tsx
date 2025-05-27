@@ -1,7 +1,7 @@
+import { Content as PopoverContent, Root as PopoverRoot, Trigger as PopoverTrigger } from '@radix-ui/react-popover'
 import {LinkEditorPanel} from '../../../panels'
 import {Icon} from '../../../ui/Icon'
-import {Toolbar} from '../../../ui/Toolbar'
-import * as Popover from '@radix-ui/react-popover'
+import { Toolbar } from '../../../ui/Toolbar'
 import {i18n} from "../../../utils/locale";
 
 export type EditLinkPopoverProps = {
@@ -10,15 +10,15 @@ export type EditLinkPopoverProps = {
 
 export const EditLinkPopover = ({onSetLink}: EditLinkPopoverProps) => {
   return (
-    <Popover.Root>
-      <Popover.Trigger asChild>
-        <Toolbar.Button tooltip={i18n("textMenu.editLink")}>
-          <Icon name="Link"/>
+    <PopoverRoot>
+      <PopoverTrigger asChild>
+        <Toolbar.Button tooltip={i18n('textMenu.editLink')}>
+          <Icon name="Link" />
         </Toolbar.Button>
-      </Popover.Trigger>
-      <Popover.Content>
-        <LinkEditorPanel onSetLink={onSetLink}/>
-      </Popover.Content>
-    </Popover.Root>
+      </PopoverTrigger>
+      <PopoverContent>
+        <LinkEditorPanel onSetLink={onSetLink} />
+      </PopoverContent>
+    </PopoverRoot>
   )
 }

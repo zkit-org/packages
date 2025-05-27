@@ -1,11 +1,11 @@
 import {BubbleMenu as BaseBubbleMenu} from '@tiptap/react'
-import React, {ReactElement, useCallback, useState} from 'react'
+import { type ReactElement, useCallback, useState } from 'react'
 
-import {MenuProps} from '../types'
 import {LinkEditorPanel, LinkPreviewPanel} from '../../panels'
+import type { MenuProps } from '../types'
 
 export const LinkMenu = ({editor, appendTo}: MenuProps): ReactElement => {
-  const [showEdit, setShowEdit] = useState(false)
+  const [showEdit, setShowEdit] = useState(false) 
 
   const shouldShow = useCallback(() => {
     return editor.isActive('link')
@@ -36,13 +36,13 @@ export const LinkMenu = ({editor, appendTo}: MenuProps): ReactElement => {
     return null
   }, [editor])
 
-  const onShowEdit = useCallback(() => {
-    setShowEdit(true)
-  }, [])
+  // const onShowEdit = useCallback(() => {
+  //   setShowEdit(true)
+  // }, [])
 
-  const onHideEdit = useCallback(() => {
-    setShowEdit(false)
-  }, [])
+  // const onHideEdit = useCallback(() => {
+  //   setShowEdit(false)
+  // }, [])
 
   return (
     <BaseBubbleMenu
@@ -53,7 +53,7 @@ export const LinkMenu = ({editor, appendTo}: MenuProps): ReactElement => {
       tippyOptions={{
         zIndex: 40,
         popperOptions: {
-          modifiers: [{name: 'flip', enabled: false}],
+          modifiers: [{ name: 'flip', enabled: false }],
         },
         appendTo: () => {
           return appendTo?.current
@@ -64,9 +64,9 @@ export const LinkMenu = ({editor, appendTo}: MenuProps): ReactElement => {
       }}
     >
       {showEdit ? (
-        <LinkEditorPanel initialUrl={link} initialOpenInNewTab={target === '_blank'} onSetLink={onSetLink}/>
+        <LinkEditorPanel initialUrl={link} initialOpenInNewTab={target === '_blank'} onSetLink={onSetLink} />
       ) : (
-        <LinkPreviewPanel url={link} onClear={onUnsetLink} onEdit={handleEdit}/>
+        <LinkPreviewPanel url={link} onClear={onUnsetLink} onEdit={handleEdit} />
       )}
     </BaseBubbleMenu>
   )

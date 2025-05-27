@@ -1,1 +1,1 @@
-export * from './uniqueId'
+export { UniqueId } from './uniqueId'

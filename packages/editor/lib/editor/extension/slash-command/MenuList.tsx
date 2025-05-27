@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 
-import {Command, MenuListProps} from './types'
-import {Surface} from '../../ui/Surface'
 import {DropdownButton} from '../../ui/Dropdown'
 import {Icon} from '../../ui/Icon'
+import { Surface } from '../../ui/Surface'
+import type { Command, MenuListProps } from './types' 
 
 export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
   const scrollContainer = useRef<HTMLDivElement>(null)
@@ -13,6 +13,7 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
 
   // Anytime the groups change, i.e. the user types to narrow it down, we want to
   // reset the current selection to the first menu item
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setSelectedGroupIndex(0)
     setSelectedCommandIndex(0)
@@ -95,10 +96,9 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
     if (activeItem.current && scrollContainer.current) {
       const offsetTop = activeItem.current.offsetTop
       const offsetHeight = activeItem.current.offsetHeight
-
       scrollContainer.current.scrollTop = offsetTop - offsetHeight
     }
-  }, [selectedCommandIndex, selectedGroupIndex])
+  }, [])
 
   const createCommandClickHandler = useCallback(
     (groupIndex: number, commandIndex: number) => {
@@ -114,12 +114,12 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
   }
 
   return (
-    <Surface ref={scrollContainer} className="text-black max-h-[min(80vh,24rem)] overflow-auto flex-wrap mb-8 p-2">
+    <Surface ref={scrollContainer} className="mb-8 max-h-[min(80vh,24rem)] flex-wrap overflow-auto p-2 text-black">
       <div className="grid grid-cols-1 gap-0.5">
         {props.items.map((group, groupIndex: number) => (
           <React.Fragment key={`${group.title}-wrapper`}>
             <div
-              className="text-neutral-500 text-[0.65rem] col-[1/-1] mx-2 mt-4 font-semibold tracking-wider select-none uppercase first:mt-0.5"
+              className="col-[1/-1] mx-2 mt-4 select-none font-semibold text-[0.65rem] text-neutral-500 uppercase tracking-wider first:mt-0.5"
               key={`${group.title}`}
             >
               {group.title}
@@ -130,7 +130,7 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
                 isActive={selectedGroupIndex === groupIndex && selectedCommandIndex === commandIndex}
                 onClick={createCommandClickHandler(groupIndex, commandIndex)}
               >
-                <Icon name={command.iconName} className="mr-1"/>
+                <Icon name={command.iconName} className="mr-1" />
                 {command.label}
               </DropdownButton>
             ))}

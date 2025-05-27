@@ -12,7 +12,7 @@ export { FocusClasses as Focus } from '@tiptap/extension-focus'
 export { Dropcursor } from '@tiptap/extension-dropcursor';
 export { History } from '@tiptap/extension-history'
 
-export { TaskItem } from './task-item';
+export { TaskItem } from './task-item'
 export { TaskList } from './task-list';
 export { Selection } from './selection'
 export { Columns, Column } from './multi-column';

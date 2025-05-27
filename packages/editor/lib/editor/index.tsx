@@ -1,12 +1,12 @@
 import styles from './style.module.scss';
 import "./editor.css";
+import type { EditorEvents, Editor as EditorInstance } from '@tiptap/core'
+import type { Extensions } from '@tiptap/core'
 import {EditorContent} from '@tiptap/react'
-import {forwardRef, useRef, useImperativeHandle} from "react";
+import { forwardRef, useImperativeHandle, useRef } from 'react'
 import {EditorController} from "./control";
-import {Editor as EditorInstance, EditorEvents} from '@tiptap/core';
-import {useEditor} from './hooks';
-import {Extensions} from '@tiptap/core';
-import {SlashCommandProps} from './extension/slash-command';
+import type { SlashCommandProps } from './extension/slash-command'
+import { useEditor } from './hooks'
 
 export type EditorProps = {
   limit?: number;

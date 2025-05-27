@@ -1,9 +1,9 @@
-import {Editor} from '@tiptap/react'
-import {EditorState} from '@tiptap/pm/state'
-import {EditorView} from '@tiptap/pm/view'
+import type { EditorState } from '@tiptap/pm/state'
+import type { EditorView } from '@tiptap/pm/view'
+import type { Editor } from '@tiptap/react'
 
-import {isTableSelected} from '../../utils'
-import {Table} from '../..'
+import { Table } from '../..'
+import { isTableSelected } from '../../utils'
 
 export const isRowGripSelected = ({
   editor,
@@ -20,7 +20,7 @@ export const isRowGripSelected = ({
   const nodeDOM = view.nodeDOM(from) as HTMLElement
   const node = nodeDOM || domAtPos
 
-  if (!editor.isActive(Table.name) || !node || isTableSelected(state.selection)) {
+  if (!(editor.isActive(Table.name) && node) || isTableSelected(state.selection)) {
     return false
   }
 
@@ -30,7 +30,7 @@ export const isRowGripSelected = ({
     container = container.parentElement!
   }
 
-  const gripRow = container && container.querySelector && container.querySelector('a.grip-row.selected')
+  const gripRow = container?.querySelector?.('a.grip-row.selected')
 
   return !!gripRow
 }

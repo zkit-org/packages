@@ -1,4 +1,4 @@
-import {ResolvedPos} from '@tiptap/pm/model'
+import type { ResolvedPos } from '@tiptap/pm/model'
 import {useCallback, useState} from 'react'
 
 export type NodeData = {
@@ -17,13 +17,13 @@ export const useData = (): NodeData => {
   const handleNodeChange = useCallback((node: ResolvedPos, nodePos: number) => {
     setCurrentNode(node)
     setCurrentPos(nodePos)
-  }, [setCurrentNode, setCurrentPos])
+  }, [])
 
   return {
     currentNode,
     currentPos,
     handleNodeChange,
     setHidden,
-    hidden
+    hidden,
   }
 }

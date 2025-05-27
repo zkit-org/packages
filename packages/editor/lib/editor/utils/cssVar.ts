@@ -3,7 +3,7 @@ export const cssVar = (name: string, value?: string) => {
   if (name.substring(0, 2) !== '--') {
     currentName = `--${currentName}`
   }
-
+ 
   if (value) {
     document.documentElement.style.setProperty(currentName, value)
   }

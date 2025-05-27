@@ -1,1 +1,2 @@
-export * from './TextMenu'
+export { TextMenu } from './TextMenu'
+export type { TextMenuProps } from './TextMenu'

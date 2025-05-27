@@ -1,1 +1,1 @@
-export * from './FontSize'
+export { FontSize } from './FontSize'

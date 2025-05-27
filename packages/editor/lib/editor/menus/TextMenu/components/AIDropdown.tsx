@@ -1,10 +1,18 @@
-import {DropdownButton} from '../../../ui/Dropdown'
-import {Icon} from '../../../ui/Icon'
-import {Surface} from '../../../ui/Surface'
-import {Toolbar} from '../../../ui/Toolbar'
-import {languages, tones} from '../../../constants'
-import * as Dropdown from '@radix-ui/react-dropdown-menu'
-import {useCallback} from 'react'
+import {
+  Content as DropdownContent,
+  Item as DropdownItem,
+  Root as DropdownRoot,
+  Sub as DropdownSub,
+  SubContent as DropdownSubContent,
+  SubTrigger as DropdownSubTrigger,
+  Trigger as DropdownTrigger,
+} from '@radix-ui/react-dropdown-menu'
+import { useCallback } from 'react'
+import { languages, tones } from '../../../constants'
+import { DropdownButton } from '../../../ui/Dropdown'
+import { Icon } from '../../../ui/Icon'
+import { Surface } from '../../../ui/Surface'
+import { Toolbar } from '../../../ui/Toolbar'
 
 export type AIDropdownProps = {
   onSimplify: () => void
@@ -33,99 +41,99 @@ export const AIDropdown = ({
   const handleTranslate = useCallback((language: string) => () => onTranslate(language), [onTranslate])
 
   return (
-    <Dropdown.Root>
-      <Dropdown.Trigger asChild>
+    <DropdownRoot>
+      <DropdownTrigger asChild>
         <Toolbar.Button
-          className="text-purple-500 hover:text-purple-600 active:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300 dark:active:text-purple-400"
+          className="text-purple-500 hover:text-purple-600 active:text-purple-600 dark:text-purple-400 dark:active:text-purple-400 dark:hover:text-purple-300"
           activeClassname="text-purple-600 hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-200"
         >
-          <Icon name="Sparkles" className="mr-1"/>
+          <Icon name="Sparkles" className="mr-1" />
           AI Tools
-          <Icon name="ChevronDown" className="w-2 h-2 ml-1"/>
+          <Icon name="ChevronDown" className="ml-1 h-2 w-2" />
         </Toolbar.Button>
-      </Dropdown.Trigger>
-      <Dropdown.Content asChild>
-        <Surface className="p-2 min-w-[10rem]">
-          <Dropdown.Item onClick={onSimplify}>
+      </DropdownTrigger>
+      <DropdownContent asChild>
+        <Surface className="min-w-[10rem] p-2">
+          <DropdownItem onClick={onSimplify}>
             <DropdownButton>
-              <Icon name="CircleSlash"/>
+              <Icon name="CircleSlash" />
               Simplify
             </DropdownButton>
-          </Dropdown.Item>
-          <Dropdown.Item onClick={onFixSpelling}>
+          </DropdownItem>
+          <DropdownItem onClick={onFixSpelling}>
             <DropdownButton>
-              <Icon name="Eraser"/>
+              <Icon name="Eraser" />
               Fix spelling & grammar
             </DropdownButton>
-          </Dropdown.Item>
-          <Dropdown.Item onClick={onMakeShorter}>
+          </DropdownItem>
+          <DropdownItem onClick={onMakeShorter}>
             <DropdownButton>
-              <Icon name="ArrowLeftToLine"/>
+              <Icon name="ArrowLeftToLine" />
               Make shorter
             </DropdownButton>
-          </Dropdown.Item>
-          <Dropdown.Item onClick={onMakeLonger}>
+          </DropdownItem>
+          <DropdownItem onClick={onMakeLonger}>
             <DropdownButton>
-              <Icon name="ArrowRightToLine"/>
+              <Icon name="ArrowRightToLine" />
               Make longer
             </DropdownButton>
-          </Dropdown.Item>
-          <Dropdown.Sub>
-            <Dropdown.SubTrigger>
+          </DropdownItem>
+          <DropdownSub>
+            <DropdownSubTrigger>
               <DropdownButton>
-                <Icon name="Mic"/>
+                <Icon name="Mic" />
                 Change tone
-                <Icon name="ChevronRight" className="w-4 h-4 ml-auto"/>
+                <Icon name="ChevronRight" className="ml-auto h-4 w-4" />
               </DropdownButton>
-            </Dropdown.SubTrigger>
-            <Dropdown.SubContent>
-              <Surface className="flex flex-col min-w-[15rem] p-2 max-h-[20rem] overflow-auto">
-                {tones.map(tone => (
-                  <Dropdown.Item onClick={handleTone(tone.value)} key={tone.value}>
+            </DropdownSubTrigger>
+            <DropdownSubContent>
+              <Surface className="flex max-h-[20rem] min-w-[15rem] flex-col overflow-auto p-2">
+                {tones.map((tone) => (
+                  <DropdownItem onClick={handleTone(tone.value)} key={tone.value}>
                     <DropdownButton>{tone.label}</DropdownButton>
-                  </Dropdown.Item>
+                  </DropdownItem>
                 ))}
               </Surface>
-            </Dropdown.SubContent>
-          </Dropdown.Sub>
-          <Dropdown.Item onClick={onTldr}>
+            </DropdownSubContent>
+          </DropdownSub>
+          <DropdownItem onClick={onTldr}>
             <DropdownButton>
-              <Icon name="MoveHorizontal"/>
+              <Icon name="MoveHorizontal" />
               Tl;dr:
             </DropdownButton>
-          </Dropdown.Item>
-          <Dropdown.Item onClick={onEmojify}>
+          </DropdownItem>
+          <DropdownItem onClick={onEmojify}>
             <DropdownButton>
-              <Icon name="SmilePlus"/>
+              <Icon name="SmilePlus" />
               Emojify
             </DropdownButton>
-          </Dropdown.Item>
-          <Dropdown.Sub>
-            <Dropdown.SubTrigger>
+          </DropdownItem>
+          <DropdownSub>
+            <DropdownSubTrigger>
               <DropdownButton>
-                <Icon name="Languages"/>
+                <Icon name="Languages" />
                 Translate
-                <Icon name="ChevronRight" className="w-4 h-4 ml-auto"/>
+                <Icon name="ChevronRight" className="ml-auto h-4 w-4" />
               </DropdownButton>
-            </Dropdown.SubTrigger>
-            <Dropdown.SubContent>
-              <Surface className="flex flex-col min-w-[15rem] p-2 max-h-[20rem] overflow-auto">
-                {languages.map(lang => (
-                  <Dropdown.Item onClick={handleTranslate(lang.value)} key={lang.value}>
+            </DropdownSubTrigger>
+            <DropdownSubContent>
+              <Surface className="flex max-h-[20rem] min-w-[15rem] flex-col overflow-auto p-2">
+                {languages.map((lang) => (
+                  <DropdownItem onClick={handleTranslate(lang.value)} key={lang.value}>
                     <DropdownButton>{lang.label}</DropdownButton>
-                  </Dropdown.Item>
+                  </DropdownItem>
                 ))}
               </Surface>
-            </Dropdown.SubContent>
-          </Dropdown.Sub>
-          <Dropdown.Item onClick={onCompleteSentence}>
+            </DropdownSubContent>
+          </DropdownSub>
+          <DropdownItem onClick={onCompleteSentence}>
             <DropdownButton>
-              <Icon name="PenLine"/>
+              <Icon name="PenLine" />
               Complete sentence
             </DropdownButton>
-          </Dropdown.Item>
+          </DropdownItem>
         </Surface>
-      </Dropdown.Content>
-    </Dropdown.Root>
+      </DropdownContent>
+    </DropdownRoot>
   )
 }

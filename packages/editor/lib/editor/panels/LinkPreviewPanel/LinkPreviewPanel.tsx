@@ -13,18 +13,18 @@ export type LinkPreviewPanelProps = {
 export const LinkPreviewPanel = ({onClear, onEdit, url}: LinkPreviewPanelProps) => {
   return (
     <Surface className="flex items-center gap-2 p-2">
-      <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm underline break-all">
+      <a href={url} target="_blank" rel="noopener noreferrer" className="break-all text-sm underline">
         {url}
       </a>
-      <Toolbar.Divider/>
-      <Tooltip title={i18n("panel.linkPreview.edit")}>
+      <Toolbar.Divider />
+      <Tooltip title={i18n('panel.linkPreview.edit')}>
         <Toolbar.Button onClick={onEdit}>
-          <Icon name="Pen"/>
+          <Icon name="Pen" />
         </Toolbar.Button>
       </Tooltip>
-      <Tooltip title={i18n("panel.linkPreview.delete")}>
+      <Tooltip title={i18n('panel.linkPreview.delete')}>
         <Toolbar.Button onClick={onClear}>
-          <Icon name="Trash2"/>
+          <Icon name="Trash2" />
         </Toolbar.Button>
       </Tooltip>
     </Surface>

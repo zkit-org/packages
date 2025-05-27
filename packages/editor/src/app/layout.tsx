@@ -1,11 +1,11 @@
 import type {Metadata} from "next";
 import "@/plugin/locales";
 import {MainLayout} from '@/components/layout/main';
-import {ReactNode} from 'react';
+import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: "Editor Playground",
-};
+  title: 'Editor Playground',
+}
 
 export default function RootLayout({
   children,

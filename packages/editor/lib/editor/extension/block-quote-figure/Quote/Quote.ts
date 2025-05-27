@@ -17,7 +17,7 @@ export const Quote = Node.create({
     ]
   },
 
-  renderHTML({HTMLAttributes}) {
+  renderHTML({ HTMLAttributes }) {
     return ['blockquote', HTMLAttributes, 0]
   },
 

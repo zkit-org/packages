@@ -1,18 +1,18 @@
-import {Editor} from '@tiptap/react'
-import {useCallback} from 'react'
-import {ShouldShowProps} from '../../types'
+import type { Editor } from '@tiptap/react'
+import { useCallback } from 'react'
 import {isCustomNodeSelected, isTextSelected} from '../../../utils'
+import type { ShouldShowProps } from '../../types'
 
 export const useTextMenuStates = (editor: Editor) => {
   const shouldShow = useCallback(
-    ({view, from}: ShouldShowProps) => {
+    ({ view, from }: ShouldShowProps) => {
       if (!view) {
         return false
       }
 
-      const dragging = view.dom.classList.contains("dragging");
+      const dragging = view.dom.classList.contains('dragging')
       if (dragging) {
-        return false;
+        return false
       }
 
       const domAtPos = view.domAtPos(from || 0).node as HTMLElement
@@ -23,9 +23,9 @@ export const useTextMenuStates = (editor: Editor) => {
         return false
       }
 
-      return isTextSelected({editor})
+      return isTextSelected({ editor })
     },
-    [editor],
+    [editor]
   )
 
   return {

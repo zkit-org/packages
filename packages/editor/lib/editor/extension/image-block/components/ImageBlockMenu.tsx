@@ -1,14 +1,14 @@
 import {BubbleMenu as BaseBubbleMenu, useEditorState} from '@tiptap/react'
-import React, {ReactElement, useCallback, useRef} from 'react'
-import {Instance, sticky} from 'tippy.js'
+import { type ReactElement, useCallback, useRef } from 'react'
+import { type Instance, sticky } from 'tippy.js'
 import {v4 as uuid} from 'uuid'
 
-import {Toolbar} from '../../../ui/Toolbar'
-import {Icon} from '../../../ui/Icon'
-import {ImageBlockWidth} from './ImageBlockWidth'
-import {MenuProps} from '../../../menus/types'
+import type { MenuProps } from '../../../menus/types'
+import { Icon } from '../../../ui/Icon'
+import { Toolbar } from '../../../ui/Toolbar' 
 import {getRenderContainer} from '../../../utils'
 import {i18n} from "../../../utils/locale";
+import { ImageBlockWidth } from './ImageBlockWidth'
 
 export const ImageBlockMenu = ({editor, appendTo}: MenuProps): ReactElement => {
   const menuRef = useRef<HTMLDivElement>(null)
@@ -49,10 +49,10 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): ReactElement => {
     editor,
     selector: ctx => {
       return {
-        isImageLeft: ctx.editor.isActive('imageBlock', {align: 'left'}),
-        isImageCenter: ctx.editor.isActive('imageBlock', {align: 'center'}),
-        isImageRight: ctx.editor.isActive('imageBlock', {align: 'right'}),
-        width: parseInt(ctx.editor.getAttributes('imageBlock')?.width || 0),
+        isImageLeft: ctx.editor.isActive('imageBlock', { align: 'left' }),
+        isImageCenter: ctx.editor.isActive('imageBlock', { align: 'center' }),
+        isImageRight: ctx.editor.isActive('imageBlock', { align: 'right' }),
+        width: Number.parseInt(ctx.editor.getAttributes('imageBlock')?.width || 0),
       }
     },
   })

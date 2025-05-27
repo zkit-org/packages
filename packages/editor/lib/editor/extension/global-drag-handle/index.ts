@@ -1,9 +1,9 @@
 import {Extension} from '@tiptap/core';
-import {NodeSelection, Plugin, PluginKey, TextSelection} from '@tiptap/pm/state';
-import {Fragment, Node, ResolvedPos, Slice} from '@tiptap/pm/model';
+import { Fragment, type Node, type ResolvedPos, Slice } from '@tiptap/pm/model'
+import { NodeSelection, Plugin, PluginKey, TextSelection } from '@tiptap/pm/state'
 
 // @ts-ignore
-import {__serializeForClipboard, EditorView} from '@tiptap/pm/view';
+import { type EditorView, __serializeForClipboard } from '@tiptap/pm/view'
 
 export interface GlobalDragHandleOptions {
   /**
@@ -116,277 +116,248 @@ const getRootNode = (pos: number, view: EditorView, node: Element, uniqueId: str
 export function DragHandlePlugin(options: GlobalDragHandleOptions & { pluginKey: string }) {
   let listType = '';
 
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
   function handleDragStart(event: DragEvent, view: EditorView) {
     // view.focus();
 
-    if (!event.dataTransfer) return;
+    if (!event.dataTransfer) return
 
     const node = nodeDOMAtCoords({
       x: event.clientX + 50 + options.dragHandleWidth,
       y: event.clientY,
-    });
+    })
 
-    if (!(node instanceof Element)) return;
+    if (!(node instanceof Element)) return
 
-    let draggedNodePos = nodePosAtDOM(node, view, options);
-    if (draggedNodePos == null || draggedNodePos < 0) return;
-    const dragNode = view.state.doc.resolve(draggedNodePos);
+    let draggedNodePos = nodePosAtDOM(node, view, options)
+    if (draggedNodePos == null || draggedNodePos < 0) return
+    const dragNode = view.state.doc.resolve(draggedNodePos)
     if (
-      ["tableCell", "tableRow"].includes(dragNode.node().type.name) ||
-      node.matches("div.tableWrapper, li, blockquote")
+      ['tableCell', 'tableRow'].includes(dragNode.node().type.name) ||
+      node.matches('div.tableWrapper, li, blockquote')
     ) {
-      draggedNodePos = rootNodePos(draggedNodePos, view) - 1;
+      draggedNodePos = rootNodePos(draggedNodePos, view) - 1
     } else {
-      draggedNodePos = calcNodePos(draggedNodePos, view);
+      draggedNodePos = calcNodePos(draggedNodePos, view)
     }
 
-    const {from, to} = view.state.selection;
-    const diff = from - to;
+    const { from, to } = view.state.selection
+    const diff = from - to
 
-    const fromSelectionPos = calcNodePos(from, view);
-    let differentNodeSelected = false;
+    const fromSelectionPos = calcNodePos(from, view)
+    let differentNodeSelected = false
 
-    const nodePos = view.state.doc.resolve(fromSelectionPos);
+    const nodePos = view.state.doc.resolve(fromSelectionPos)
 
     // Check if nodePos points to the top level node
-    if (nodePos.node().type.name === 'doc') differentNodeSelected = true;
+    if (nodePos.node().type.name === 'doc') differentNodeSelected = true
     else {
-      const nodeSelection = NodeSelection.create(
-        view.state.doc,
-        nodePos.before(),
-      );
+      const nodeSelection = NodeSelection.create(view.state.doc, nodePos.before())
       // Check if the node where the drag event started is part of the current selection
       differentNodeSelected = !(
-        draggedNodePos + 1 >= nodeSelection.$from.pos &&
-        draggedNodePos <= nodeSelection.$to.pos
-      );
+        draggedNodePos + 1 >= nodeSelection.$from.pos && draggedNodePos <= nodeSelection.$to.pos
+      )
     }
 
-    if (
-      !differentNodeSelected &&
-      diff !== 0 &&
-      !(view.state.selection instanceof NodeSelection)
-    ) {
-      const endSelection = NodeSelection.create(view.state.doc, to - 1);
-      const multiNodeSelection = TextSelection.create(
-        view.state.doc,
-        draggedNodePos,
-        endSelection.$to.pos,
-      );
-      view.dispatch(view.state.tr.setSelection(multiNodeSelection));
+    if (!differentNodeSelected && diff !== 0 && !(view.state.selection instanceof NodeSelection)) {
+      const endSelection = NodeSelection.create(view.state.doc, to - 1)
+      const multiNodeSelection = TextSelection.create(view.state.doc, draggedNodePos, endSelection.$to.pos)
+      view.dispatch(view.state.tr.setSelection(multiNodeSelection))
     } else {
-      const nodeSelection = NodeSelection.create(
-        view.state.doc,
-        draggedNodePos,
-      );
-      view.dispatch(view.state.tr.setSelection(nodeSelection));
+      const nodeSelection = NodeSelection.create(view.state.doc, draggedNodePos)
+      view.dispatch(view.state.tr.setSelection(nodeSelection))
     }
 
     // If the selected node is a list item, we need to save the type of the wrapping list e.g. OL or UL
-    if (
-      view.state.selection instanceof NodeSelection &&
-      view.state.selection.node.type.name === 'listItem'
-    ) {
-      listType = node.parentElement!.tagName;
+    if (view.state.selection instanceof NodeSelection && view.state.selection.node.type.name === 'listItem') {
+      listType = node.parentElement!.tagName
     }
 
-    const slice = view.state.selection.content();
-    const {dom, text} = __serializeForClipboard(view, slice);
+    const slice = view.state.selection.content()
+    const { dom, text } = __serializeForClipboard(view, slice)
 
-    event.dataTransfer.clearData();
-    event.dataTransfer.setData('text/html', dom.innerHTML);
-    event.dataTransfer.setData('text/plain', text);
-    event.dataTransfer.effectAllowed = 'copyMove';
+    event.dataTransfer.clearData()
+    event.dataTransfer.setData('text/html', dom.innerHTML)
+    event.dataTransfer.setData('text/plain', text)
+    event.dataTransfer.effectAllowed = 'copyMove'
 
-    event.dataTransfer.setDragImage(node, 0, 0);
+    event.dataTransfer.setDragImage(node, 0, 0)
 
-    view.dragging = {slice, move: event.ctrlKey};
+    view.dragging = { slice, move: event.ctrlKey }
   }
 
-  let dragHandleElement: HTMLElement | null = null;
+  let dragHandleElement: HTMLElement | null = null
 
   function hideDragHandle() {
     if (dragHandleElement) {
-      dragHandleElement.classList.add('hidden');
-      options.onHide?.();
+      dragHandleElement.classList.add('hidden')
+      options.onHide?.()
     }
   }
 
   function showDragHandle() {
     if (dragHandleElement) {
-      dragHandleElement.classList.remove('hidden');
-      options.onShow?.();
+      dragHandleElement.classList.remove('hidden')
+      options.onShow?.()
     }
   }
 
   return new Plugin({
     key: new PluginKey(options.pluginKey),
     view: (view) => {
-      const handleBySelector = options.dragHandleSelector ? document.querySelector<HTMLElement>(options.dragHandleSelector) : null
-      dragHandleElement = handleBySelector ?? document.createElement('div');
-      dragHandleElement.draggable = true;
-      dragHandleElement.dataset.dragHandle = '';
-      dragHandleElement.classList.add('drag-handle');
-
+      const handleBySelector = options.dragHandleSelector
+        ? document.querySelector<HTMLElement>(options.dragHandleSelector)
+        : null
+      dragHandleElement = handleBySelector ?? document.createElement('div')
+      dragHandleElement.draggable = true
+      dragHandleElement.dataset.dragHandle = ''
+      dragHandleElement.classList.add('drag-handle')
 
       function onDragHandleDragStart(e: DragEvent) {
-        view.dom.classList.add('dragging');
-        handleDragStart(e, view);
+        view.dom.classList.add('dragging')
+        handleDragStart(e, view)
       }
 
-      dragHandleElement.addEventListener('dragstart', onDragHandleDragStart);
+      dragHandleElement.addEventListener('dragstart', onDragHandleDragStart)
 
       function onDragHandleDragEnd() {
-        view.dom.classList.remove('dragging');
+        view.dom.classList.remove('dragging')
       }
 
-      dragHandleElement.addEventListener('dragend', onDragHandleDragEnd);
+      dragHandleElement.addEventListener('dragend', onDragHandleDragEnd)
 
       function onDragHandleDrag(e: DragEvent) {
-        hideDragHandle();
-        let scrollY = window.scrollY;
+        hideDragHandle()
+        const scrollY = window.scrollY
         if (e.clientY < options.scrollTreshold) {
-          window.scrollTo({top: scrollY - 30, behavior: 'smooth'});
+          window.scrollTo({ top: scrollY - 30, behavior: 'smooth' })
         } else if (window.innerHeight - e.clientY < options.scrollTreshold) {
-          window.scrollTo({top: scrollY + 30, behavior: 'smooth'});
+          window.scrollTo({ top: scrollY + 30, behavior: 'smooth' })
         }
       }
 
-      dragHandleElement.addEventListener('drag', onDragHandleDrag);
+      dragHandleElement.addEventListener('drag', onDragHandleDrag)
 
-      hideDragHandle();
+      hideDragHandle()
 
       if (!handleBySelector) {
-        view?.dom?.parentElement?.appendChild(dragHandleElement);
+        view?.dom?.parentElement?.appendChild(dragHandleElement)
       }
 
       return {
         destroy: () => {
           if (!handleBySelector) {
-            dragHandleElement?.remove?.();
+            dragHandleElement?.remove?.()
           }
-          dragHandleElement?.removeEventListener('drag', onDragHandleDrag);
-          dragHandleElement?.removeEventListener('dragstart', onDragHandleDragStart);
-          dragHandleElement = null;
+          dragHandleElement?.removeEventListener('drag', onDragHandleDrag)
+          dragHandleElement?.removeEventListener('dragstart', onDragHandleDragStart)
+          dragHandleElement = null
         },
-      };
+      }
     },
     props: {
       handleDOMEvents: {
+        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
         mousemove: (view, event) => {
           if (!view.editable) {
-            return;
+            return
           }
 
           const node = nodeDOMAtCoords({
             x: event.clientX + 50 + options.dragHandleWidth,
             y: event.clientY,
-          });
+          })
 
-          const notDragging = node?.closest('.not-draggable');
+          const notDragging = node?.closest('.not-draggable')
 
-          if (
-            !(node instanceof Element) ||
-            node.matches('ul, ol') ||
-            notDragging
-          ) {
-            hideDragHandle();
-            return;
+          if (!(node instanceof Element) || node.matches('ul, ol') || notDragging) {
+            hideDragHandle()
+            return
           }
 
-          const compStyle = window.getComputedStyle(node);
-          const parsedLineHeight = parseInt(compStyle.lineHeight, 10);
-          const lineHeight = isNaN(parsedLineHeight)
-            ? parseInt(compStyle.fontSize) * 1.2
-            : parsedLineHeight;
-          const paddingTop = parseInt(compStyle.paddingTop, 10);
+          const compStyle = window.getComputedStyle(node)
+          const parsedLineHeight = Number.parseInt(compStyle.lineHeight, 10)
+          const lineHeight = Number.isNaN(parsedLineHeight)
+            ? Number.parseInt(compStyle.fontSize) * 1.2
+            : parsedLineHeight
+          const paddingTop = Number.parseInt(compStyle.paddingTop, 10)
 
-          const boundingRect = node.getBoundingClientRect();
-          let draggedNodePos = view.posAtCoords({
+          const boundingRect = node.getBoundingClientRect()
+          const draggedNodePos = view.posAtCoords({
             left: boundingRect.left,
             top: boundingRect.top,
-          });
-          if (draggedNodePos == null) return;
-          const rootPos = rootNodePos(draggedNodePos.pos, view);
-          const root = getRootNode(rootPos, view, node, options.uniqueId!);
-          options.onNodeChange?.(root, rootPos);
+          })
+          if (draggedNodePos == null) return
+          const rootPos = rootNodePos(draggedNodePos.pos, view)
+          const root = getRootNode(rootPos, view, node, options.uniqueId!)
+          options.onNodeChange?.(root, rootPos)
 
-          const rootNode = view.domAtPos(root.pos).node as Element;
-          let rect = absoluteRect(rootNode);
-          if (node.matches("div.react-renderer, div[data-type=horizontalRule]")) {
-            rect = absoluteRect(node);
+          const rootNode = view.domAtPos(root.pos).node as Element
+          let rect = absoluteRect(rootNode)
+          if (node.matches('div.react-renderer, div[data-type=horizontalRule]')) {
+            rect = absoluteRect(node)
           }
 
-          rect.top += paddingTop;
-          rect.width = options.dragHandleWidth;
-          if (node.matches("div[data-type=horizontalRule]")) {
-            rect.top -= (boundingRect.height + 8) / 2;
+          rect.top += paddingTop
+          rect.width = options.dragHandleWidth
+          if (node.matches('div[data-type=horizontalRule]')) {
+            rect.top -= (boundingRect.height + 8) / 2
           }
           if (root.node().type.name === 'codeBlock') {
-            rect.top -= (lineHeight + parseInt(compStyle.fontSize));
+            rect.top -= lineHeight + Number.parseInt(compStyle.fontSize)
           }
-          if (!dragHandleElement) return;
+          if (!dragHandleElement) return
 
-          const editorRect = view.dom.getBoundingClientRect();
-          dragHandleElement.style.left = `${rect.left - rect.width}px`;
-          dragHandleElement.style.top = `${rect.top - editorRect.top}px`;
-          showDragHandle();
+          const editorRect = view.dom.getBoundingClientRect()
+          dragHandleElement.style.left = `${rect.left - rect.width}px`
+          dragHandleElement.style.top = `${rect.top - editorRect.top}px`
+          showDragHandle()
         },
         keydown: () => {
-          hideDragHandle();
+          hideDragHandle()
         },
         mousewheel: () => {
-          hideDragHandle();
+          hideDragHandle()
         },
         drop: (view, event) => {
-          view.dom.classList.remove('dragging');
-          hideDragHandle();
-          let droppedNode: Node | null = null;
+          view.dom.classList.remove('dragging')
+          hideDragHandle()
+          let droppedNode: Node | null = null
           const dropPos = view.posAtCoords({
             left: event.clientX,
             top: event.clientY,
-          });
+          })
 
-          if (!dropPos) return;
+          if (!dropPos) return
 
           if (view.state.selection instanceof NodeSelection) {
-            droppedNode = view.state.selection.node;
+            droppedNode = view.state.selection.node
           }
-          if (!droppedNode) return;
+          if (!droppedNode) return
 
-          const resolvedPos = view.state.doc.resolve(dropPos.pos);
+          const resolvedPos = view.state.doc.resolve(dropPos.pos)
 
-          const isDroppedInsideList =
-            resolvedPos.parent.type.name === 'listItem';
+          const isDroppedInsideList = resolvedPos.parent.type.name === 'listItem'
 
           // If the selected node is a list item and is not dropped inside a list, we need to wrap it inside <ol> tag otherwise ol list items will be transformed into ul list item when dropped
           if (
             view.state.selection instanceof NodeSelection &&
             view.state.selection.node.type.name === 'listItem' &&
             !isDroppedInsideList &&
-            listType == 'OL'
+            listType === 'OL'
           ) {
-            const text = droppedNode.textContent;
-            if (!text) return;
-            const paragraph = view.state.schema.nodes.paragraph?.createAndFill(
-              {},
-              view.state.schema.text(text),
-            );
-            const listItem = view.state.schema.nodes.listItem?.createAndFill(
-              {},
-              paragraph,
-            );
-            const newList = view.state.schema.nodes.orderedList?.createAndFill(
-              null,
-              listItem,
-            );
-            const slice = new Slice(Fragment.from(newList), 0, 0);
-            view.dragging = {slice, move: event.ctrlKey};
+            const text = droppedNode.textContent
+            if (!text) return
+            const paragraph = view.state.schema.nodes.paragraph?.createAndFill({}, view.state.schema.text(text))
+            const listItem = view.state.schema.nodes.listItem?.createAndFill({}, paragraph)
+            const newList = view.state.schema.nodes.orderedList?.createAndFill(null, listItem)
+            const slice = new Slice(Fragment.from(newList), 0, 0)
+            view.dragging = { slice, move: event.ctrlKey }
           }
         },
       },
     },
-  });
+  })
 }
 
 const GlobalDragHandle = Extension.create({

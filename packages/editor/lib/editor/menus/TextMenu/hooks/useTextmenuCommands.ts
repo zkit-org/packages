@@ -1,6 +1,6 @@
 // import { Language } from '@tiptap-pro/extension-ai'
-import {Editor} from '@tiptap/react'
-import {useCallback} from 'react'
+import type { Editor } from '@tiptap/react'
+import { useCallback } from 'react'
 
 export const useTextmenuCommands = (editor: Editor) => {
   const onBold = useCallback(() => editor.chain().focus().toggleBold().run(), [editor])
@@ -20,7 +20,7 @@ export const useTextmenuCommands = (editor: Editor) => {
   const onChangeColor = useCallback((color: string) => editor.chain().setColor(color).run(), [editor])
   const onClearColor = useCallback(() => editor.chain().focus().unsetColor().run(), [editor])
 
-  const onChangeHighlight = useCallback((color: string) => editor.chain().setHighlight({color}).run(), [editor])
+  const onChangeHighlight = useCallback((color: string) => editor.chain().setHighlight({ color }).run(), [editor])
   const onClearHighlight = useCallback(() => editor.chain().focus().unsetHighlight().run(), [editor])
 
   // const onSimplify = useCallback(() => editor.chain().focus().aiSimplify().run(), [editor])
@@ -37,9 +37,9 @@ export const useTextmenuCommands = (editor: Editor) => {
       editor
         .chain()
         .focus()
-        .setLink({href: url, target: inNewTab ? '_blank' : ''})
+        .setLink({ href: url, target: inNewTab ? '_blank' : '' })
         .run(),
-    [editor],
+    [editor]
   )
 
   const onSetFont = useCallback(
@@ -49,7 +49,7 @@ export const useTextmenuCommands = (editor: Editor) => {
       }
       return editor.chain().focus().setFontFamily(font).run()
     },
-    [editor],
+    [editor]
   )
 
   const onSetFontSize = useCallback(
@@ -59,7 +59,7 @@ export const useTextmenuCommands = (editor: Editor) => {
       }
       return editor.chain().focus().setFontSize(fontSize).run()
     },
-    [editor],
+    [editor]
   )
 
   return {

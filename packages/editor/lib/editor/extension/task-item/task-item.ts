@@ -1,7 +1,5 @@
-import {
-  KeyboardShortcutCommand, mergeAttributes, Node, wrappingInputRule,
-} from '@tiptap/core'
-import {Node as ProseMirrorNode} from '@tiptap/pm/model'
+import { type KeyboardShortcutCommand, Node, mergeAttributes, wrappingInputRule } from '@tiptap/core'
+import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
 
 export interface TaskItemOptions {
   /**
@@ -65,12 +63,12 @@ export const TaskItem = Node.create<TaskItemOptions>({
       checked: {
         default: false,
         keepOnSplit: false,
-        parseHTML: element => {
+        parseHTML: (element) => {
           const dataChecked = element.getAttribute('data-checked')
 
           return dataChecked === '' || dataChecked === 'true'
         },
-        renderHTML: attributes => ({
+        renderHTML: (attributes) => ({
           'data-checked': attributes.checked,
         }),
       },
@@ -86,7 +84,7 @@ export const TaskItem = Node.create<TaskItemOptions>({
     ]
   },
 
-  renderHTML({node, HTMLAttributes}) {
+  renderHTML({ node, HTMLAttributes }) {
     return [
       'li',
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
@@ -126,9 +124,7 @@ export const TaskItem = Node.create<TaskItemOptions>({
   },
 
   addNodeView() {
-    return ({
-              node, HTMLAttributes, getPos, editor,
-            }) => {
+    return ({ node, HTMLAttributes, getPos, editor }) => {
       const listItem = document.createElement('li')
       const checkboxWrapper = document.createElement('label')
       const checkboxStyler = document.createElement('span')
@@ -137,23 +133,23 @@ export const TaskItem = Node.create<TaskItemOptions>({
 
       checkboxWrapper.contentEditable = 'false'
       checkbox.type = 'checkbox'
-      checkbox.addEventListener('mousedown', event => event.preventDefault())
-      checkbox.addEventListener('change', event => {
-        // if the editor isn’t editable and we don't have a handler for
+      checkbox.addEventListener('mousedown', (event) => event.preventDefault())
+      checkbox.addEventListener('change', (event) => {
+        // if the editor isn't editable and we don't have a handler for
         // readonly checks we have to undo the latest change
-        if (!editor.isEditable && !this.options.onReadOnlyChecked) {
+        if (!(editor.isEditable || this.options.onReadOnlyChecked)) {
           checkbox.checked = !checkbox.checked
 
           return
         }
 
-        const {checked} = event.target as any
+        const { checked } = event.target as any
 
         if (editor.isEditable && typeof getPos === 'function') {
           editor
             .chain()
-            .focus(undefined, {scrollIntoView: false})
-            .command(({tr}) => {
+            .focus(undefined, { scrollIntoView: false })
+            .command(({ tr }) => {
               const position = getPos()
 
               if (typeof position !== 'number') {
@@ -170,17 +166,14 @@ export const TaskItem = Node.create<TaskItemOptions>({
             })
             .run()
         }
-        if (!editor.isEditable && this.options.onReadOnlyChecked) {
-          // Reset state if onReadOnlyChecked returns false
-          if (!this.options.onReadOnlyChecked(node, checked)) {
-            checkbox.checked = !checkbox.checked
-          }
+        if (!editor.isEditable && this.options.onReadOnlyChecked && !this.options.onReadOnlyChecked(node, checked)) {
+          checkbox.checked = !checkbox.checked
         }
       })
 
-      Object.entries(this.options.HTMLAttributes).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(this.options.HTMLAttributes)) {
         listItem.setAttribute(key, value)
-      })
+      }
 
       listItem.dataset.checked = node.attrs.checked
       if (node.attrs.checked) {
@@ -190,14 +183,14 @@ export const TaskItem = Node.create<TaskItemOptions>({
       checkboxWrapper.append(checkbox, checkboxStyler)
       listItem.append(checkboxWrapper, content)
 
-      Object.entries(HTMLAttributes).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(HTMLAttributes)) {
         listItem.setAttribute(key, value)
-      })
+      }
 
       return {
         dom: listItem,
         contentDOM: content,
-        update: updatedNode => {
+        update: (updatedNode) => {
           if (updatedNode.type !== this.type) {
             return false
           }
@@ -220,8 +213,8 @@ export const TaskItem = Node.create<TaskItemOptions>({
       wrappingInputRule({
         find: inputRegex,
         type: this.type,
-        getAttributes: match => ({
-          checked: match[match.length - 1] === 'x',
+        getAttributes: (match) => ({
+          checked: match.at(-1) === 'x',
         }),
       }),
     ]

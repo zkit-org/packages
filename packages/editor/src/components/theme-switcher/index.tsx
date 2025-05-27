@@ -1,11 +1,12 @@
 import {IconDark, IconLight, IconSystem} from "@arco-iconbox/react-clover";
-import {useTheme} from "next-themes";
-import classNames from "classnames";
+import classNames from 'classnames'
+import { useTheme } from 'next-themes'
 import {useEffect, useState} from "react";
 
 export type Theme = {
-  name: string;
-  icon: any;
+  name: string
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  icon: any
 }
 
 const themes: Theme[] = [
@@ -31,17 +32,24 @@ export const ThemeSwitcher = () => {
     setMounted(true)
   }, [])
 
-  return <div className={"border rounded-full p-1 flex"} key={`switcher-${mounted}`}>
-    {
-      themes.map((item) => {
-        const Icon = item.icon;
-        return <div key={item.name} className={classNames(
-          "w-8 h-8 flex justify-center items-center rounded-full cursor-pointer",
-          theme === item.name ? "bg-secondary" : ""
-        )} onClick={() => setTheme(item.name)} suppressHydrationWarning={true}>
-          <Icon className={"text-lg"}/>
-        </div>
-      })
-    }
-  </div>
+  return (
+    <div className="flex rounded-full border p-1" key={`switcher-${mounted}`}>
+      {themes.map((item) => {
+        const Icon = item.icon
+        return (
+          <div
+            key={item.name}
+            className={classNames(
+              'flex h-8 w-8 cursor-pointer items-center justify-center rounded-full',
+              theme === item.name ? 'bg-secondary' : ''
+            )}
+            onClick={() => setTheme(item.name)}
+            suppressHydrationWarning={true}
+          >
+            <Icon className="text-lg" />
+          </div>
+        )
+      })}
+    </div>
+  )
 }

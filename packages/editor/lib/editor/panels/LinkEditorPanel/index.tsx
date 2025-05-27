@@ -1,1 +1,1 @@
-export * from './LinkEditorPanel'
+export { LinkEditorPanel } from './LinkEditorPanel'

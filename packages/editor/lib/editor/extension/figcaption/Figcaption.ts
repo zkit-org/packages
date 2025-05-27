@@ -1,4 +1,4 @@
-import {mergeAttributes, Node} from '@tiptap/core'
+import { Node, mergeAttributes } from '@tiptap/core'
 
 import {Image} from '../image';
 
@@ -30,10 +30,10 @@ export const Figcaption = Node.create({
   addKeyboardShortcuts() {
     return {
       // On Enter at the end of line, create new paragraph and focus
-      Enter: ({editor}) => {
+      Enter: ({ editor }) => {
         const {
           state: {
-            selection: {$from, empty},
+            selection: { $from, empty },
           },
         } = editor
 
@@ -49,15 +49,15 @@ export const Figcaption = Node.create({
 
         const pos = editor.state.selection.$from.end()
 
-        return editor.chain().focus(pos).insertContentAt(pos, {type: 'paragraph'}).run()
+        return editor.chain().focus(pos).insertContentAt(pos, { type: 'paragraph' }).run()
       },
 
       // On Backspace at the beginning of line,
       // dont delete content of image before
-      Backspace: ({editor}) => {
+      Backspace: ({ editor }) => {
         const {
           state: {
-            selection: {$from, empty},
+            selection: { $from, empty },
           },
         } = editor
 
@@ -82,7 +82,7 @@ export const Figcaption = Node.create({
     }
   },
 
-  renderHTML({HTMLAttributes}) {
+  renderHTML({ HTMLAttributes }) {
     return ['figcaption', mergeAttributes(HTMLAttributes), 0]
   },
 })

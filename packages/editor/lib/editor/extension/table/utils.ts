@@ -1,14 +1,17 @@
 import {findParentNode} from '@tiptap/core'
-import {Selection, Transaction} from '@tiptap/pm/state'
-import {CellSelection, TableMap} from '@tiptap/pm/tables'
-import {Node, ResolvedPos} from '@tiptap/pm/model'
+import type { Node, ResolvedPos } from '@tiptap/pm/model'
+import type { Selection, Transaction } from '@tiptap/pm/state'
+import { CellSelection, TableMap } from '@tiptap/pm/tables'
 
+const CELL_ROLE_REGEX = /cell/i
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const isRectSelected = (rect: any) => (selection: CellSelection) => {
   const map = TableMap.get(selection.$anchorCell.node(-1))
   const start = selection.$anchorCell.start(-1)
   const cells = map.cellsInRect(rect)
   const selectedCells = map.cellsInRect(
-    map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start),
+    map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start)
   )
 
   for (let i = 0, count = cells.length; i < count; i += 1) {
@@ -23,8 +26,10 @@ export const isRectSelected = (rect: any) => (selection: CellSelection) => {
 export const findTable = (selection: Selection) =>
   findParentNode(node => node.type.spec.tableRole && node.type.spec.tableRole === 'table')(selection)
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const isCellSelection = (selection: any) => selection instanceof CellSelection
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const isColumnSelected = (columnIndex: number) => (selection: any) => {
   if (isCellSelection(selection)) {
     const map = TableMap.get(selection.$anchorCell.node(-1))
@@ -40,6 +45,7 @@ export const isColumnSelected = (columnIndex: number) => (selection: any) => {
   return false
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const isRowSelected = (rowIndex: number) => (selection: any) => {
   if (isCellSelection(selection)) {
     const map = TableMap.get(selection.$anchorCell.node(-1))
@@ -55,6 +61,7 @@ export const isRowSelected = (rowIndex: number) => (selection: any) => {
   return false
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const isTableSelected = (selection: any) => {
   if (isCellSelection(selection)) {
     const map = TableMap.get(selection.$anchorCell.node(-1))
@@ -180,11 +187,12 @@ export const findParentNodeClosestToPos = ($pos: ResolvedPos, predicate: (node: 
 }
 
 export const findCellClosestToPos = ($pos: ResolvedPos) => {
-  const predicate = (node: Node) => node.type.spec.tableRole && /cell/i.test(node.type.spec.tableRole)
+  const predicate = (node: Node) => node.type.spec.tableRole && CELL_ROLE_REGEX.test(node.type.spec.tableRole)
 
   return findParentNodeClosestToPos($pos, predicate)
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 const select = (type: 'row' | 'column') => (index: number) => (tr: Transaction) => {
   const table = findTable(tr.selection)
   const isRowSelection = type === 'row'
@@ -210,14 +218,14 @@ const select = (type: 'row' | 'column') => (index: number) => (tr: Transaction) 
         bottom - top === 1
           ? cellsInFirstRow
           : map.cellsInRect({
-            left: isRowSelection ? left : right - 1,
-            top: isRowSelection ? bottom - 1 : top,
-            right,
-            bottom,
-          })
+              left: isRowSelection ? left : right - 1,
+              top: isRowSelection ? bottom - 1 : top,
+              right,
+              bottom,
+            })
 
       const head = table.start + cellsInFirstRow[0]
-      const anchor = table.start + cellsInLastRow[cellsInLastRow.length - 1]
+      const anchor = table.start + (cellsInLastRow?.at(-1) ?? 0)
       const $head = tr.doc.resolve(head)
       const $anchor = tr.doc.resolve(anchor)
 
@@ -237,9 +245,9 @@ export const selectTable = (tr: Transaction) => {
   if (table) {
     const {map} = TableMap.get(table.node)
 
-    if (map && map.length) {
+    if (map?.length) {
       const head = table.start + map[0]
-      const anchor = table.start + map[map.length - 1]
+      const anchor = table.start + (map?.at(-1) ?? 0)
       const $head = tr.doc.resolve(head)
       const $anchor = tr.doc.resolve(anchor)
 

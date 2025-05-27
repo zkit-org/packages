@@ -1,1 +1,1 @@
-export * from './ImageUpload'
+export { ImageUpload } from './ImageUpload'

@@ -3,11 +3,11 @@ import {useCallback} from 'react'
 import {sticky} from 'tippy.js'
 import {v4 as uuid} from 'uuid'
 
-import {MenuProps} from '../../../menus/types'
-import {getRenderContainer} from '../../../utils'
-import {Toolbar} from '../../../ui/Toolbar'
-import {ColumnLayout} from '../Columns'
-import {Icon} from '../../../ui/Icon'
+import type { MenuProps } from '../../../menus/types'
+import { Icon } from '../../../ui/Icon'
+import { Toolbar } from '../../../ui/Toolbar'
+import { getRenderContainer } from '../../../utils'
+import { ColumnLayout } from '../Columns' 
 
 export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
   const getReferenceClientRect = useCallback(() => {

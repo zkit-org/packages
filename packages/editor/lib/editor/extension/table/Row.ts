@@ -5,4 +5,4 @@ export const TableRow = TiptapTableRow.extend({
   content: 'tableCell*',
 })
 
-export default TableRow
+export default TableRow 

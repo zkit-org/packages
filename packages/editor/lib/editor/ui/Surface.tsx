@@ -1,5 +1,5 @@
-import {cn} from '../utils'
-import {HTMLProps, forwardRef} from 'react'
+import { type HTMLProps, forwardRef } from 'react' 
+import { cn } from '../utils'
 
 export type SurfaceProps = HTMLProps<HTMLDivElement> & {
   withShadow?: boolean

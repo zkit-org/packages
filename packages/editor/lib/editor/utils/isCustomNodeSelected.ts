@@ -1,13 +1,14 @@
-import {Editor} from '@tiptap/react'
+import type { Editor } from '@tiptap/react' 
 
+import CodeBlock from '@tiptap/extension-code-block'
 import {
   // AiWriter, AiImage,
-  Figcaption, HorizontalRule,
+  Figcaption,
+  HorizontalRule,
   ImageBlock,
   ImageUpload,
   Link,
-} from '../../editor/extension';
-import CodeBlock from '@tiptap/extension-code-block';
+} from '../../editor/extension'
 // import { TableOfContentsNode } from '@/extensions/TableOfContentsNode'
 
 export const isTableGripSelected = (node: HTMLElement) => {
@@ -17,8 +18,8 @@ export const isTableGripSelected = (node: HTMLElement) => {
     container = container.parentElement!
   }
 
-  const gripColumn = container && container.querySelector && container.querySelector('a.grip-column.selected')
-  const gripRow = container && container.querySelector && container.querySelector('a.grip-row.selected')
+  const gripColumn = container?.querySelector?.('a.grip-column.selected')
+  const gripRow = container?.querySelector?.('a.grip-row.selected')
 
   if (gripColumn || gripRow) {
     return true

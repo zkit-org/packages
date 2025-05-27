@@ -1,23 +1,23 @@
 import {BubbleMenu as BaseBubbleMenu} from '@tiptap/react'
-import React, {ReactElement, useCallback} from 'react'
-import * as PopoverMenu from '../../../../ui/PopoverMenu'
+import React, { type ReactElement, useCallback } from 'react'
+import { Item } from '../../../../ui/PopoverMenu'
 
-import {Toolbar} from '../../../../ui/Toolbar'
-import {isColumnGripSelected} from './utils'
-import {Icon} from '../../../../ui/Icon'
-import {MenuProps, ShouldShowProps} from '../../../../menus/types'
+import type { MenuProps, ShouldShowProps } from '../../../../menus/types'
+import { Icon } from '../../../../ui/Icon'
+import { Toolbar } from '../../../../ui/Toolbar'
 import {i18n} from "../../../../utils/locale";
+import { isColumnGripSelected } from './utils'
 
 export const TableColumnMenu = React.memo(({editor, appendTo}: MenuProps): ReactElement => {
   const shouldShow = useCallback(
-    ({view, state, from}: ShouldShowProps) => {
+    ({ view, state, from }: ShouldShowProps) => {
       if (!state) {
         return false
       }
 
-      return isColumnGripSelected({editor, view, state, from: from || 0})
+      return isColumnGripSelected({ editor, view, state, from: from || 0 })
     },
-    [editor],
+    [editor]
   )
 
   const onAddColumnBefore = useCallback(() => {
@@ -44,26 +44,25 @@ export const TableColumnMenu = React.memo(({editor, appendTo}: MenuProps): React
         },
         offset: [0, 15],
         popperOptions: {
-          modifiers: [{name: 'flip', enabled: false}],
+          modifiers: [{ name: 'flip', enabled: false }],
         },
       }}
       shouldShow={shouldShow}
     >
       <Toolbar.Wrapper isVertical>
-        <PopoverMenu.Item
-          iconComponent={<Icon name="ArrowLeftToLine"/>}
+        <Item
+          iconComponent={<Icon name="ArrowLeftToLine" />}
           close={false}
-          label={i18n("tableColumnMenu.onAddColumnBefore")}
+          label={i18n('tableColumnMenu.onAddColumnBefore')}
           onClick={onAddColumnBefore}
         />
-        <PopoverMenu.Item
-          iconComponent={<Icon name="ArrowRightToLine"/>}
+        <Item
+          iconComponent={<Icon name="ArrowRightToLine" />}
           close={false}
-          label={i18n("tableColumnMenu.onAddColumnAfter")}
+          label={i18n('tableColumnMenu.onAddColumnAfter')}
           onClick={onAddColumnAfter}
         />
-        <PopoverMenu.Item icon="Trash" close={false} label={i18n("tableColumnMenu.onDeleteColumn")}
-                          onClick={onDeleteColumn}/>
+        <Item icon="Trash" close={false} label={i18n('tableColumnMenu.onDeleteColumn')} onClick={onDeleteColumn} />
       </Toolbar.Wrapper>
     </BaseBubbleMenu>
   )

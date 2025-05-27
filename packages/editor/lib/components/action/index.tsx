@@ -1,1 +1,1 @@
-export { Action } from "@easykit/design";
+export { Action } from '@easykit/design'

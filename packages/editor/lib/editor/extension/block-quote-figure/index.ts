@@ -1,1 +1,1 @@
-export * from './BlockquoteFigure'
+export { BlockquoteFigure } from './BlockquoteFigure'

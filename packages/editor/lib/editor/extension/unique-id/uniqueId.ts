@@ -1,7 +1,7 @@
-import {Extension, combineTransactionSteps, findChildrenInRange, findDuplicates, getChangedRanges} from '@tiptap/core'
-import {nanoid} from 'nanoid'
+import { Extension, combineTransactionSteps, findChildrenInRange, findDuplicates, getChangedRanges } from '@tiptap/core'
 import type {Transaction} from '@tiptap/pm/state'
 import {Plugin, PluginKey} from '@tiptap/pm/state'
+import { nanoid } from 'nanoid'
 
 export interface UniqueIdOptions {
   attributeName: string
@@ -86,17 +86,17 @@ export const UniqueId = Extension.create<UniqueIdOptions>({
     return [
       new Plugin({
         key: pluginKey,
-        appendTransaction(trs, {doc: oldDoc}, {doc: newDoc, tr}) {
-          if (!trs.some(tr => tr.docChanged) || oldDoc.eq(newDoc))
-            return
+        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+        appendTransaction(trs, { doc: oldDoc }, { doc: newDoc, tr }) {
+          if (!trs.some((tr) => tr.docChanged) || oldDoc.eq(newDoc)) return
 
           const transform = combineTransactionSteps(oldDoc, trs as Transaction[])
 
-          getChangedRanges(transform).forEach(({newRange}) => {
-            const newNodes = findChildrenInRange(newDoc, newRange, node => types!.includes(node.type.name))
+          for (const { newRange } of getChangedRanges(transform)) {
+            const newNodes = findChildrenInRange(newDoc, newRange, (node) => types!.includes(node.type.name))
 
-            const newIds = newNodes.map(({node}) => node.attrs[attributeName!]).filter(item => !!item)
-            newNodes.forEach(({node, pos}) => {
+            const newIds = newNodes.map(({ node }) => node.attrs[attributeName!]).filter((item) => !!item)
+            for (const { node, pos } of newNodes) {
               if (injectNodeName && !node.attrs['data-node-name'])
                 tr.setNodeAttribute(pos, 'data-node-name', node.type.name)
 
@@ -104,16 +104,15 @@ export const UniqueId = Extension.create<UniqueIdOptions>({
 
               if (!uniqueId) {
                 tr.setNodeAttribute(pos, attributeName!, generateID!())
-                return
+                continue
               }
 
               if (tr.mapping.invert().mapResult(pos) && findDuplicates(newIds).includes(uniqueId))
                 tr.setNodeAttribute(pos, attributeName!, generateID!())
-            })
-          })
+            }
+          }
 
-          if (!transform.steps.length)
-            return null
+          if (!transform.steps.length) return null
 
           return tr
         },

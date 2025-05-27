@@ -1,13 +1,13 @@
 import styles from '../style.module.scss';
-import "../editor.css";
-import {FC} from "react";
-import classNames from "classnames";
+import '../editor.css'
 import {EditorContent} from "@tiptap/react";
+import classNames from 'classnames'
+import type { FC } from 'react'
 import {useEditor} from "../hooks";
 
 export type ContentViewerProps = {
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: string
+  onChange?: (value: string) => void
 }
 
 export const ContentViewer: FC<ContentViewerProps> = (props) => {

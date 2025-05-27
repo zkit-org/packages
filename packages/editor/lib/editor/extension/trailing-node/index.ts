@@ -1,1 +1,1 @@
-export * from './trailing-node'
+export { TrailingNode } from './trailing-node'
