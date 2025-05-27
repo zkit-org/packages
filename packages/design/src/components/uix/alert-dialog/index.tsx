@@ -17,7 +17,8 @@ export interface ConfirmProps {
   description: ReactNode
   cancelText?: string
   okText?: string
-  onOk?: () => boolean | undefined | Promise<boolean | undefined>
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  onOk?: () => boolean | void | Promise<boolean | void>
   onCancel?: () => void
   open?: boolean
   confirmLoading?: boolean
@@ -62,7 +63,7 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
               const result = onOk?.()
               let value: boolean | undefined
               if (result instanceof Promise) {
-                value = await result
+                value = (await result) as boolean | undefined
                 if (typeof value === 'undefined') {
                   value = true
                 }
