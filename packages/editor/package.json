@@ -1,6 +1,6 @@
 {
   "name": "@easykit/editor",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "keywords": [
     "easykit",
     "tailwindcss",
@@ -93,7 +93,7 @@
       "types": "./dist/locales/zh-tw.d.ts",
       "default": "./dist/locales/zh-tw.js"
     },
-    "./locales/en-ys": {
+    "./locales/en-us": {
       "types": "./dist/locales/en-us.d.ts",
       "default": "./dist/locales/en-us.js"
     },

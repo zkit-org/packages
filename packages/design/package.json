@@ -1,6 +1,6 @@
 {
   "name": "@easykit/design",
-  "version": "0.0.100",
+  "version": "0.0.101",
   "keywords": [
     "easykit",
     "design",
@@ -93,7 +93,7 @@
       "types": "./dist/assets/locales/zh-tw.d.ts",
       "default": "./dist/locales/zh-tw.js"
     },
-    "./locales/en-ys": {
+    "./locales/en-us": {
       "types": "./dist/assets/locales/en-us.d.ts",
       "default": "./dist/locales/en-us.js"
     },
