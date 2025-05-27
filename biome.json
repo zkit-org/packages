@@ -13,7 +13,9 @@
     "ignoreUnknown": false,
     "ignore": [
       "node_modules",
-      "packages/design/src/components/ui"
+      "packages/design/src/components/ui",
+      ".next",
+      "dist"
     ]
   },
   "formatter": {

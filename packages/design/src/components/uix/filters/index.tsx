@@ -35,6 +35,7 @@ const renderItem = (item: FilterItemProps, form: { control: Control }) => {
         <Controller
           name={item.field}
           control={form.control}
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           render={({ field }) => cloneElement<any>(ele, { ...(ele as any).props, ...field, value: field.value })}
         />
       </div>
@@ -63,6 +64,7 @@ export const Filters: FC<FiltersProps> = (props) => {
   const searchText = props.searchText || get(config.locale, "Filters.searchText");
   const resetText = props.resetText || get(config.locale, "Filters.resetText");
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const onSubmit: SubmitHandler<any> = (data) => {
     load?.({
       ...(data || {}),

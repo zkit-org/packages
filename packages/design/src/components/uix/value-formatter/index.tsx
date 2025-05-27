@@ -18,7 +18,7 @@ export const formatValue = (v: any, formatters: Formatters, all?: FunctionMap) =
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const merged: any = { ...BUILT_IN, ..._handles, ...(all ?? {}) }
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const fallback = (v: any, ...p: any[]) => v
+  const fallback = (v: any, ..._p: any[]) => v
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   let params: any[] = []
   let result = v

@@ -10,7 +10,7 @@ const Page = () => {
     <div className="p-4">
       <Tree
         checkedKeys={checkedKeys}
-        onCheck={(keys, e) => {
+        onCheck={(keys) => {
           setCheckedKeys(keys as string[])
         }}
         selectable={false}

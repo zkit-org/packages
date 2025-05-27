@@ -1,3 +1,3 @@
-import {NextConfig} from "next";
-
+import type { NextConfig } from 'next'
+ 
 export default {} as NextConfig;

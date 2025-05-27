@@ -3,7 +3,9 @@ import { useEffect } from 'react'
 /**
  * Hook that alerts clicks outside of the passed ref
  */
-export const useOutside = (call: () => void, refs: any) => {
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export  const useOutside = (call: () => void, refs: any) => {
   useEffect(() => {
     /**
      * Alert if clicked on outside of element

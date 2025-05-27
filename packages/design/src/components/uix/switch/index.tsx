@@ -7,18 +7,20 @@ export interface SwitchProps {
   readonly?: boolean;
 }
 
-export const Switch: FC<SwitchProps> = forwardRef((props, ref) => {
+export const Switch: FC<SwitchProps> = forwardRef((props, _ref) => {
   const { onChange, readonly = false } = props
 
-  const [checked, setChecked] = useState(props.value);
+  const [checked, setChecked] = useState(props.value)
 
-  const core = <UISwitch
-    checked={checked}
-    onCheckedChange={(checked) => {
-      setChecked(checked)
-      onChange?.(checked)
-    }}
-  />;
+  const core = (
+    <UISwitch
+      checked={checked}
+      onCheckedChange={(checked) => {
+        setChecked(checked)
+        onChange?.(checked)
+      }}
+    />
+  )
   return readonly ? (
     <div className="relative inline-block">
       {core}
@@ -27,4 +29,4 @@ export const Switch: FC<SwitchProps> = forwardRef((props, ref) => {
   ) : (
     core
   )
-});
+})

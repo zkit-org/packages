@@ -18,7 +18,7 @@ export interface CheckboxGroupProps {
   className?: string;
 }
 
-export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => {
+export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, _ref) => {
   const { options = [], itemClassName, className, checkboxClassName } = props
 
   const [checkedValues, setCheckedValues] = useState<string[]>(props.value || [])
@@ -56,4 +56,4 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, ref) => 
       })}
     </div>
   )
-});
+})

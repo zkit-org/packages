@@ -1,4 +1,4 @@
-import zhCN from '@easykit/design/assets/locales/zh-CN'
+import zhCN from '@easykit/design/assets/locales/zh-cn'
 import {Toaster} from "@easykit/design/components/ui/sonner";
 import omit from 'lodash/omit'
 import { type FC, type PropsWithChildren, createContext } from 'react'

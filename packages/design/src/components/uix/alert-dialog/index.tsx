@@ -89,6 +89,7 @@ export const useAlert = () => {
   return useMemo(() => {
     return {
       confirm: (props: ConfirmProps) => {
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         let root: any;
         const div = document.createElement('div');
         document.body.appendChild(div);

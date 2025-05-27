@@ -1,6 +1,6 @@
 {
   "name": "@easykit/design",
-  "version": "0.0.99",
+  "version": "0.0.100",
   "keywords": [
     "easykit",
     "design",
@@ -85,17 +85,17 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./locales/zh-CN": {
-      "types": "./dist/assets/locales/zh-CN.d.ts",
-      "default": "./dist/locales/zh-CN.js"
+    "./locales/zh-cn": {
+      "types": "./dist/assets/locales/zh-cn.d.ts",
+      "default": "./dist/locales/zh-cn.js"
     },
-    "./locales/zh-TW": {
-      "types": "./dist/assets/locales/zh-TW.d.ts",
-      "default": "./dist/locales/zh-TW.js"
+    "./locales/zh-tw": {
+      "types": "./dist/assets/locales/zh-tw.d.ts",
+      "default": "./dist/locales/zh-tw.js"
     },
-    "./locales/en-US": {
-      "types": "./dist/assets/locales/en-US.d.ts",
-      "default": "./dist/locales/en-US.js"
+    "./locales/en-ys": {
+      "types": "./dist/assets/locales/en-us.d.ts",
+      "default": "./dist/locales/en-us.js"
     },
     "./style.css": "./dist/style.css",
     "./theme.css": "./dist/theme.css"
