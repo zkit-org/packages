@@ -23,7 +23,7 @@ export default defineConfig({
     react(),
     viteStaticCopy({
       targets: [
-        { src: './README.md', dest: './' },
+        // { src: './README.md', dest: './' },
         { src: './src/assets/style/theme.css', dest: './' },
       ],
     }),

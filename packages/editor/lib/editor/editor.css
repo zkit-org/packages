@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "../style/tailwind.css";
 
 .ProseMirror {
   --margin-y: 1rem;
@@ -26,18 +24,18 @@
   @apply my-[var(--margin-y)] text-secondary-foreground;
 }
 
-.ProseMirror [data-type=blockquoteFigure] blockquote,
-.ProseMirror > blockquote blockquote { 
+.ProseMirror > blockquote blockquote,
+.ProseMirror [data-type=blockquoteFigure] blockquote { 
   @apply m-0;
 }
 
-.ProseMirror [data-type=blockquoteFigure] blockquote > :first-child,
-.ProseMirror > blockquote blockquote > :first-child {
+.ProseMirror > blockquote blockquote > :first-child,
+.ProseMirror [data-type=blockquoteFigure] blockquote > :first-child {
   @apply mt-0;
 }
 
-.ProseMirror [data-type=blockquoteFigure] blockquote > :last-child,
-.ProseMirror > blockquote blockquote > :last-child {
+.ProseMirror > blockquote blockquote > :last-child,
+.ProseMirror [data-type=blockquoteFigure] blockquote > :last-child{
   @apply mb-0;
 }
 
@@ -178,11 +176,6 @@
 
 .ProseMirror ol li, .ProseMirror ol ol, .ProseMirror ol ul, .ProseMirror ul li, .ProseMirror ul ol, .ProseMirror ul ul {
   margin-top: .25rem;
-  margin-bottom: .25rem
-}
-
-.ProseMirror ol p, .ProseMirror ul p {
-  margin-top: 0;
   margin-bottom: .25rem
 }
 
@@ -415,6 +408,11 @@
 }
 
 /**  普通段落 end  **/
+
+.ProseMirror ol p, .ProseMirror ul p {
+  margin-top: 0;
+  margin-bottom: .25rem
+}
 
 /**  标题 start  **/
 .ProseMirror h1 {

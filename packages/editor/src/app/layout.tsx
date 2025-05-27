@@ -2,6 +2,8 @@ import type {Metadata} from "next";
 import "@/plugin/locales";
 import {MainLayout} from '@/components/layout/main';
 import type { ReactNode } from 'react'
+import '@easykit/design/style.css'
+import '../../lib/style/tailwind.css'
 
 export const metadata: Metadata = {
   title: 'Editor Playground',

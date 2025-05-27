@@ -15,7 +15,8 @@
       "node_modules",
       "packages/design/src/components/ui",
       ".next",
-      "dist"
+      "dist",
+      "*.css"
     ]
   },
   "formatter": {
@@ -107,7 +108,8 @@
         "useBlockStatements": "off",
         "useNamingConvention": "off",
         "useExplicitLengthCheck": "off",
-        "noNamespaceImport": "info"
+        "noNamespaceImport": "info",
+        "useFilenamingConvention": "off"
       },
       "suspicious": {
         "all": true,

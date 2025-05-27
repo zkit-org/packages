@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import type { ReactNode } from 'react'
 
-export const DropdownCategoryTitle = ({ children }: { children: React.ReactNode }) => {
+export const DropdownCategoryTitle = ({ children }: { children: ReactNode }) => {
   return (
     <div className="mb-1 px-1.5 font-semibold text-[.65rem] text-neutral-500 uppercase dark:text-neutral-400">
       {children}

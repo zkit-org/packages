@@ -5,6 +5,7 @@ import {Decoration, DecorationSet} from '@tiptap/pm/view'
 import {getCellsInColumn, isRowSelected, selectRow} from './utils'
 
 export interface TableCellOptions {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   HTMLAttributes: Record<string, any>
 }
 

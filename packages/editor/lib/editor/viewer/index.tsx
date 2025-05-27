@@ -1,9 +1,8 @@
-import styles from '../style.module.scss';
+import '../container.css'
 import '../editor.css'
-import {EditorContent} from "@tiptap/react";
-import classNames from 'classnames'
+import { EditorContent } from '@tiptap/react'
 import type { FC } from 'react'
-import {useEditor} from "../hooks";
+import { useEditor } from '../hooks'
 
 export type ContentViewerProps = {
   value?: string
@@ -11,17 +10,16 @@ export type ContentViewerProps = {
 }
 
 export const ContentViewer: FC<ContentViewerProps> = (props) => {
-  const {value, onChange} = props;
+  const { value, onChange } = props
   const [editor] = useEditor({
     value,
     editable: false,
     onReadOnlyChange: onChange,
-  });
+  })
 
-  return <div className={styles.editorContainer}>
-    <EditorContent
-      className={classNames(styles.editor, styles.readonly)}
-      editor={editor}
-    />
-  </div>
+  return (
+    <div className="editor-container">
+      <EditorContent className="editor" editor={editor} />
+    </div>
+  )
 }

@@ -1,6 +1,6 @@
 {
   "name": "@easykit/editor",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "keywords": [
     "easykit",
     "tailwindcss",
@@ -17,7 +17,7 @@
     "url": "https://github.com/zkit-org/packages.git"
   },
   "scripts": {
-    "dev": "next dev -p 4001",
+    "dev": "next dev -p 4001 --turbopack",
     "build": "tsc && vite build",
     "build:next": "next build",
     "start": "next start",
@@ -75,17 +75,36 @@
     "tailwind-merge": "2.3.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.1.4",
     "@types/uuid": "10.0.0"
   },
-  "module": "./index.js",
-  "types": "./index.d.ts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./locales/zh-cn": {
+      "types": "./dist/locales/zh-cn.d.ts",
+      "default": "./dist/locales/zh-cn.js"
+    },
+    "./locales/zh-tw": {
+      "types": "./dist/locales/zh-tw.d.ts",
+      "default": "./dist/locales/zh-tw.js"
+    },
+    "./locales/en-ys": {
+      "types": "./dist/locales/en-us.d.ts",
+      "default": "./dist/locales/en-us.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "publishConfig": {
     "access": "public"
   },
-  "postcss": {
-    "plugins": {
-      "tailwindcss": {},
-      "autoprefixer": {}
-    }
-  }
+  "files": [
+    "/dist",
+    "package.json",
+    "README.md"
+  ]
 }

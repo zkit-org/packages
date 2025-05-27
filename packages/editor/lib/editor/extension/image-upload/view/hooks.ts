@@ -23,7 +23,7 @@ export const useUploader = ({onUpload, uploadImage}: UseUploaderProps) => {
       }
       setLoading(false)
     },
-    [onUpload, msg]
+    [onUpload, msg, uploadImage]
   )
 
   return {loading, uploadFile}

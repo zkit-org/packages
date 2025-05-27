@@ -21,6 +21,6 @@ jobs:
       - run: pnpm i
       - run: pnpm build:design # This is a dependency of the editor package
       - run: pnpm build:editor
-      - run: cd packages/editor/dist/ && npm publish
+      - run: cd packages/editor/ && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

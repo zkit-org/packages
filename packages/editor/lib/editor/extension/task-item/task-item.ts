@@ -22,6 +22,8 @@ export interface TaskItemOptions {
    * @default {}
    * @example { class: 'foo' }
    */
+
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   HTMLAttributes: Record<string, any>
 
   /**
@@ -143,6 +145,7 @@ export const TaskItem = Node.create<TaskItemOptions>({
           return
         }
 
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         const { checked } = event.target as any
 
         if (editor.isEditable && typeof getPos === 'function') {

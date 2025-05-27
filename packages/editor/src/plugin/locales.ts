@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import zhCN from "../../lib/locales/zh-CN";
+import zhCN from '../../lib/locales/zh-cn'
 
 i18next
   .init({

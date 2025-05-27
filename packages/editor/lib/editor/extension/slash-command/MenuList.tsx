@@ -28,7 +28,8 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
   )
 
   React.useImperativeHandle(ref, () => ({
-    onKeyDown: ({event}: { event: React.KeyboardEvent }) => {
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+    onKeyDown: ({ event }: { event: React.KeyboardEvent }) => {
       if (event.key === 'ArrowDown') {
         if (!props.items.length) {
           return false

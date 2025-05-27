@@ -1,4 +1,4 @@
-import styles from './style.module.scss';
+import './container.css'
 import "./editor.css";
 import type { EditorEvents, Editor as EditorInstance } from '@tiptap/core'
 import type { Extensions } from '@tiptap/core'
@@ -41,17 +41,10 @@ export const Editor = forwardRef<EditorRef, EditorProps>((props, ref) => {
     editor,
   }), [editor]);
 
-  return <div className={styles.editorContainer} ref={menuContainerRef}>
-    <EditorContent
-      className={styles.editor}
-      editor={editor}
-    />
-    <EditorController
-      editor={editor}
-      limit={limit}
-      appendTo={menuContainerRef}
-      handleId={handleId}
-      data={data}
-    />
-  </div>
+  return (
+    <div className="editor-container" ref={menuContainerRef}>
+      <EditorContent className="editor" editor={editor} />
+      <EditorController editor={editor} limit={limit} appendTo={menuContainerRef} handleId={handleId} data={data} />
+    </div>
+  )
 });

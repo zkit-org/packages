@@ -1,8 +1,6 @@
 "use client";
 
-import "@/plugin/locales";
-import "@easykit/design/globals.css";
-import "@easykit/design/style.css";
+import '@/plugin/locales'
 import {Editor} from "@easykit/editor";
 import {useState} from 'react';
 
@@ -801,8 +799,8 @@ export default function Home() {
   }
   const [value, setValue] = useState(JSON.stringify(obj));
   return (
-    <div className={'flex items-start justify-center p-4'}>
-      <div className={'m-8 w-full max-w-[860px]'}>
+    <div className="flex items-start justify-center p-4">
+      <div className="m-8 w-full max-w-[860px]">
         <Editor
           value={value}
           onChange={setValue}
