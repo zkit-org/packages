@@ -59,8 +59,17 @@ export type ToolbarButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
   (
-    {children, buttonSize = 'icon', variant = 'ghost', className, tooltip, tooltipShortcut, activeClassname, ...rest},
-    ref,
+    {
+      children,
+      buttonSize = 'icon',
+      variant = 'ghost',
+      className,
+      tooltip,
+      tooltipShortcut,
+      activeClassname = '!bg-neutral-200 dark:!bg-neutral-800',
+      ...rest
+    },
+    ref
   ) => {
     const buttonClass = cn('gap-1 min-w-[2rem] px-2 w-auto', className)
 
@@ -86,7 +95,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     }
 
     return content
-  },
+  }
 )
 
 ToolbarButton.displayName = 'ToolbarButton'

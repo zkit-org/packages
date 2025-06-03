@@ -1,6 +1,6 @@
 'use client'
 
-import Tippy from '@tippyjs/react/headless'
+import Tippy from 'rb-tippyjs-react/headless'
 import { type ReactElement, useCallback } from 'react'
 
 import type { TippyProps, TooltipProps } from './types' 
