@@ -5,8 +5,8 @@ import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card a
 
 export interface CardProps extends PropsWithChildren {
   footer?: ReactNode
-  title?: string
-  description?: string
+  title?: ReactNode
+  description?: ReactNode
   className?: string
   contentClassName?: string
   onClick?: () => void
