@@ -39,7 +39,6 @@ import {
   TaskList,
   TextAlign,
   TextStyle,
-  TrailingNode,
   Underline,
   UniqueId,
 } from './extension'
@@ -151,7 +150,7 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
         FontSize,
         FontFamily,
         Color,
-        TrailingNode,
+        // TrailingNode,
         Link.configure({
           openOnClick: false,
         }),
