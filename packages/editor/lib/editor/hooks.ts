@@ -6,7 +6,7 @@ import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
 import { useEditor as useBaseEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { type NodeData, useData } from './control/drag-handle/use.data'
 import { useHandleId } from './control/drag-handle/use.handle.id'
 import {
@@ -231,6 +231,34 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
     },
     [onChange, onReadOnlyChecked, onCreate]
   )
+
+  const isRemoteUpdate = useRef(false)
+
+  // 监听 value 变化，必要时 setContent
+  useEffect(() => {
+    if (!(editor && value)) return
+    const current = JSON.stringify(editor.getJSON())
+    if (current !== value) {
+      isRemoteUpdate.current = true
+      editor.commands.setContent(JSON.parse(value), false)
+    }
+  }, [value, editor])
+
+  // onUpdate 里判断是否是外部 setContent
+  useEffect(() => {
+    if (!editor) return
+    const handler = () => {
+      if (isRemoteUpdate.current) {
+        isRemoteUpdate.current = false
+        return
+      }
+      onChange?.(getJSONString(editor))
+    }
+    editor.on('update', handler)
+    return () => {
+      editor.off('update', handler)
+    }
+  }, [editor, onChange])
 
   return [editor!, data, handleId]
 }
