@@ -37,24 +37,25 @@ export interface RenderProps extends ControllerRenderProps {
   placeholder?: string
 }
 
-export interface FieldItem extends PropsWithChildren {
+export interface FieldItem<T extends FieldValues> extends PropsWithChildren {
   name: string
   label: string | ReactNode
   description?: string
-  control?: Control<FieldValues>
+  control?: Control<T>
   className?: string
 }
 
-export type FormProps<T> = FormHTMLAttributes<HTMLFormElement> & {
+export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> & {
   schema?: ZodType<T>
   defaultValues?: DefaultValues<T>
-  onSubmit?: SubmitHandler<FieldValues>
+  onSubmit?: SubmitHandler<T>
   className?: string
-  onValuesChange?: WatchObserver<FieldValues>
+  onValuesChange?: WatchObserver<T>
   stopPropagation?: boolean
 }
 
-export const FormItem: FC<FieldItem> = (props) => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const FormItem: FC<FieldItem<any>> = (props) => {
   const render = (field: ControllerRenderProps) => {
     if (Children.count(props.children) === 1) {
       const ele = props.children as ReactElement
@@ -97,10 +98,10 @@ export const FormItem: FC<FieldItem> = (props) => {
   )
 }
 
-export const Form = forwardRef(<T,>(props: FormProps<T>, ref: Ref<UseFormReturn | undefined>) => {
+function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormReturn<T> | undefined>) {
   const { schema = null, defaultValues, onSubmit, className, onValuesChange, stopPropagation = true, ...rest } = props
 
-  const form = useForm({
+  const form = useForm<T>({
     resolver: zodResolver(schema!),
     defaultValues: defaultValues,
   })
@@ -141,4 +142,8 @@ export const Form = forwardRef(<T,>(props: FormProps<T>, ref: Ref<UseFormReturn 
       </form>
     </UIForm>
   )
-})
+}
+
+export const Form = forwardRef(FormInner) as <T extends FieldValues>(
+  props: FormProps<T> & { ref?: Ref<UseFormReturn<T> | undefined> }
+) => ReactElement

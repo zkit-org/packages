@@ -1,9 +1,9 @@
 'use client';
 
 import {Alert, Button, Form, FormItem, Select} from '@easykit/design';
-import {useCallback, useRef} from 'react';
+import { useCallback, useRef } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
-import { object, string } from 'zod'
+import { object, string, type z } from 'zod'
 
 const getSchema = () =>
   object({
@@ -11,19 +11,23 @@ const getSchema = () =>
     projectId: string(),
   })
 
-const Page = () => {
-  const formRef = useRef<UseFormReturn>(null)
+type FormData = z.infer<ReturnType<typeof getSchema>>
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const onSubmit = useCallback((data: any) => {
+const Page = () => {
+  const formRef = useRef<UseFormReturn<FormData>>(null)
+
+  const onSubmit = useCallback((data: FormData) => {
     console.log('onSubmit', data)
   }, [])
 
   return (
     <div className="p-4">
-      <Form
+      <Form<FormData>
         ref={formRef}
         schema={getSchema()}
+        onValuesChange={(data) => {
+          console.log('onValuesChange', data)
+        }}
         onSubmit={onSubmit}
         defaultValues={{
           teamId: '1',
