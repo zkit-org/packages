@@ -66,7 +66,7 @@ export const Filters: FC<FiltersProps> = (props) => {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const onSubmit: SubmitHandler<any> = (data) => {
     load?.({
-      ...(data || {}),
+      ...pick(data, fields),
       page: 1,
     })
   }
@@ -87,11 +87,12 @@ export const Filters: FC<FiltersProps> = (props) => {
                 className="ml-2"
                 variant="secondary"
                 onClick={() => {
+                  const filteredDefaultValues = pick(defaultValues, fields)
                   load?.({
-                    ...(defaultValues || {}),
+                    ...filteredDefaultValues,
                     page: 1,
                   })
-                  reset(defaultValues)
+                  reset(filteredDefaultValues)
                 }}
               >
                 {resetText}
