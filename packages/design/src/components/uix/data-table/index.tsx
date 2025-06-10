@@ -55,8 +55,7 @@ export interface DataTableProps<TData> {
   rowActions?: DropdownMenuItemProps[] | ((cell: TData) => DropdownMenuItemProps[])
   onRowActionClick?: (item: DropdownMenuItemProps, row: Row<TData>) => void
   loading?: boolean
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  load?: (params?: any) => Promise<any>
+  load?: (params?: unknown) => Promise<unknown> | unknown
   filter?: FiltersProps
   pagination?: PaginationProps | boolean
   cellHandles?: FunctionMap
@@ -415,10 +414,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             <Pagination
               {...(pagination as PaginationProps)}
               onChange={(page: number) => {
-                load?.({ page }).then()
+                load?.({ page })
               }}
               onSizeChange={(size: number) => {
-                load?.({ size, page: 1 }).then()
+                load?.({ size, page: 1 })
               }}
             />
           )}

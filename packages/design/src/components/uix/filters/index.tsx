@@ -19,8 +19,7 @@ export interface FiltersProps extends PropsWithChildren {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   query?: any
   loading?: boolean
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  load?: (params?: any) => Promise<any>
+  load?: (params?: unknown) => Promise<unknown> | unknown
   searchText?: string
   resetText?: string
 }
@@ -68,8 +67,8 @@ export const Filters: FC<FiltersProps> = (props) => {
   const onSubmit: SubmitHandler<any> = (data) => {
     load?.({
       ...(data || {}),
-      page: 1
-    }).then();
+      page: 1,
+    })
   }
 
   return (
@@ -91,7 +90,7 @@ export const Filters: FC<FiltersProps> = (props) => {
                   load?.({
                     ...(defaultValues || {}),
                     page: 1,
-                  }).then()
+                  })
                   reset(defaultValues)
                 }}
               >
