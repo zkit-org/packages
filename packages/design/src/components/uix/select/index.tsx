@@ -47,8 +47,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
 
   return (
     <UISelect {...rest} onValueChange={handleChange} value={currentValue} defaultValue={defaultValue}>
-      <div className={cn('relative', allowClear && currentValue ? 'group' : '')}>
-        <SelectTrigger className={cn('flex w-full', className)}>
+      <div className={cn('relative', allowClear && currentValue ? 'group' : '', className)}>
+        <SelectTrigger className={cn('flex w-full')}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         {allowClear && currentValue && (
