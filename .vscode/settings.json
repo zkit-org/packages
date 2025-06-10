@@ -20,7 +20,7 @@
   "[css]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "cSpell.words": [],
+  "cSpell.words": ["iconbox", "turbopack", "dismissable", "cmdk", "sonner", "easykit"],
   "css.customData": [".vscode/tailwind.json"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "never",
