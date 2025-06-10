@@ -1,6 +1,7 @@
 import { Empty } from '@easykit/design/components/uix/empty'
 import { cn } from '@easykit/design/lib'
-import { type ReactNode, forwardRef } from 'react'
+import { XIcon } from 'lucide-react'
+import { type MouseEvent, type ReactNode, forwardRef, useState } from 'react'
 import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select as UISelect } from '../../ui/select'
 
 export interface SelectOptionProps {
@@ -11,6 +12,7 @@ export interface SelectOptionProps {
 export interface SelectProps {
   options: SelectOptionProps[]
   value?: string
+  defaultValue?: string
   onChange?: (value: string) => void
   placeholder?: string
   className?: string
@@ -19,16 +21,45 @@ export interface SelectProps {
   align?: 'start' | 'center' | 'end'
   alignOffset?: number
   empty?: ReactNode
+  allowClear?: boolean
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) => {
-  const { options = [], value, onChange, placeholder, className, empty, ...rest } = props
+  const { options = [], value, defaultValue, onChange, placeholder, className, empty, allowClear, ...rest } = props
+
+  const [innerValue, setInnerValue] = useState<string | undefined>(defaultValue)
+  const isControlled = value !== undefined
+  const currentValue = isControlled ? value : innerValue
+
+  const handleChange = (val: string) => {
+    if (onChange) {
+      onChange(val)
+    }
+    if (!isControlled) {
+      setInnerValue(val)
+    }
+  }
+
+  const clear = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    handleChange('')
+  }
 
   return (
-    <UISelect {...rest} onValueChange={onChange} value={value}>
-      <SelectTrigger className={cn('w-[180px]', className)}>
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
+    <UISelect {...rest} onValueChange={handleChange} value={currentValue} defaultValue={defaultValue}>
+      <div className={cn('relative', allowClear && currentValue ? 'group' : '')}>
+        <SelectTrigger className={cn('flex w-full', className)}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        {allowClear && currentValue && (
+          <div
+            className="absolute top-0 right-0 z-50 hidden h-full cursor-pointer items-center justify-center px-3 group-hover:flex"
+            onClick={clear}
+          >
+            <XIcon className="size-4 opacity-50" />
+          </div>
+        )}
+      </div>
       <SelectContent
         side={props.side}
         sideOffset={props.sideOffset}

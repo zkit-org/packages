@@ -10,6 +10,7 @@ const Page = () => {
         onChange={(value) => {
           console.log(value)
         }}
+        allowClear={true}
         options={[
           {
             label: 'Apple',
