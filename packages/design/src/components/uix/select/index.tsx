@@ -22,10 +22,22 @@ export interface SelectProps {
   alignOffset?: number
   empty?: ReactNode
   allowClear?: boolean
+  triggerClassName?: string
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) => {
-  const { options = [], value, defaultValue, onChange, placeholder, className, empty, allowClear, ...rest } = props
+  const {
+    options = [],
+    value,
+    defaultValue,
+    onChange,
+    placeholder,
+    className,
+    empty,
+    allowClear,
+    triggerClassName,
+    ...rest
+  } = props
 
   const [innerValue, setInnerValue] = useState<string | undefined>(defaultValue)
   const isControlled = value !== undefined
@@ -47,8 +59,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
 
   return (
     <UISelect {...rest} onValueChange={handleChange} value={currentValue} defaultValue={defaultValue}>
-      <div className={cn('relative', allowClear && currentValue ? 'group' : '', className)}>
-        <SelectTrigger className={cn('flex w-full')}>
+      <div className={cn('relative inline-block', allowClear && currentValue ? 'group' : '', className)}>
+        <SelectTrigger className={cn('flex w-full', triggerClassName)}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         {allowClear && currentValue && (
