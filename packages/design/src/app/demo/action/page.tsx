@@ -1,7 +1,6 @@
 'use client';
 
-import {Button} from "@easykit/design";
-import { Action } from 'dist'
+import { Action, Button } from '@easykit/design'
 
 const Page = () => {
 
