@@ -1,6 +1,7 @@
 'use client';
 
 import {Button} from "@easykit/design";
+import { Action } from 'dist'
 
 const Page = () => {
 
@@ -23,6 +24,7 @@ const Page = () => {
         1
       </button>
       <Button>Test</Button>
+      <Action>Test Action</Action>
     </div>
   )
 }
