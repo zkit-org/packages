@@ -60,12 +60,12 @@ export const Checkbox = forwardRef<
       checked={v}
       onCheckedChange={(checked) => handleChange(checked as boolean)}
       className={cn(
-        indeterminate && 'bg-primary text-primary-foreground',
+        indeterminate && 'border-primary bg-primary text-primary-foreground',
         indeterminate && 'flex items-center justify-center',
         !content && props.className
       )}
     >
-      {indeterminate && <MinusIcon className="h-4 w-4" />}
+      {indeterminate && <MinusIcon className="size-3.5" />}
     </UICheckbox>
   )
   if (!content)

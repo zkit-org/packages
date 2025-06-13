@@ -30,7 +30,7 @@ const Page = () => {
         loading={loading}
         placeholder="请选择"
         multiple={true}
-        className="w-[200px]"
+        className="w-[220px]"
         search={true}
         onSearch={(value) => {
           setLoading(true)

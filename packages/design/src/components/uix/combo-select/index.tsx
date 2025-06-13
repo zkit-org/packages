@@ -15,7 +15,6 @@ import {
   type ComponentPropsWithRef,
   type FC,
   type ReactNode,
-  type RefObject,
   forwardRef,
   useContext,
   useEffect,
@@ -23,6 +22,8 @@ import {
   useRef,
   useState,
 } from 'react'
+import type { ButtonProps } from '../button'
+import { Checkbox } from '../checkbox'
 
 export interface ComboSelectOptionProps<Data> {
   value: string
@@ -62,12 +63,11 @@ function SelectedLabels({
   if (selectedValues?.length) {
     return (
       <>
-        <span />
         {selectedValues.map((v) => {
           // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           const label = options.find((option: any) => option.value === v)?.label
           return label ? (
-            <div className="mr-1 mb-1 rounded bg-secondary px-2 py-[3px]" key={v}>
+            <div className="my-0.5 mr-1 rounded bg-secondary px-2 py-[3px] text-sm" key={v}>
               {label}
             </div>
           ) : null
@@ -106,11 +106,11 @@ function handleSelect(
     }
     const v = cloneDeep(selectedValues)
     setSelectedValues(v)
-    onChange(v)
+    onChange?.(v)
   } else {
     const v = optionValue
     setValueState(v)
-    onChange(v)
+    onChange?.(v)
     setOpen(false)
   }
 }
@@ -167,16 +167,7 @@ function ComboSelectCommandList({
                   )
                 }
               >
-                {multiple ? (
-                  <div
-                    className={cn(
-                      'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                      isSelected ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible'
-                    )}
-                  >
-                    <CheckIcon className={cn('h-4 w-4')} />
-                  </div>
-                ) : null}
+                {multiple ? <Checkbox checked={isSelected} /> : null}
                 {option.label}
                 {multiple ? null : (
                   <CheckIcon className={cn('ml-auto h-4 w-4', value === option.value ? 'opacity-100' : 'opacity-0')} />
@@ -188,25 +179,7 @@ function ComboSelectCommandList({
   )
 }
 
-function ComboSelectButton({
-  containerRef,
-  open,
-  multiple,
-  selectedValues,
-  className,
-  placeholderDom,
-  options,
-  valueState,
-  loading,
-  showClear,
-  setSelectedValues,
-  setValueState,
-  onChange,
-  onSearch,
-}: {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  containerRef: RefObject<any>
-  open: boolean
+type ComboSelectButtonProps = {
   multiple: boolean
   selectedValues: string[]
   className?: string
@@ -222,49 +195,70 @@ function ComboSelectButton({
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onChange: (v: any) => void
   onSearch?: (v: string) => void
-}) {
+} & ButtonProps
+
+const ComboSelectButton = forwardRef<HTMLButtonElement, ComboSelectButtonProps>((props, ref) => {
+  const {
+    multiple,
+    selectedValues,
+    className,
+    placeholderDom,
+    options,
+    valueState,
+    loading,
+    showClear,
+    setSelectedValues,
+    setValueState,
+    onChange,
+    // onSearch,
+    onClick,
+  } = props
+
   return (
     <Button
-      ref={containerRef}
+      ref={ref}
+      type="button"
       variant="outline"
-      aria-expanded={open}
       className={cn(
         'group h-9 min-w-[150px] items-center justify-between px-2 py-1 align-middle hover:bg-secondary/40',
         multiple ? 'border-dashed' : null,
-        multiple && selectedValues && selectedValues.length ? 'h-auto pb-0' : null,
+        multiple && selectedValues && selectedValues.length ? 'h-auto' : null,
         className
       )}
+      onClick={onClick}
     >
-      <div className="flex flex-1 flex-wrap items-start justify-start">
+      <div className={cn('flex flex-1 flex-wrap items-start justify-start', multiple ? '-m-0.5' : null)}>
         {multiple ? (
           <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
         ) : (
           <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
         )}
       </div>
-      <div className="ml-2 flex shrink-0 items-center justify-center opacity-50">
+      <div className="ml-2 flex w-4 shrink-0 items-center justify-center opacity-50">
         {loading ? (
           <Spin />
         ) : (
           <>
             {multiple ? null : <CaretSortIcon className={cn('block h-4 w-4', showClear ? 'group-hover:hidden' : '')} />}
-            <Cross2Icon
+            <div
               onClick={(e) => {
+                console.log('onClick', e)
                 e.stopPropagation()
                 const v = multiple ? [] : ''
                 setSelectedValues([])
                 setValueState('')
-                onChange(v)
-                onSearch?.('')
+                onChange?.(v)
+                // onSearch?.('')
               }}
-              className={cn('hidden h-4 w-4', showClear ? 'group-hover:block' : '')}
-            />
+            >
+              <Cross2Icon className={cn('hidden h-4 w-4', showClear ? 'group-hover:block' : '')} />
+            </div>
           </>
         )}
       </div>
     </Button>
   )
-}
+})
 
 export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, _ref) => {
   const {
@@ -315,8 +309,7 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, _ref) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <ComboSelectButton
-          containerRef={containerRef}
-          open={open}
+          ref={containerRef}
           multiple={multiple}
           selectedValues={selectedValues}
           className={className}
