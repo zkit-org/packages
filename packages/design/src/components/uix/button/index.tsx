@@ -16,7 +16,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     <UIButton
       {...rest}
       ref={ref}
-      className={cn('space-x-1', className, long ? 'w-full' : null)}
+      className={cn('gap-0.5', className, long ? 'w-full' : null)}
       disabled={loading || disabled}
     >
       {loading ? <Spin /> : null}
