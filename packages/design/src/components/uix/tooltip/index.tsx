@@ -11,16 +11,17 @@ type Side = 'top' | 'right' | 'bottom' | 'left'
 export type TooltipProps = PropsWithChildren & {
   content: ReactNode
   side?: Side
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export const Tooltip: FC<TooltipProps> = (props) => {
+  const { open, onOpenChange } = props
   return (
     <TooltipProvider>
-      <TooltipUI>
+      <TooltipUI open={open} onOpenChange={onOpenChange}>
         <TooltipTrigger asChild={true}>{props.children}</TooltipTrigger>
-        <TooltipContent side={props.side} className="bg-black/90">
-          {props.content}
-        </TooltipContent>
+        <TooltipContent side={props.side}>{props.content}</TooltipContent>
       </TooltipUI>
     </TooltipProvider>
   )
