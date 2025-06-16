@@ -19,7 +19,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
   const config = useContext(UIXContext)
   const locale = get(config.locale, 'DateRangePicker.locale')
-  const formatConfig = props.format || get(config.locale, 'DateRangePicker.locale')
+  const formatConfig = props.format || get(config.locale, 'DateRangePicker.format') || 'yyyy-MM-dd'
 
   const [date, setDate] = useState<DateRange | undefined>(value)
 

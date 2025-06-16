@@ -54,8 +54,8 @@ export const Pagination: FC<PaginationProps> = (props) => {
   return (
     <div className="flex items-center justify-center space-x-2">
       <span className="space-x-1">
-        <span>{totalPageText.replace('%total', `${total}`)}</span>
-        <span>{totalText.replace('%page', `${totalPage}`)}</span>
+        <span>{totalPageText?.replace('%total', `${total}`)}</span>
+        <span>{totalText?.replace('%page', `${totalPage}`)}</span>
       </span>
       <Button disabled={`${page}` === '1'} variant="outline" size="icon" onClick={() => onChange?.(1)}>
         <DoubleArrowLeftIcon />
@@ -83,7 +83,7 @@ export const Pagination: FC<PaginationProps> = (props) => {
       <Select
         className="w-auto"
         value={`${size}`}
-        options={sizeOptions.map((v) => ({ label: sizeText.replace('%size', `${v}`), value: `${v}` }))}
+        options={sizeOptions.map((v) => ({ label: sizeText?.replace('%size', `${v}`) || '', value: `${v}` }))}
         onChange={(v) => onSizeChange?.(Number(v))}
       />
       <div className="flex items-center justify-center space-x-1">

@@ -4,8 +4,8 @@ import omit from 'lodash/omit'
 import { type FC, type PropsWithChildren, createContext } from 'react'
 
 export interface UIXContextProps {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  locale?: any
+  locale?: typeof zhCN
+  toasterPosition?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
 }
 
 const defaultContextProps: UIXContextProps = {
@@ -19,9 +19,12 @@ export type ConfigProviderProps = PropsWithChildren<UIXContextProps>
 export const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   const config: UIXContextProps = {
     ...omit(props, ['children']),
-  };
-  return <>
-    <UIXContext.Provider value={config}>{props.children}</UIXContext.Provider>
-    <Toaster/>
-  </>;
+  }
+  const { toasterPosition = 'top-center' } = config
+  return (
+    <>
+      <UIXContext.Provider value={config}>{props.children}</UIXContext.Provider>
+      <Toaster position={toasterPosition} />
+    </>
+  )
 }

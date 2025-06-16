@@ -21,7 +21,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, _r
 
   const config = useContext(UIXContext)
   const locale = get(config.locale, 'DatePicker.locale')
-  const formatConfig = props.format || get(config.locale, 'DatePicker.format')
+  const formatConfig = props.format || get(config.locale, 'DatePicker.format') || 'yyyy-MM-dd'
   const options = get(config.locale, 'DatePicker.options')
 
   const calendar = (
@@ -67,7 +67,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, _r
             <Select
               className="w-full"
               value={presetValue}
-              options={options}
+              options={options || []}
               placeholder="请选择"
               onChange={(value) => {
                 setDate(addDays(new Date(), Number.parseInt(value)))
