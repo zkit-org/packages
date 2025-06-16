@@ -40,7 +40,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, _r
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          wrapper={false}
           variant="outline"
           className={cn(
             'group w-full justify-start space-x-1 text-left font-normal',
