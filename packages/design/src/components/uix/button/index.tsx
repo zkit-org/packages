@@ -4,31 +4,25 @@ import { cn } from '@easykit/design/lib'
 import {forwardRef} from "react";
 import type { ComponentProps } from 'react'
 export interface ButtonProps extends ComponentProps<typeof UIButton> {
-  loading?: boolean;
-  long?: boolean;
-  htmlType?: "submit" | "reset" | "button" | undefined;
-  wrapper?: boolean;
+  loading?: boolean
+  long?: boolean
+  htmlType?: 'submit' | 'reset' | 'button' | undefined
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const {
-    loading = false,
-    long = false,
-    disabled = false,
-    className,
-    wrapper = true,
-    ...rest
-  } = props;
+  const { loading = false, long = false, disabled = false, className, ...rest } = props
 
-  return <UIButton
-    {...rest}
-    ref={ref}
-    className={cn("space-x-1", className, long ? 'w-full' : null)}
-    disabled={loading || disabled}
-  >
-    {loading ? <Spin/> : null}
-    {wrapper ? <span>{props.children}</span> : props.children}
-  </UIButton>
+  return (
+    <UIButton
+      {...rest}
+      ref={ref}
+      className={cn('space-x-1', className, long ? 'w-full' : null)}
+      disabled={loading || disabled}
+    >
+      {loading ? <Spin /> : null}
+      {props.children}
+    </UIButton>
+  )
 });
 
 Button.displayName = "Button";
