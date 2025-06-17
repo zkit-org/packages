@@ -132,6 +132,7 @@ export {DateRangePicker} from "./components/uix/date-range-picker";
 export type {DateRangePickerProps} from "./components/uix/date-range-picker";
 export {Uploader} from "./components/uix/uploader";
 export type {UploaderProps} from "./components/uix/uploader";
+export type { UploadFile } from './components/uix/uploader/type'
 export {DatePicker} from "./components/uix/date-picker";
 export type {DatePickerProps} from "./components/uix/date-picker";
 export {Tooltip} from './components/uix/tooltip';

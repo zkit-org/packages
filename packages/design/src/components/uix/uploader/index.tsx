@@ -2,13 +2,14 @@ import { Button, Progress } from '@easykit/design'
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import { cn } from '@easykit/design/lib'
 import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, FileIcon } from '@radix-ui/react-icons'
-import axios from "axios";
 import classNames from "classnames";
 import get from "lodash/get";
 import remove from 'lodash/remove'
-import { type PropsWithChildren, forwardRef, useContext, useState } from 'react'
+import { type PropsWithChildren, forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { type DropzoneOptions, useDropzone } from 'react-dropzone'
 import { v4 as uuidv4 } from 'uuid'
+import type { UploadFile } from './type'
+import { type HandleProps, defaultUploadHandle } from './utils'
 
 export type UploaderProps = PropsWithChildren<{
   showFileList?: boolean
@@ -17,20 +18,16 @@ export type UploaderProps = PropsWithChildren<{
   action?: string
   uploadText?: string
   maxLimit?: number
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  value?: (File & any)[]
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  onChange?: (value: (File & any)[]) => void
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  headers?: any
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  data?: any
+  value?: UploadFile[]
+  onChange?: (value: UploadFile[]) => void
+  headers?: Record<string, string>
+  data?: unknown
   showButton?: boolean
+  uploadHandle?: (props: HandleProps) => void
 }> &
   DropzoneOptions
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const initFile = (file: File & any) => {
+const initFile = (file: UploadFile) => {
   file.uid ??= uuidv4()
   file.status ??= 'done'
   return file
@@ -48,93 +45,88 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
     showButton = true,
     showFileList = true,
     children,
+    uploadHandle = defaultUploadHandle,
     ...rest
   } = props
 
-  const [files, setFiles] = useState<File[]>((value || []).map(initFile));
+  const [files, setFiles] = useState<UploadFile[]>((value || []).map(initFile))
+  const filesRef = useRef<UploadFile[]>(files)
+  const config = useContext(UIXContext)
+  const placeholder = props.placeholder || get(config.locale, 'Uploader.placeholder')
+  const uploadText = props.uploadText || get(config.locale, 'Uploader.uploadText')
+
+  useEffect(() => {
+    if (value) {
+      setFiles(value.map(initFile))
+      filesRef.current = value.map(initFile)
+    }
+  }, [value])
+
+  useEffect(() => {
+    filesRef.current = files
+  }, [files])
 
   const { getRootProps, getInputProps } = useDropzone({
     ...rest,
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    onDropAccepted: (list: (File & any)[], event) => {
+    onDropAccepted: (list: File[], event) => {
       onDropAccepted?.(list, event)
       const newFiles = [
-        ...files,
+        ...filesRef.current,
         ...list.map((file) => {
-          file.uid = uuidv4()
-          file.status = 'init'
-          return file
+          const uploadFile = file as UploadFile
+          uploadFile.uid = uuidv4()
+          uploadFile.status = 'init'
+          return uploadFile
         }),
       ]
       setFiles(newFiles)
-      onChange?.(newFiles)
+      onChange?.(newFiles as UploadFile[])
     },
   })
 
-  const config = useContext(UIXContext);
-  const placeholder = props.placeholder || get(config.locale, "Uploader.placeholder");
-  const uploadText = props.uploadText || get(config.locale, "Uploader.uploadText");
-
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const upload = async (file: File & any) => {
-    const controller = new AbortController()
-    file._controller = controller
-    const formData = new FormData()
-    formData.append('file', file)
-    const appendData = data || {}
-    for (const key of Object.keys(appendData)) {
-      formData.append(key, appendData[key])
+  const onUpload = useCallback(() => {
+    const updateFile = (file: UploadFile, status: 'uploading' | 'done' | 'error') => {
+      const idx = filesRef.current.findIndex((f) => (f as UploadFile).uid === file.uid)
+      if (idx !== -1) {
+        file.status = status
+        filesRef.current[idx] = { ...filesRef.current[idx], ...file, name: filesRef.current[idx].name }
+        setFiles([...filesRef.current])
+        onChange?.([...filesRef.current] as UploadFile[])
+      }
     }
-    axios
-      .post(action!, formData, {
-        headers,
-        onUploadProgress: (progressEvent) => {
-          file.progress = Math.ceil(progressEvent.progress! * 100)
-          setFiles([...files])
-        },
-        signal: controller.signal,
-      })
-      .then((response) => {
-        file.status = 'done'
-        file.response = response
-        setFiles([...files])
-        onChange?.([...files])
-      })
-      .catch((error) => {
-        file.status = 'error'
-        file.error = error
-        setFiles([...files])
-        onChange?.([...files])
-      })
-  }
-
-  const onUpload = () => {
-    for (const f of files) {
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      const file = f as any
+    for (const f of filesRef.current) {
+      const file = f as UploadFile
       if (file.status === 'init') {
         file.status = 'uploading'
         file.progress = 0
-        upload(file).then()
+        uploadHandle({
+          file,
+          action,
+          headers,
+          data,
+          onProgress: (file) => updateFile(file, 'uploading'),
+          onSuccess: (file) => updateFile(file, 'done'),
+          onError: (file) => updateFile(file, 'error'),
+        })
       }
     }
-    setFiles([...files])
-    onChange?.([...files])
-  }
+    setFiles([...filesRef.current])
+    onChange?.([...filesRef.current] as UploadFile[])
+  }, [action, headers, data, uploadHandle, onChange])
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const renderFile = (file: File & any) => {
+  const renderFile = (file: UploadFile) => {
     return (
       <div key={file.uid} className={cn('flex items-center justify-center border-b', 'last:border-none')}>
         <div className="flex h-8 w-8 items-center justify-center">
           <FileIcon />
         </div>
-        <div className="w-[50%] overflow-hidden overflow-ellipsis whitespace-nowrap">{file.name}</div>
+        <div className="w-[50%] overflow-hidden overflow-ellipsis whitespace-nowrap text-sm">{file.name}</div>
         <div className="mx-1 flex-1">
           {file.status === 'uploading' && <Progress value={file.progress} className="w-full" />}
           {file.status === 'error' && (
             <div className="flex items-center justify-end text-red-500">
-              <CrossCircledIcon className="mr-1" /> {file.error.message}
+              <CrossCircledIcon className="mr-1" />
+              <span className="text-sm"> {file.error?.message}</span>
             </div>
           )}
           {file.status === 'done' && (
@@ -149,11 +141,10 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
             'cursor-pointer hover:bg-[var(--action-hover)] hover:text-black/75'
           )}
           onClick={() => {
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-            remove(files, (item: File & any) => item.uid === file.uid)
-            file._controller?.abort()
-            setFiles([...files])
-            onChange?.([...files])
+            remove(filesRef.current, (item: UploadFile) => item.uid === file.uid)
+            file.controller?.abort()
+            setFiles([...filesRef.current])
+            onChange?.([...filesRef.current])
           }}
         >
           <Cross2Icon />
@@ -187,12 +178,10 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
           <div className="rounded-sm border">{files.map(renderFile)}</div>
         </>
       ) : null}
-      {/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
-      {!!files.filter(({ status }: any) => status === 'init').length && showButton ? (
+      {!!files.filter(({ status }) => status === 'init').length && showButton ? (
         <div>
           <Button
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-            loading={!!files.filter(({ status }: any) => status === 'uploading').length}
+            loading={!!files.filter(({ status }) => status === 'uploading').length}
             onClick={onUpload}
             type="button"
             variant="outline"
