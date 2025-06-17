@@ -53,7 +53,8 @@
     "vite-plugin-node-polyfills": "^0.22.0",
     "zod": "3.23.8",
     "zod-i18n-map": "2.27.0",
-    "zustand": "4.5.4"
+    "zustand": "4.5.4",
+    "lucide-react": "0.516.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

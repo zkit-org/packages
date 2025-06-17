@@ -31,7 +31,8 @@
     "tributejs",
     "bowser",
     "msgpackr",
-    "prosemirror"
+    "prosemirror",
+    "uuidv"
   ],
   "css.customData": [".vscode/tailwind.json"],
   "editor.codeActionsOnSave": {
