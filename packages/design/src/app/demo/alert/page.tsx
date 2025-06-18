@@ -1,9 +1,10 @@
 'use client';
 
-import {Button, useAlert} from "@easykit/design";
+import { Alert, useAlert } from '@easykit/design'
+import { Info } from 'lucide-react'
 
 const Page = () => {
-  const alert = useAlert();
+  const alert = useAlert()
 
   const test = () => {
     alert.confirm({
@@ -21,9 +22,11 @@ const Page = () => {
 
   return (
     <div className="p-4">
-      <Button onClick={test}>确认</Button>
+      <Alert icon={<Info />} title="test">
+        test
+      </Alert>
     </div>
   )
 }
 
-export default Page;
+export default Page

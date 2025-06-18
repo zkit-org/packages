@@ -23,9 +23,13 @@ export const Alert = (props: AlertProps) => {
 
   const children = childrenProp || description;
 
-  return <UIAlert {...rest}>
-    { icon }
-    {title && <UIAlertTitle className={titleClassName}>{title}</UIAlertTitle>}
-    {children && <UIAlertDescription className={descriptionClassName}>{children}</UIAlertDescription>}
-  </UIAlert>;
+  return (
+    <UIAlert {...rest} className="flex gap-2">
+      {icon}
+      <div className="flex flex-1 flex-col gap-2">
+        {title && <UIAlertTitle className={titleClassName}>{title}</UIAlertTitle>}
+        {children && <UIAlertDescription className={descriptionClassName}>{children}</UIAlertDescription>}
+      </div>
+    </UIAlert>
+  )
 }
