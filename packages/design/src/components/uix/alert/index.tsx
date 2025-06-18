@@ -1,3 +1,4 @@
+import { cn } from '@/lib'
 import type { ComponentProps, ReactNode } from 'react'
 import { Alert as UIAlert, AlertDescription as UIAlertDescription, AlertTitle as UIAlertTitle } from "../../ui/alert";
 
@@ -18,13 +19,14 @@ export const Alert = (props: AlertProps) => {
     children: childrenProp,
     titleClassName,
     descriptionClassName,
+    className,
     ...rest
-  } = props;
+  } = props
 
   const children = childrenProp || description;
 
   return (
-    <UIAlert {...rest} className="flex gap-2">
+    <UIAlert {...rest} className={cn('flex gap-2', className)}>
       {icon}
       <div className="flex flex-1 flex-col gap-2">
         {title && <UIAlertTitle className={titleClassName}>{title}</UIAlertTitle>}
