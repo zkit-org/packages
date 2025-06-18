@@ -1,15 +1,5 @@
 import axios from 'axios'
-import type { UploadFile } from './type'
-
-export type HandleProps = {
-  file: UploadFile
-  action?: string
-  headers?: Record<string, string>
-  data?: unknown
-  onProgress: (file: UploadFile) => void
-  onSuccess: (file: UploadFile) => void
-  onError: (file: UploadFile) => void
-}
+import type { HandleProps } from './type'
 
 export const defaultUploadHandle = (props: HandleProps) => {
   const { file, action, headers, data, onProgress, onSuccess, onError } = props
