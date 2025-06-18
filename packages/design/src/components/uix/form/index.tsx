@@ -39,7 +39,7 @@ export interface RenderProps extends ControllerRenderProps {
 
 export interface FieldItem<T extends FieldValues> extends PropsWithChildren {
   name: string
-  label: string | ReactNode
+  label?: string | ReactNode
   description?: string
   control?: Control<T>
   className?: string
