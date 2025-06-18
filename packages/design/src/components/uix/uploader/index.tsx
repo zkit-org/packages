@@ -128,7 +128,13 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
       const idx = filesRef.current.findIndex((f) => (f as UploadFile).uid === file.uid)
       if (idx !== -1) {
         file.status = status
-        filesRef.current[idx] = { ...filesRef.current[idx], ...file, name: filesRef.current[idx].name }
+        filesRef.current[idx] = {
+          ...filesRef.current[idx],
+          ...file,
+          name: filesRef.current[idx].name,
+          size: filesRef.current[idx].size,
+          type: filesRef.current[idx].type,
+        }
         setFiles([...filesRef.current])
         onChange?.([...filesRef.current] as UploadFile[])
       }
