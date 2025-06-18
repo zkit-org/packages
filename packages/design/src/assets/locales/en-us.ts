@@ -38,6 +38,8 @@ export default {
   Uploader: {
     placeholder: "Drag 'n' drop some files here, or click to select files",
     uploadText: 'Upload',
+    maxFilesExceeded: 'Maximum number of files exceeded',
+    partialFilesAdded: ', only %count more files can be added',
   },
   DatePicker: {
     locale: enUS,

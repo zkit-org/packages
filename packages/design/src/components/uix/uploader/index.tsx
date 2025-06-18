@@ -1,4 +1,5 @@
 import { Button, Progress } from '@easykit/design'
+import { useMessage } from '@easykit/design'
 import {UIXContext} from "@easykit/design/components/uix/config-provider";
 import { cn } from '@easykit/design/lib'
 import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, FileIcon } from '@radix-ui/react-icons'
@@ -17,7 +18,6 @@ export type UploaderProps = PropsWithChildren<{
   placeholder?: string
   action?: string
   uploadText?: string
-  maxLimit?: number
   value?: UploadFile[]
   onChange?: (value: UploadFile[]) => void
   headers?: Record<string, string>
@@ -46,14 +46,22 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
     showFileList = true,
     children,
     uploadHandle = defaultUploadHandle,
+    maxFiles,
     ...rest
   } = props
 
   const [files, setFiles] = useState<UploadFile[]>((value || []).map(initFile))
   const filesRef = useRef<UploadFile[]>(files)
   const config = useContext(UIXContext)
+  const message = useMessage()
   const placeholder = props.placeholder || get(config.locale, 'Uploader.placeholder')
   const uploadText = props.uploadText || get(config.locale, 'Uploader.uploadText')
+  const maxFilesExceededText = get(config.locale, 'Uploader.maxFilesExceeded')
+  const partialFilesAddedText =
+    get(config.locale, 'Uploader.partialFilesAdded') || ', only %count more files can be added'
+
+  // 检查是否达到文件上限
+  const isMaxFilesReached = maxFiles !== undefined && files.length >= maxFiles
 
   useEffect(() => {
     if (value) {
@@ -68,11 +76,35 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
 
   const { getRootProps, getInputProps } = useDropzone({
     ...rest,
+    maxFiles,
+    disabled: isMaxFilesReached,
     onDropAccepted: (list: File[], event) => {
       onDropAccepted?.(list, event)
+
+      // 检查 maxFiles 限制
+      let filesToAdd = list
+      if (maxFiles !== undefined) {
+        const currentFileCount = filesRef.current.length
+        const availableSlots = maxFiles - currentFileCount
+
+        if (availableSlots <= 0) {
+          // 已达到最大文件数，不添加任何文件
+          message.warning(maxFilesExceededText)
+          return
+        }
+
+        // 只添加可用槽位数量的文件
+        if (list.length > availableSlots) {
+          filesToAdd = list.slice(0, availableSlots)
+          message.warning(
+            `${maxFilesExceededText}${partialFilesAddedText.replace('%count', availableSlots.toString())}`
+          )
+        }
+      }
+
       const newFiles = [
         ...filesRef.current,
-        ...list.map((file) => {
+        ...filesToAdd.map((file) => {
           const uploadFile = file as UploadFile
           uploadFile.uid = uuidv4()
           uploadFile.status = 'init'
@@ -81,6 +113,13 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
       ]
       setFiles(newFiles)
       onChange?.(newFiles as UploadFile[])
+    },
+    onDropRejected(fileRejections) {
+      // 收集所有文件名和错误信息
+      const errorMessages = fileRejections.map((rejection) => {
+        return `${rejection.file.name}: ${rejection.errors[0].message}`
+      })
+      message.warning(errorMessages.map((item) => <div key={item}>{item}</div>))
     },
   })
 
@@ -166,10 +205,11 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
               'rounded-md border-2 border-[#eeeeee] border-dashed bg-[#fafafa]',
               'cursor-default',
               'focus:border-[#2196f3]',
+              isMaxFilesReached && 'cursor-not-allowed bg-gray-100 opacity-50',
               className
             )}
           >
-            <p>{placeholder}</p>
+            <p>{isMaxFilesReached ? maxFilesExceededText : placeholder}</p>
           </div>
         )}
       </div>

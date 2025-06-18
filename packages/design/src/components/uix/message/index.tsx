@@ -1,21 +1,21 @@
-import {useMemo} from "react";
-import { toast } from 'sonner'
+import { type ReactNode, useMemo } from 'react'
+import { type ExternalToast, toast } from 'sonner'
 
 export const useMessage = () => {
   return useMemo(() => {
     return {
-      success: (message?: string) => {
-        toast.success(message)
+      success: (message?: ReactNode, options?: ExternalToast) => {
+        toast.success(message, options)
       },
-      error: (message?: string) => {
-        toast.error(message) 
+      error: (message?: ReactNode, options?: ExternalToast) => {
+        toast.error(message, options)
       },
-      warning: (message?: string) => {
-        toast.warning(message)
+      warning: (message?: ReactNode, options?: ExternalToast) => {
+        toast.warning(message, options)
       },
-      info: (message?: string) => {
-        toast.info(message)
-      }
+      info: (message?: ReactNode, options?: ExternalToast) => {
+        toast.info(message, options)
+      },
     }
   }, [])
-};
+}

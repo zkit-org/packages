@@ -1,5 +1,5 @@
-import 'dayjs/locale/zh-tw';
-import {zhTW} from 'date-fns/locale';
+import 'dayjs/locale/zh-tw'
+import { zhTW } from 'date-fns/locale'
 
 export default {
   key: 'zh-TW',
@@ -38,6 +38,8 @@ export default {
   Uploader: {
     placeholder: '請拖曳文件到此處或點擊選擇文件',
     uploadText: '上傳',
+    maxFilesExceeded: '已達到最大文件數量限制',
+    partialFilesAdded: '，只能再添加 %count 個文件',
   },
   DatePicker: {
     locale: zhTW,

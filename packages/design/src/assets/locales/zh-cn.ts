@@ -1,5 +1,5 @@
-import 'dayjs/locale/zh-cn';
-import {zhCN} from 'date-fns/locale';
+import 'dayjs/locale/zh-cn'
+import { zhCN } from 'date-fns/locale'
 
 export default {
   key: 'zh-CN',
@@ -38,6 +38,8 @@ export default {
   Uploader: {
     placeholder: '请拖动文件到此处或者点击选择文件',
     uploadText: '上传',
+    maxFilesExceeded: '已达到最大文件数量限制',
+    partialFilesAdded: '，只能再添加 %count 个文件',
   },
   DatePicker: {
     locale: zhCN,

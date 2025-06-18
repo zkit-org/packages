@@ -13,6 +13,7 @@ const Page = () => {
   return (
     <div className="p-4">
       <Uploader
+        maxFiles={1}
         value={files}
         onChange={setFiles}
         uploadHandle={(props) => {
