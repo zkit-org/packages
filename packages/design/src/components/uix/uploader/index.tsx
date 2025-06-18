@@ -8,8 +8,8 @@ import remove from 'lodash/remove'
 import { type PropsWithChildren, forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { type DropzoneOptions, useDropzone } from 'react-dropzone'
 import { v4 as uuidv4 } from 'uuid'
-import type { UploadFile } from './type'
-import { type HandleProps, defaultUploadHandle } from './utils'
+import type { HandleProps, UploadFile } from './type'
+import { defaultUploadHandle } from './utils'
 
 export type UploaderProps = PropsWithChildren<{
   showFileList?: boolean
