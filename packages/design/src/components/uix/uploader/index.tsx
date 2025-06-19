@@ -206,11 +206,13 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
           children
         ) : (
           <div
+            // biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
+            tabIndex={0}
             className={cn(
-              'flex items-center justify-center p-6 text-[#bdbdbd]',
-              'rounded-md border-2 border-[#eeeeee] border-dashed bg-[#fafafa]',
+              'flex items-center justify-center p-6 text-card-foreground/50',
+              'rounded-md border-2 border-border border-dashed bg-card',
               'cursor-default',
-              'focus:border-[#2196f3]',
+              'focus:border-primary',
               isMaxFilesReached && 'cursor-not-allowed bg-gray-100 opacity-50',
               className
             )}
