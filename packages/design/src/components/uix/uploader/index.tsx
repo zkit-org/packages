@@ -181,10 +181,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
           )}
         </div>
         <div
-          className={cn(
-            'flex h-8 w-8 items-center justify-center text-black/50',
-            'cursor-pointer hover:bg-[var(--action-hover)] hover:text-black/75'
-          )}
+          className={cn('flex h-8 w-8 items-center justify-center ', 'cursor-pointer hover:bg-[var(--action-hover)] ')}
           onClick={() => {
             remove(filesRef.current, (item: UploadFile) => item.uid === file.uid)
             file.controller?.abort()
@@ -213,7 +210,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
               'rounded-md border-2 border-border border-dashed bg-card',
               'cursor-default',
               'focus:border-primary',
-              isMaxFilesReached && 'cursor-not-allowed bg-gray-100 opacity-50',
+              isMaxFilesReached && 'cursor-not-allowed opacity-50',
               className
             )}
           >
