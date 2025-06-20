@@ -7,6 +7,7 @@ import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select as UISele
 export interface SelectOptionProps {
   value: string
   label: string
+  disabled?: boolean
 }
 
 export interface SelectProps {
@@ -80,7 +81,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
       >
         {options?.length
           ? options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
                 {option.label}
               </SelectItem>
             ))
