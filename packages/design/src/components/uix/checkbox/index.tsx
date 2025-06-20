@@ -13,7 +13,7 @@ import {
   useMemo,
 } from 'react'
 
-export type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, 'onChange'> & {
+export type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, 'onChange' | 'value'> & {
   indeterminate?: boolean
   label?: ReactNode
   field?: boolean

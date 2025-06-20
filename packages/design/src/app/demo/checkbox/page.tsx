@@ -1,17 +1,19 @@
 'use client';
 
 import {Checkbox} from "@easykit/design";
-import {useCallback} from "react";
+import { useEffect, useState } from 'react'
 
 const Page = () => {
 
-  const onChange = useCallback((value: boolean) => {
-    console.log("onChange", value);
-  }, []);
+  const [value, setValue] = useState(false)
+
+  useEffect(() => {
+    console.log('value', value)
+  }, [value])
 
   return (
     <div className="p-4">
-      <Checkbox field={true} onChange={onChange} indeterminate={false} label="test">
+      <Checkbox checked={value} onCheckedChange={(v) => setValue(v as boolean)} label="test">
         Test
       </Checkbox>
     </div>
