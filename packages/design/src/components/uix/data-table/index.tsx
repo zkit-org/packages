@@ -9,6 +9,7 @@ import {
   type PaginationProps,
   Spin,
   cn,
+  generateColumnStorageKey,
 } from '@easykit/design'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import {
@@ -25,7 +26,7 @@ import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
 import isString from 'lodash/isString'
 import isUndefined from 'lodash/isUndefined'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table'
 import './style.css'
 import { UIXContext } from '@easykit/design/components/uix/config-provider'
@@ -63,6 +64,27 @@ export interface DataTableProps<TData> {
   empty?: string
   showHeader?: boolean
   onRowClick?: (row: Row<TData>) => void
+}
+
+// 本地存储相关函数
+const LOCAL_STORAGE_PREFIX = 'datatable_columns_'
+
+const saveColumnVisibility = (storageKey: string, visibility: VisibilityState) => {
+  try {
+    localStorage.setItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`, JSON.stringify(visibility))
+  } catch (error) {
+    console.warn('Failed to save column visibility to localStorage:', error)
+  }
+}
+
+const loadColumnVisibility = (storageKey: string): VisibilityState => {
+  try {
+    const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`)
+    return stored ? JSON.parse(stored) : {}
+  } catch (error) {
+    console.warn('Failed to load column visibility from localStorage:', error)
+    return {}
+  }
 }
 
 export const getSticky = (
@@ -150,10 +172,34 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
 
   const config = useContext(UIXContext)
   const empty = props.empty || get(config.locale, 'DataTable.empty')
-
+  // 生成存储key
+  const storageKey = useMemo(() => {
+    return generateColumnStorageKey(columns)
+  }, [columns])
   const [sorting, setSorting] = useState<SortingState>([])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  // 从本地存储初始化列可见性
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() => {
+    return loadColumnVisibility(storageKey)
+  })
   const [rowSelection, setRowSelection] = useState({})
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setColumnVisibility(loadColumnVisibility(storageKey))
+    setMounted(true)
+  }, [storageKey])
+
+  // 当列可见性改变时，保存到本地存储
+  useEffect(() => {
+    saveColumnVisibility(storageKey, columnVisibility)
+  }, [columnVisibility, storageKey])
+
+  // 当columns改变时，重新加载存储的状态
+  useEffect(() => {
+    const newStorageKey = generateColumnStorageKey(columns)
+    const storedVisibility = loadColumnVisibility(newStorageKey)
+    setColumnVisibility(storedVisibility)
+  }, [columns])
 
   const tableColumns = useMemo<ColumnDef<TData, unknown>[]>(() => {
     const newColumns: ColumnDef<TData, unknown>[] = []
@@ -321,8 +367,8 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           ) : null}
         </div>
       ) : null}
-      <div className="relative">
-        <Table className={classNames('data-table', inCard ? 'in-card' : null)}>
+      <div className={cn('relative')}>
+        <Table className={classNames('data-table', inCard ? 'in-card' : null, !mounted && 'invisible')}>
           <TableHeader className={cn(!showHeader && 'hidden')}>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -411,7 +457,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             )}
           </TableBody>
         </Table>
-        <div className="py-4">
+        <div className={cn('py-4', !mounted && 'invisible')}>
           {showPagination && (
             <Pagination
               {...(pagination as PaginationProps)}
@@ -424,7 +470,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             />
           )}
         </div>
-        {loading ? (
+        {loading || !mounted ? (
           <div className="dark:!bg-black/5 absolute top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center bg-white/50">
             <Spin />
           </div>
