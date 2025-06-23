@@ -21,9 +21,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { isString } from 'lodash'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
+import isString from 'lodash/isString'
+import isUndefined from 'lodash/isUndefined'
 import { useContext, useMemo, useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table'
 import './style.css'
@@ -275,15 +276,16 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             label = item.header
           }
         }
+        const checked = columnVisibility[column.id]
         return {
           id: column.id,
           label,
           type: 'checkbox',
-          checked: column.getIsVisible(),
+          checked: isUndefined(checked) ? column.getIsVisible() : checked,
           onCheckedChange: (_item, value) => column.toggleVisibility(value),
         }
       })
-  }, [table, columns])
+  }, [table, columns, columnVisibility])
 
   const showVisibilityControl = useMemo(
     () => showColumnVisibility && columnSettings.length,

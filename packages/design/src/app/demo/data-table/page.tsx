@@ -58,13 +58,13 @@ const Page = () => {
             {
               accessorKey: 'name',
               header: '所属团队',
-              enableHiding: false,
+              enableHiding: true,
               className: 'w-[200px] min-w-[200px]',
             },
             {
               accessorKey: 'createTime',
               header: '创建时间',
-              enableHiding: false,
+              enableHiding: true,
               formatters: ['time'],
               className: 'w-[200px] min-w-[200px]',
             },
