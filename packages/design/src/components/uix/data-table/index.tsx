@@ -151,6 +151,7 @@ const hasActions = (rowActions: DropdownMenuItemProps[] | ((cell: any) => Dropdo
   return false
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export function DataTable<TData>(props: DataTableProps<TData>) {
   const {
     data,

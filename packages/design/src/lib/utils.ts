@@ -14,7 +14,7 @@ export function md5Hash(text: string): string {
   for (let i = 0; i < text.length; i++) {
     const char = text.charCodeAt(i)
     hash = (hash << 5) - hash + char
-    hash = hash & hash // 转换为32位整数
+    hash &= hash // 转换为32位整数
   }
 
   // 转换为16进制并确保长度
