@@ -70,6 +70,12 @@ export {
 } from "./components/ui/radio-group";
 // biome-ignore lint/performance/noReExportAll: <explanation>
 export * from './components/ui/navigation-menu'
+export {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+} from '@/components/ui/input-otp'
 
 // extend
 export {Alert} from "./components/uix/alert";

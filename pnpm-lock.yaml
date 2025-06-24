@@ -29,7 +29,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-clover':
         specifier: 0.0.28
-        version: 0.0.28(react@19.1.0)
+        version: 0.0.28
       '@easykit/design':
         specifier: workspace:*
         version: link:packages/design
@@ -228,7 +228,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-atom-ui':
         specifier: 0.0.4
-        version: 0.0.4(react@19.1.0)
+        version: 0.0.4
       '@emotion/react':
         specifier: 11.11.4
         version: 11.11.4(@types/react@19.1.6)(react@19.1.0)
@@ -322,6 +322,9 @@ importers:
       github-markdown-css:
         specifier: 5.6.1
         version: 5.6.1
+      input-otp:
+        specifier: ^1.4.2
+        version: 1.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       is-hotkey:
         specifier: 0.2.0
         version: 0.2.0
@@ -541,13 +544,9 @@ packages:
 
   '@arco-iconbox/react-atom-ui@0.0.4':
     resolution: {integrity: sha512-gYBxZRGfVNcGrJu3MGYK6Xtgf9m+oobn/OL8QnqmI6/2zv6JmWwccI+4fMtvDfeh5U7sgfyK9wYh1ftn95Wlpg==}
-    peerDependencies:
-      react: 19.1.0
 
   '@arco-iconbox/react-clover@0.0.28':
     resolution: {integrity: sha512-JZHx/deixnALfrDyOkSPPbOoicSRmZ4o+jmLEbkFxRARRlFRbXzEbq/ktkO6HoNnsp5iS8re+Gsogd5G4NuETA==}
-    peerDependencies:
-      react: 19.1.0
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -3421,6 +3420,12 @@ packages:
   ini@1.3.8:
     resolution: {integrity: sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==}
 
+  input-otp@1.4.2:
+    resolution: {integrity: sha512-l3jWwYNvrEa6NTCt7BECfCm48GvwuZzkoeG3gBL2w4CHeOXW3eKFmf9UNYkNfYc3mxMrthMnxjIE07MT0zLBQA==}
+    peerDependencies:
+      react: 19.1.0
+      react-dom: 19.1.0
+
   interactjs@1.10.27:
     resolution: {integrity: sha512-y/8RcCftGAF24gSp76X2JS3XpHiUvDQyhF8i7ujemBz77hwiHDuJzftHx7thY8cxGogwGiPJ+o97kWB6eAXnsA==}
 
@@ -4921,13 +4926,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@arco-iconbox/react-atom-ui@0.0.4(react@19.1.0)':
-    dependencies:
-      react: 19.1.0
+  '@arco-iconbox/react-atom-ui@0.0.4': {}
 
-  '@arco-iconbox/react-clover@0.0.28(react@19.1.0)':
-    dependencies:
-      react: 19.1.0
+  '@arco-iconbox/react-clover@0.0.28': {}
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -7844,6 +7845,11 @@ snapshots:
   inherits@2.0.4: {}
 
   ini@1.3.8: {}
+
+  input-otp@1.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   interactjs@1.10.27:
     dependencies:
