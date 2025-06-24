@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, useAlert } from '@easykit/design'
+import { Alert, Button, useAlert } from '@easykit/design'
 import { Info } from 'lucide-react'
 
 const Page = () => {
@@ -12,8 +12,7 @@ const Page = () => {
       description: '是否要删除这条记录，所有的子权限以及关联的角色权限将会失效，是否继续？',
       cancelText: '取消',
       okText: '删除',
-      // biome-ignore lint/suspicious/useAwait: <explanation>
-      onOk: async () => {
+      onOk: () => {
         console.log('ok')
         return false
       },
@@ -23,7 +22,10 @@ const Page = () => {
   return (
     <div className="p-4">
       <Alert icon={<Info />} title="test">
-        test
+        <Button onClick={test}>test</Button>
+      </Alert>
+      <Alert icon={<Info />} title="test" variant="destructive">
+        error
       </Alert>
     </div>
   )

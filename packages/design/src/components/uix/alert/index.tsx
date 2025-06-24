@@ -19,14 +19,19 @@ export const Alert = (props: AlertProps) => {
     children: childrenProp,
     titleClassName,
     descriptionClassName,
-    className,
+    variant,
     ...rest
   } = props
 
+  let className = props.className
   const children = childrenProp || description;
 
+  if (variant === 'destructive') {
+    className = cn('text-destructive bg-destructive/10 border-destructive/20', className)
+  }
+
   return (
-    <UIAlert {...rest} className={cn('flex gap-2', className)}>
+    <UIAlert {...rest} variant={variant} className={cn('flex gap-2', className)}>
       {icon}
       <div className="flex flex-1 flex-col gap-2">
         {title && <UIAlertTitle className={titleClassName}>{title}</UIAlertTitle>}
