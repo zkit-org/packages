@@ -72,8 +72,8 @@ const LOCAL_STORAGE_PREFIX = 'datatable_columns_'
 const saveColumnVisibility = (storageKey: string, visibility: VisibilityState) => {
   try {
     localStorage.setItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`, JSON.stringify(visibility))
-  } catch (error) {
-    console.warn('Failed to save column visibility to localStorage:', error)
+  } catch (_error) {
+    // console.warn('Failed to save column visibility to localStorage:', error)
   }
 }
 
@@ -81,8 +81,8 @@ const loadColumnVisibility = (storageKey: string): VisibilityState => {
   try {
     const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`)
     return stored ? JSON.parse(stored) : {}
-  } catch (error) {
-    console.warn('Failed to load column visibility from localStorage:', error)
+  } catch (_error) {
+    // console.warn('Failed to load column visibility from localStorage:', error)
     return {}
   }
 }
