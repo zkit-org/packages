@@ -2,7 +2,7 @@
 
 import '@/plugin/locales'
 import {Editor} from "@easykit/editor";
-import {useState} from 'react';
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   const obj = {
@@ -798,6 +798,11 @@ export default function Home() {
     ],
   }
   const [value, setValue] = useState(JSON.stringify(obj));
+
+  useEffect(() => {
+    console.log(JSON.parse(value))
+  }, [value])
+
   return (
     <div className="flex items-start justify-center p-4">
       <div className="m-8 w-full max-w-[860px]">
