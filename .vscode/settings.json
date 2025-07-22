@@ -32,7 +32,8 @@
     "bowser",
     "msgpackr",
     "prosemirror",
-    "uuidv"
+    "uuidv",
+    "datatable"
   ],
   "css.customData": [".vscode/tailwind.json"],
   "editor.codeActionsOnSave": {

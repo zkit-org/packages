@@ -178,29 +178,32 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
     return generateColumnStorageKey(columns)
   }, [columns])
   const [sorting, setSorting] = useState<SortingState>([])
-  // 从本地存储初始化列可见性
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() => {
-    return loadColumnVisibility(storageKey)
-  })
+  // 初始化时不从本地存储读取，避免 SSR 水合错误
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    // 只在客户端挂载后才读取本地存储的列可见性
     setColumnVisibility(loadColumnVisibility(storageKey))
     setMounted(true)
   }, [storageKey])
 
-  // 当列可见性改变时，保存到本地存储
+  // 当列可见性改变时，保存到本地存储（但跳过初始的空状态）
   useEffect(() => {
-    saveColumnVisibility(storageKey, columnVisibility)
-  }, [columnVisibility, storageKey])
+    if (mounted) {
+      saveColumnVisibility(storageKey, columnVisibility)
+    }
+  }, [columnVisibility, storageKey, mounted])
 
   // 当columns改变时，重新加载存储的状态
   useEffect(() => {
-    const newStorageKey = generateColumnStorageKey(columns)
-    const storedVisibility = loadColumnVisibility(newStorageKey)
-    setColumnVisibility(storedVisibility)
-  }, [columns])
+    if (mounted) {
+      const newStorageKey = generateColumnStorageKey(columns)
+      const storedVisibility = loadColumnVisibility(newStorageKey)
+      setColumnVisibility(storedVisibility)
+    }
+  }, [columns, mounted])
 
   const tableColumns = useMemo<ColumnDef<TData, unknown>[]>(() => {
     const newColumns: ColumnDef<TData, unknown>[] = []
@@ -375,7 +378,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
               <TableRow key={headerGroup.id}>
                 {/* biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation> */}
                 {headerGroup.headers.map((header) => {
-                  const sticky = getSticky(header.column.id, leftStickyColumns, rightStickyColumns)
+                  // 在未挂载时禁用粘性列功能，避免 SSR 水合错误
+                  const sticky = mounted
+                    ? getSticky(header.column.id, leftStickyColumns, rightStickyColumns)
+                    : { enable: false }
                   const content = header.isPlaceholder
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())
@@ -416,7 +422,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                 >
                   {/* biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation> */}
                   {row.getVisibleCells().map((cell) => {
-                    const sticky = getSticky(cell.column.id, leftStickyColumns, rightStickyColumns)
+                    // 在未挂载时禁用粘性列功能，避免 SSR 水合错误
+                    const sticky = mounted
+                      ? getSticky(cell.column.id, leftStickyColumns, rightStickyColumns)
+                      : { enable: false }
                     const ctx = cell.getContext()
                     const render = ctx.renderValue
                     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
