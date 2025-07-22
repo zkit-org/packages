@@ -23,7 +23,7 @@ export interface ComboSelectOptionProps<Data> {
 
 type SearchFunction = (value: string) => Promise<void> | void
 
-export interface ComboSelectProps<Data> {
+export interface ComboSelectProps<Data = unknown> {
   options?: ComboSelectOptionProps<Data>[]
   placeholder?: string
   searchPlaceholder?: string
