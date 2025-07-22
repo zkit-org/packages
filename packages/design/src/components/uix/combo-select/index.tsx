@@ -11,17 +11,7 @@ import type { DebouncedFunc } from 'lodash'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 import remove from 'lodash/remove'
-import {
-  type ComponentPropsWithRef,
-  type FC,
-  type ReactNode,
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { type ForwardedRef, type ReactNode, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { ButtonProps } from '../button'
 import { Checkbox } from '../checkbox'
 
@@ -33,19 +23,16 @@ export interface ComboSelectOptionProps<Data> {
 
 type SearchFunction = (value: string) => Promise<void> | void
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export interface ComboSelectProps extends ComponentPropsWithRef<any> {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  options?: ComboSelectOptionProps<any>[]
+export interface ComboSelectProps<Data> {
+  options?: ComboSelectOptionProps<Data>[]
   placeholder?: string
   searchPlaceholder?: string
   empty?: ReactNode
   className?: string
   onChange?: (value: string | string[]) => void
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  value?: any
+  value?: string | string[]
   loading?: boolean
-  filter?: (value: string, search: string) => number
+  filter?: (value: string, search: string, option?: ComboSelectOptionProps<Data>) => boolean
   multiple?: boolean
   clearable?: boolean
   clearText?: string
@@ -91,8 +78,7 @@ function handleSelect(
   limit: number,
   setSelectedValues: (v: string[]) => void,
   setValueState: (v: string) => void,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  onChange: (v: any) => void,
+  onChange: (v: string | string[]) => void,
   setOpen: (v: boolean) => void
 ) {
   if (multiple) {
@@ -115,7 +101,7 @@ function handleSelect(
   }
 }
 
-function ComboSelectCommandList({
+function ComboSelectCommandList<Data>({
   loading,
   options,
   selectedValues,
@@ -128,18 +114,15 @@ function ComboSelectCommandList({
   setOpen,
 }: {
   loading: boolean
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  options: ComboSelectOptionProps<any>[]
+  options: ComboSelectOptionProps<Data>[]
   selectedValues: string[]
   multiple: boolean
   limit: number
   setSelectedValues: (v: string[]) => void
   setValueState: (v: string) => void
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  onChange: (v: any) => void
+  onChange?: (v: string | string[]) => void
   onSearch?: (v: string) => void
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  value: any
+  value: string | string[]
   setOpen: (v: boolean) => void
 }) {
   return (
@@ -162,7 +145,7 @@ function ComboSelectCommandList({
                     limit,
                     setSelectedValues,
                     setValueState,
-                    onChange,
+                    onChange!,
                     setOpen
                   )
                 }
@@ -179,88 +162,89 @@ function ComboSelectCommandList({
   )
 }
 
-type ComboSelectButtonProps = {
+type ComboSelectButtonProps<Data> = {
   multiple: boolean
   selectedValues: string[]
   className?: string
   placeholderDom: ReactNode
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  options: ComboSelectOptionProps<any>[]
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  valueState: any
+  options: ComboSelectOptionProps<Data>[]
+  valueState?: string | string[]
   loading: boolean
   showClear: boolean
   setSelectedValues: (v: string[]) => void
   setValueState: (v: string) => void
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  onChange: (v: any) => void
+  onChange?: (v: string | string[]) => void
   onSearch?: (v: string) => void
-} & ButtonProps
+} & Omit<ButtonProps, 'onChange'>
 
-const ComboSelectButton = forwardRef<HTMLButtonElement, ComboSelectButtonProps>((props, ref) => {
-  const {
-    multiple,
-    selectedValues,
-    className,
-    placeholderDom,
-    options,
-    valueState,
-    loading,
-    showClear,
-    setSelectedValues,
-    setValueState,
-    onChange,
-    // onSearch,
-    onClick,
-  } = props
+const ComboSelectButton = forwardRef(
+  <Data,>(props: ComboSelectButtonProps<Data>, ref: ForwardedRef<HTMLButtonElement>) => {
+    const {
+      multiple,
+      selectedValues,
+      className,
+      placeholderDom,
+      options,
+      valueState,
+      loading,
+      showClear,
+      setSelectedValues,
+      setValueState,
+      onChange,
+      // onSearch,
+      onClick,
+    } = props
 
-  return (
-    <Button
-      ref={ref}
-      type="button"
-      variant="outline"
-      className={cn(
-        'group h-9 min-w-[150px] items-center justify-between px-2 py-1 align-middle hover:bg-secondary/40',
-        multiple ? 'border-dashed' : null,
-        multiple && selectedValues && selectedValues.length ? 'h-auto' : null,
-        className
-      )}
-      onClick={onClick}
-    >
-      <div className={cn('flex flex-1 flex-wrap items-start justify-start', multiple ? '-m-0.5' : null)}>
-        {multiple ? (
-          <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
-        ) : (
-          <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
+    return (
+      <Button
+        ref={ref}
+        type="button"
+        variant="outline"
+        className={cn(
+          'group h-9 min-w-[150px] items-center justify-between px-2 py-1 align-middle hover:bg-secondary/40',
+          multiple ? 'border-dashed' : null,
+          multiple && selectedValues && selectedValues.length ? 'h-auto' : null,
+          className
         )}
-      </div>
-      <div className="ml-2 flex w-4 shrink-0 items-center justify-center opacity-50">
-        {loading ? (
-          <Spin />
-        ) : (
-          <>
-            {multiple ? null : <CaretSortIcon className={cn('block h-4 w-4', showClear ? 'group-hover:hidden' : '')} />}
-            <div
-              onClick={(e) => {
-                console.log('onClick', e)
-                e.stopPropagation()
-                const v = multiple ? [] : ''
-                setSelectedValues([])
-                setValueState('')
-                onChange?.(v)
-                // onSearch?.('')
-              }}
-            >
-              <Cross2Icon className={cn('hidden h-4 w-4', showClear ? 'group-hover:block' : '')} />
-            </div>
-          </>
-        )}
-      </div>
-    </Button>
-  )
-})
+        onClick={onClick}
+      >
+        <div className={cn('flex flex-1 flex-wrap items-start justify-start', multiple ? '-m-0.5' : null)}>
+          {multiple ? (
+            <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
+          ) : (
+            <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
+          )}
+        </div>
+        <div className="ml-2 flex w-4 shrink-0 items-center justify-center opacity-50">
+          {loading ? (
+            <Spin />
+          ) : (
+            <>
+              {multiple ? null : (
+                <CaretSortIcon className={cn('block h-4 w-4', showClear ? 'group-hover:hidden' : '')} />
+              )}
+              <div
+                onClick={(e) => {
+                  console.log('onClick', e)
+                  e.stopPropagation()
+                  const v = multiple ? [] : ''
+                  setSelectedValues([])
+                  setValueState('')
+                  onChange?.(v)
+                  // onSearch?.('')
+                }}
+              >
+                <Cross2Icon className={cn('hidden h-4 w-4', showClear ? 'group-hover:block' : '')} />
+              </div>
+            </>
+          )}
+        </div>
+      </Button>
+    )
+  }
+)
 
-export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, _ref) => {
+export function ComboSelect<Data = unknown>(props: ComboSelectProps<Data>) {
   const {
     options = [],
     placeholder,
@@ -274,32 +258,32 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, _ref) => {
     limit = Number.MAX_VALUE,
     search = false,
     onSearch,
+    filter = (value, search) => value.includes(search),
   } = props
 
   const config = useContext(UIXContext)
   const empty = props.empty || get(config.locale, 'ComboSelect.empty')
-  // const clearText = props.clearText || get(config.locale, "ComboSelect.clearText");
 
   const [open, setOpen] = useState(false)
   const containerRef = useRef(null)
-  const [valueState, setValueState] = useState(value)
+  const [valueState, setValueState] = useState<string | string[] | undefined>(value)
   const [selectedValues, setSelectedValues] = useState<string[]>(
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    multiple ? (value || []).map((v: any) => `${v || ''}`) : value ? [`${value || ''}`] : []
+    multiple ? ((value || []) as string[]).map((v: string) => `${v || ''}`) : value ? [`${value || ''}`] : []
   )
   const size = useSize(containerRef)
 
   useEffect(() => {
     if (multiple) {
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      setSelectedValues(multiple ? (value || []).map((v: any) => `${v || ''}`) : value ? [`${value || ''}`] : [])
+      setSelectedValues(
+        multiple ? ((value || []) as string[]).map((v: string) => `${v || ''}`) : value ? [`${value || ''}`] : []
+      )
     } else {
       setValueState(value)
     }
   }, [value, multiple])
 
-  const showClear = useMemo(
-    () => clearable && (selectedValues.length > 0 || valueState),
+  const showClear = useMemo<boolean>(
+    () => !!(clearable && (selectedValues.length > 0 || valueState)),
     [clearable, selectedValues, valueState]
   )
 
@@ -325,7 +309,17 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, _ref) => {
         />
       </PopoverTrigger>
       <PopoverContent className="p-0" style={{ width: size.width }}>
-        <Command filter={props.filter}>
+        <Command
+          filter={(value, search) =>
+            filter(
+              value,
+              search,
+              options.find((option) => option.value === value)
+            )
+              ? 1
+              : 0
+          }
+        >
           {search ? <CommandInput onValueChange={onSearch} placeholder={searchPlaceholder} className="h-9" /> : null}
           {loading ? (
             <div className="px-2">
@@ -346,11 +340,11 @@ export const ComboSelect: FC<ComboSelectProps> = forwardRef((props, _ref) => {
             setValueState={setValueState}
             onChange={onChange}
             onSearch={onSearch}
-            value={value}
+            value={value || ''}
             setOpen={setOpen}
           />
         </Command>
       </PopoverContent>
     </Popover>
   )
-})
+}

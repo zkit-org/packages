@@ -25,7 +25,7 @@ const Page = () => {
 
   return (
     <div className="p-4">
-      <ComboSelect
+      <ComboSelect<{ label: string; value: string }>
         options={options}
         loading={loading}
         placeholder="请选择"
@@ -36,6 +36,10 @@ const Page = () => {
           setLoading(true)
           setResult([])
           onSearch(value)
+        }}
+        filter={(value, search, option) => {
+          console.log('filter', value, search, option)
+          return (option?.label as string)?.includes(search) || value.includes(search)
         }}
       />
     </div>
