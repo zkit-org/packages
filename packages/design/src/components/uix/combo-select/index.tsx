@@ -178,6 +178,7 @@ type ComboSelectButtonProps<Data> = {
 } & Omit<ButtonProps, 'onChange'>
 
 const ComboSelectButton = forwardRef(
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
   <Data,>(props: ComboSelectButtonProps<Data>, ref: ForwardedRef<HTMLButtonElement>) => {
     const {
       multiple,
