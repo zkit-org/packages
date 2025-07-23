@@ -8,6 +8,7 @@ const Page = () => {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const [result, setResult] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [value, setValue] = useState<string[]>(['1001'])
 
   const onSearch = useCallback(
     debounce(async (value: string) => {
@@ -40,6 +41,10 @@ const Page = () => {
         filter={(value, search, option) => {
           console.log('filter', value, search, option)
           return (option?.label as string)?.includes(search) || value.includes(search)
+        }}
+        value={value}
+        onChange={(value) => {
+          setValue(value as string[])
         }}
       />
     </div>

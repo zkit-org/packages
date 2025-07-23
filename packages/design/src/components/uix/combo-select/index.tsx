@@ -52,7 +52,7 @@ function SelectedLabels({
       <>
         {selectedValues.map((v) => {
           // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-          const label = options.find((option: any) => option.value === v)?.label
+          const label = options.find((option: any) => option.value === v)?.label || v
           return label ? (
             <div className="my-0.5 mr-1 rounded bg-secondary px-2 py-[3px] text-sm" key={v}>
               {label}
@@ -208,11 +208,13 @@ const ComboSelectButton = forwardRef(
         )}
         onClick={onClick}
       >
-        <div className={cn('flex flex-1 flex-wrap items-start justify-start', multiple ? '-m-0.5' : null)}>
+        <div className={cn('flex flex-1 flex-wrap items-start justify-start', multiple ? '-my-0.5' : null)}>
           {multiple ? (
             <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
           ) : (
-            <span>{valueState ? options.find((option) => option.value === valueState)?.label : placeholderDom}</span>
+            <span>
+              {valueState ? options.find((option) => option.value === valueState)?.label || valueState : placeholderDom}
+            </span>
           )}
         </div>
         <div className="ml-2 flex w-4 shrink-0 items-center justify-center opacity-50">
@@ -225,7 +227,6 @@ const ComboSelectButton = forwardRef(
               )}
               <div
                 onClick={(e) => {
-                  console.log('onClick', e)
                   e.stopPropagation()
                   const v = multiple ? [] : ''
                   setSelectedValues([])
