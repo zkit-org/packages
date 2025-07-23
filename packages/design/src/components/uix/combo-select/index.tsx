@@ -209,8 +209,10 @@ const ComboSelectButton = forwardRef(
         )}
         onClick={onClick}
       >
-        <div className={cn('flex flex-1 flex-wrap items-start justify-start', multiple ? '-my-0.5' : null)}>
-          {multiple ? (
+        <div className={cn('flex min-h-7.5 flex-1 flex-wrap items-center justify-start', multiple ? '-my-0.5' : null)}>
+          {loading ? (
+            <Skeleton className="h-6 w-full min-w-20" />
+          ) : multiple ? (
             <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
           ) : (
             <span>
