@@ -39,6 +39,7 @@ export interface ComboSelectProps<Data = unknown> {
   limit?: number
   search?: boolean
   onSearch?: SearchFunction | DebouncedFunc<SearchFunction>
+  initLoading?: boolean
 }
 
 function SelectedLabels({
@@ -175,6 +176,7 @@ type ComboSelectButtonProps<Data> = {
   setValueState: (v: string) => void
   onChange?: (v: string | string[]) => void
   onSearch?: (v: string) => void
+  initLoading: boolean
 } & Omit<ButtonProps, 'onChange'>
 
 const ComboSelectButton = forwardRef(
@@ -188,6 +190,7 @@ const ComboSelectButton = forwardRef(
       options,
       valueState,
       loading,
+      initLoading,
       showClear,
       setSelectedValues,
       setValueState,
@@ -210,7 +213,7 @@ const ComboSelectButton = forwardRef(
         onClick={onClick}
       >
         <div className={cn('flex min-h-7.5 flex-1 flex-wrap items-center justify-start', multiple ? '-my-0.5' : null)}>
-          {loading ? (
+          {initLoading ? (
             <Skeleton className="h-6 w-full min-w-20" />
           ) : multiple ? (
             <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
@@ -221,7 +224,7 @@ const ComboSelectButton = forwardRef(
           )}
         </div>
         <div className="ml-2 flex w-4 shrink-0 items-center justify-center opacity-50">
-          {loading ? (
+          {loading || initLoading ? (
             <Spin />
           ) : (
             <>
@@ -262,6 +265,7 @@ export function ComboSelect<Data = unknown>(props: ComboSelectProps<Data>) {
     limit = Number.MAX_VALUE,
     search = false,
     onSearch,
+    initLoading = false,
     filter = (value, search) => value.includes(search),
   } = props
 
@@ -305,6 +309,7 @@ export function ComboSelect<Data = unknown>(props: ComboSelectProps<Data>) {
           options={options}
           valueState={valueState}
           loading={loading}
+          initLoading={initLoading}
           showClear={showClear}
           setSelectedValues={setSelectedValues}
           setValueState={setValueState}

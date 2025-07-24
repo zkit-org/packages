@@ -2,13 +2,14 @@
 
 import {ComboSelect} from "@easykit/design";
 import { debounce } from 'lodash'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 const Page = () => {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const [result, setResult] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [value, setValue] = useState<string[]>(['1001'])
+  const [initLoading, setInitLoading] = useState<boolean>(true)
 
   const onSearch = useCallback(
     debounce(async (value: string) => {
@@ -20,6 +21,12 @@ const Page = () => {
     []
   )
 
+  useEffect(() => {
+    setTimeout(() => {
+      setInitLoading(false)
+    }, 1000)
+  }, [])
+
   const options = useMemo(() => {
     return result
   }, [result])
@@ -29,6 +36,7 @@ const Page = () => {
       <ComboSelect<{ label: string; value: string }>
         options={options}
         loading={loading}
+        initLoading={initLoading}
         placeholder="请选择"
         multiple={true}
         className="w-[220px]"
