@@ -16,6 +16,7 @@ import {cn} from "@easykit/design/lib";
 import type { FC, MouseEvent, PropsWithChildren, ReactNode } from 'react'
 
 type Align = "start" | "center" | "end";
+type Side = 'top' | 'bottom' | 'left' | 'right'
 
 export type onDropdownMenuClick = (item: DropdownMenuItemProps, e: MouseEvent) => void;
 export type onCheckedChange = (item: DropdownMenuItemProps, checked: boolean) => void;
@@ -34,16 +35,17 @@ export interface DropdownMenuItemProps {
 }
 
 export interface DropdownProps extends PropsWithChildren {
-  items?: DropdownMenuItemProps[];
-  className?: string;
-  onItemClick?: onDropdownMenuClick;
-  onCheckedChange?: onCheckedChange;
-  align?: Align;
-  asChild?: boolean;
-  hideOnEmpty?: boolean;
-  modal?: boolean;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  items?: DropdownMenuItemProps[]
+  className?: string
+  onItemClick?: onDropdownMenuClick
+  onCheckedChange?: onCheckedChange
+  align?: Align
+  side?: Side
+  asChild?: boolean
+  hideOnEmpty?: boolean
+  modal?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 type Callback = {
@@ -91,12 +93,22 @@ const renderItem = (item: DropdownMenuItemProps, call: Callback) => {
 }
 
 export const Dropdown: FC<DropdownProps> = (props) => {
-  const { items = [], onItemClick, onCheckedChange, align, asChild, hideOnEmpty = true, open, modal = false } = props
+  const {
+    items = [],
+    onItemClick,
+    onCheckedChange,
+    align,
+    asChild,
+    hideOnEmpty = true,
+    open,
+    modal = false,
+    side,
+  } = props
   if (!items?.length && hideOnEmpty) return null
   return (
     <DropdownMenu modal={modal} open={open} onOpenChange={props.onOpenChange}>
       <DropdownMenuTrigger asChild={asChild}>{props.children}</DropdownMenuTrigger>
-      <DropdownMenuContent align={align} className={cn(props.className)}>
+      <DropdownMenuContent align={align} className={cn(props.className)} side={side}>
         {items.filter((item) => !item.hidden).map((child) => renderItem(child, { onItemClick, onCheckedChange }))}
       </DropdownMenuContent>
     </DropdownMenu>
