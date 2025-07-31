@@ -3,7 +3,8 @@ import { Fragment, type Node, type ResolvedPos, Slice } from '@tiptap/pm/model'
 import { NodeSelection, Plugin, PluginKey, TextSelection } from '@tiptap/pm/state'
 
 // @ts-ignore
-import { type EditorView, __serializeForClipboard } from '@tiptap/pm/view'
+import type { EditorView } from '@tiptap/pm/view'
+import { serializeForClipboard } from './clipboard-serializer'
 
 export interface GlobalDragHandleOptions {
   /**
@@ -174,7 +175,7 @@ export function DragHandlePlugin(options: GlobalDragHandleOptions & { pluginKey:
     }
 
     const slice = view.state.selection.content()
-    const { dom, text } = __serializeForClipboard(view, slice)
+    const { dom, text } = serializeForClipboard(view, slice)
 
     event.dataTransfer.clearData()
     event.dataTransfer.setData('text/html', dom.innerHTML)

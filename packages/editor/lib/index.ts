@@ -1,5 +1,3 @@
-import './style/tailwind.css'
-
 // biome-ignore lint/performance/noReExportAll: <explanation>
 export * from './editor/hooks'
 

@@ -740,7 +740,7 @@ export default function Home() {
         type: 'imageBlock',
         attrs: {
           id: 'rhTW9UO3f9UyGkoIkrYhz',
-          src: 'https://clover-assets.oss-cn-beijing.aliyuncs.com/ac1f4f17c35b4501d93ca02785c24979',
+          src: 'https://clover-assets.oss-cn-beijing.aliyuncs.com/blobs/bb40d3e7690a48525710af4b45822a51',
           width: '50%',
           align: 'left',
         },
@@ -749,7 +749,7 @@ export default function Home() {
         type: 'imageBlock',
         attrs: {
           id: 'IkvT4-B7Tzo7chWw44IWm',
-          src: 'https://clover-assets.oss-cn-beijing.aliyuncs.com/e9586884307aca4f5b0771ec27660bb4',
+          src: 'https://clover-assets.oss-cn-beijing.aliyuncs.com/blobs/bb40d3e7690a48525710af4b45822a51',
           width: '50%',
           align: 'right',
         },
@@ -809,6 +809,12 @@ export default function Home() {
         <Editor
           value={value}
           onChange={setValue}
+          uploadImage={async (file) => {
+            console.log('uploadImage', file)
+            return await Promise.resolve(
+              'https://clover-assets.oss-cn-beijing.aliyuncs.com/blobs/bb40d3e7690a48525710af4b45822a51'
+            )
+          }}
           slashCommandProps={{
             groups: [
               {

@@ -9,7 +9,11 @@ declare module '@tiptap/core' {
   }
 }
 
-export const ImageUpload = Node.create({
+export type UploadImageFunction = (file: File) => Promise<string>
+
+export const ImageUpload = Node.create<{
+  uploadImage?: UploadImageFunction
+}>({
   name: 'imageUpload',
 
   isolating: true,
@@ -33,15 +37,15 @@ export const ImageUpload = Node.create({
   },
 
   renderHTML() {
-    return ['div', {'data-type': this.name}]
+    return ['div', { 'data-type': this.name }]
   },
 
   addCommands() {
     return {
       setImageUpload:
         () =>
-          ({commands}) =>
-            commands.insertContent(`<div data-type="${this.name}"></div>`),
+        ({ commands }) =>
+          commands.insertContent(`<div data-type="${this.name}"></div>`),
     }
   },
 

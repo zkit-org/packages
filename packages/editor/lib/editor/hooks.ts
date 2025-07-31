@@ -43,6 +43,7 @@ import {
   UniqueId,
 } from './extension'
 import GlobalDragHandle from './extension/global-drag-handle'
+import type { UploadImageFunction } from './extension/image-upload/ImageUpload'
 import SlashCommand, { type SlashCommandProps } from './extension/slash-command'
 import { i18n } from './utils/locale'
 
@@ -55,6 +56,7 @@ export type UseEditorProps = {
   onCreate?: (props: EditorEvents['create']) => void
   extensions?: Extensions
   slashCommandProps?: SlashCommandProps
+  uploadImage?: UploadImageFunction
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -91,6 +93,7 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
     editable = true,
     extensions = [],
     slashCommandProps,
+    uploadImage,
   } = props
   const handleId = useHandleId()
   const data = useData()
@@ -196,7 +199,7 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
         }),
         ImageBlock,
         ImageUpload.configure({
-          clientId: 'test',
+          uploadImage,
         }),
         UniqueId.configure({
           attributeName: UNIQUE_ATTRIBUTE_NAME,
@@ -232,14 +235,13 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
     [onChange, onReadOnlyChecked, onCreate]
   )
 
-  const isRemoteUpdate = useRef(false)
+  const isUpdate = useRef(false)
 
   // 监听 value 变化，必要时 setContent
   useEffect(() => {
     if (!(editor && value)) return
     const current = JSON.stringify(editor.getJSON())
-    if (current !== value) {
-      isRemoteUpdate.current = true
+    if (current !== value && !isUpdate.current) {
       editor.commands.setContent(JSON.parse(value), false)
     }
   }, [value, editor])
@@ -248,10 +250,7 @@ export const useEditor = (props: UseEditorProps): [EditorInstance, NodeData, str
   useEffect(() => {
     if (!editor) return
     const handler = () => {
-      if (isRemoteUpdate.current) {
-        isRemoteUpdate.current = false
-        return
-      }
+      isUpdate.current = true
       onChange?.(getJSONString(editor))
     }
     editor.on('update', handler)

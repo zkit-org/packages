@@ -1,30 +1,24 @@
-import { type Editor, NodeViewWrapper } from '@tiptap/react'
-import {useCallback} from 'react'
+import { type NodeViewProps, NodeViewWrapper } from '@tiptap/react'
+import { type ComponentType, useCallback } from 'react'
 
-import {ImageUploader} from './ImageUploader'
+import { ImageUploader } from './ImageUploader'
 
-interface ImageUploadProps {
-  editor: Editor
-  getPos: () => number
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  HTMLAttributes: Record<string, any>
-}
-
-export const ImageUpload = (props: ImageUploadProps) => {
-  const { getPos, editor } = props
+export const ImageUpload: ComponentType<NodeViewProps> = (props) => {
+  const { getPos, editor, extension } = props
+  const { uploadImage } = extension?.options || {}
   const onUpload = useCallback(
     (url: string) => {
       if (url) {
-        editor.chain().setImageBlock({src: url}).deleteRange({from: getPos(), to: getPos()}).focus().run()
+        editor.chain().setImageBlock({ src: url }).deleteRange({ from: getPos(), to: getPos() }).focus().run()
       }
     },
-    [getPos, editor],
+    [getPos, editor]
   )
 
   return (
     <NodeViewWrapper {...props.HTMLAttributes}>
       <div className="m-0 p-0" data-drag-handle>
-        <ImageUploader onUpload={onUpload} />
+        <ImageUploader onUpload={onUpload} uploadImage={uploadImage} />
       </div>
     </NodeViewWrapper>
   )
