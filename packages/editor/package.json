@@ -22,7 +22,7 @@
     "build:next": "next build",
     "start": "next start",
     "lint:next": "next lint",
-    "lint": "biome lint --config-path=biome.json"
+    "lint": "biome lint"
   },
   "type": "module",
   "dependencies": {
