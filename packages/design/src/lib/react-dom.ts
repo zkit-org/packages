@@ -1,7 +1,9 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <any> */
+import { isObject } from './is'
+
 import type { ReactElement } from 'react'
 import ReactDOM from 'react-dom'
 import { createRoot as reactDOMCreateRoot } from 'react-dom/client'
-import { isObject } from './is'
 
 type CreateRootFnType = (container: Element | DocumentFragment) => {
   render: (container: ReactElement) => void
@@ -79,16 +81,13 @@ if (isReact19) {
   }
 } else {
   copyRender = (app: ReactElement, container: Element | DocumentFragment) => {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     ;(CopyReactDOM as any).render(app, container)
 
     return {
       render: (app: ReactElement) => {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         ;(CopyReactDOM as any).render(app, container)
       },
       _unmount() {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         ;(CopyReactDOM as any).unmountComponentAtNode(container)
       },
     }

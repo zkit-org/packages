@@ -1,10 +1,10 @@
+import { type FC, useContext, useEffect, useState } from 'react'
+import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
+import get from 'lodash/get'
 import { Input } from '@easykit/design/components/ui/input'
-import {Button} from "@easykit/design/components/uix/button";
+import { Button } from '@easykit/design/components/uix/button'
 import { UIXContext } from '@easykit/design/components/uix/config-provider'
 import { Select } from '@easykit/design/components/uix/select'
-import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
-import get from "lodash/get";
-import { type FC, useContext, useEffect, useState } from 'react'
 
 export interface PaginationProps {
   total: number
@@ -15,7 +15,7 @@ export interface PaginationProps {
   sizeOptions?: number[]
 }
 
-export const SIZE_OPTIONS = [10, 20, 50, 100];
+export const SIZE_OPTIONS = [10, 20, 50, 100]
 
 export const Pagination: FC<PaginationProps> = (props) => {
   const { total = 0, page = 1, size = 20, sizeOptions = SIZE_OPTIONS, onChange, onSizeChange } = props
@@ -28,14 +28,14 @@ export const Pagination: FC<PaginationProps> = (props) => {
   const goSuffix = get(config.locale, 'Pagination.goSuffix')
 
   const totalPage = Math.ceil(Number(total) / Number(size))
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <pageValue>
   const [pageValue, setPageValue] = useState<any>(page)
 
   useEffect(() => {
     setPageValue(page)
   }, [page])
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <e>
   const handleChange = (e: any) => {
     let v = e.target.value.replace(/[^\d]/g, '')
     if (v === '') {
@@ -57,47 +57,47 @@ export const Pagination: FC<PaginationProps> = (props) => {
         <span>{totalPageText?.replace('%total', `${total}`)}</span>
         <span>{totalText?.replace('%page', `${totalPage}`)}</span>
       </span>
-      <Button disabled={`${page}` === '1'} variant="outline" size="icon" onClick={() => onChange?.(1)}>
+      <Button disabled={`${page}` === '1'} onClick={() => onChange?.(1)} size="icon" variant="outline">
         <DoubleArrowLeftIcon />
       </Button>
-      <Button disabled={`${page}` === '1'} variant="outline" size="icon" onClick={() => onChange?.(Number(page) - 1)}>
+      <Button disabled={`${page}` === '1'} onClick={() => onChange?.(Number(page) - 1)} size="icon" variant="outline">
         <ChevronLeftIcon />
       </Button>
       <div className="flex h-9 items-center justify-center rounded bg-primary px-4 text-primary-foreground">{page}</div>
       <Button
         disabled={`${page}` === `${totalPage}`}
-        variant="outline"
-        size="icon"
         onClick={() => onChange?.(Number(page) + 1)}
+        size="icon"
+        variant="outline"
       >
         <ChevronRightIcon />
       </Button>
       <Button
         disabled={`${page}` === `${totalPage}`}
-        variant="outline"
-        size="icon"
         onClick={() => onChange?.(Number(totalPage))}
+        size="icon"
+        variant="outline"
       >
         <DoubleArrowRightIcon />
       </Button>
       <Select
         className="w-auto"
-        value={`${size}`}
-        options={sizeOptions.map((v) => ({ label: sizeText?.replace('%size', `${v}`) || '', value: `${v}` }))}
         onChange={(v) => onSizeChange?.(Number(v))}
+        options={sizeOptions.map((v) => ({ label: sizeText?.replace('%size', `${v}`) || '', value: `${v}` }))}
+        value={`${size}`}
       />
       <div className="flex items-center justify-center space-x-1">
         <span>{go}</span>
         <Input
-          value={pageValue}
-          onChange={handleChange}
-          type="text"
           className="h-9 w-12 rounded px-2"
+          onChange={handleChange}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               onChange?.(Number(pageValue))
             }
           }}
+          type="text"
+          value={pageValue}
         />
         <span>{goSuffix}</span>
       </div>

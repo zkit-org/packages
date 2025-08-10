@@ -1,11 +1,11 @@
-import { Button, Calendar, Popover, PopoverContent, PopoverTrigger } from '@easykit/design'
-import { UIXContext } from '@easykit/design/components/uix/config-provider'
-import { cn } from '@easykit/design/lib'
+import { forwardRef, type HTMLAttributes, useContext, useState } from 'react'
 import { format } from 'date-fns'
 import get from 'lodash/get'
 import { Calendar as CalendarIcon } from 'lucide-react'
-import { type HTMLAttributes, forwardRef, useContext, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
+import { Button, Calendar, Popover, PopoverContent, PopoverTrigger } from '@easykit/design'
+import { UIXContext } from '@easykit/design/components/uix/config-provider'
+import { cn } from '@easykit/design/lib'
 
 export type DateRangePickerProps = {
   value?: DateRange
@@ -14,8 +14,9 @@ export type DateRangePickerProps = {
   format?: string
 } & HTMLAttributes<HTMLDivElement>
 
-export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>((props, ref) => {
+export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>((props, forwardedRef) => {
   const { className, value, onChange } = props
+  const elementRef = forwardedRef
 
   const config = useContext(UIXContext)
   const locale = get(config.locale, 'DateRangePicker.locale')
@@ -24,14 +25,14 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   const [date, setDate] = useState<DateRange | undefined>(value)
 
   return (
-    <div className={cn('grid gap-2', className)} ref={ref}>
+    <div className={cn('grid gap-2', className)} ref={elementRef}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            type="button"
-            id="date"
-            variant="outline"
             className={cn('justify-start text-left font-normal', !date && 'text-muted-foreground')}
+            id="date"
+            type="button"
+            variant="outline"
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {date?.from ? (
@@ -47,18 +48,18 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent align="start" className="w-auto p-0">
           <Calendar
-            locale={locale}
-            initialFocus
-            mode="range"
             defaultMonth={date?.from}
-            selected={date}
+            initialFocus
+            locale={locale}
+            mode="range"
+            numberOfMonths={2}
             onSelect={(v) => {
               setDate(v)
               onChange?.(v!)
             }}
-            numberOfMonths={2}
+            selected={date}
           />
         </PopoverContent>
       </Popover>

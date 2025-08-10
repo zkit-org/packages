@@ -1,18 +1,17 @@
-'use client';
+'use client'
 
-import {TreeSelect} from "@easykit/design/components/uix/tree-select";
-import {useState} from "react";
+import { useState } from 'react'
+import { TreeSelect } from '@easykit/design/components/uix/tree-select'
 
 const Page = () => {
-  const [value, setValue] = useState<string | undefined>(undefined);
+  const [value, setValue] = useState<string | undefined>(undefined)
 
   return (
     <div className="p-4">
       <TreeSelect
-        loading={false}
         clearable={true}
+        loading={false}
         onChange={setValue}
-        value={value}
         treeData={[
           {
             key: '1',
@@ -47,9 +46,10 @@ const Page = () => {
             title: '3',
           },
         ]}
+        value={value}
       />
     </div>
   )
 }
 
-export default Page;
+export default Page

@@ -3,18 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/lib/*": [
-        "./src/lib/*"
-      ],
-      "@easykit/design/*": [
-        "./src/*"
-      ],
-      "@easykit/design": [
-        "./src/index.ts"
-      ]
+      "@/*": ["./src/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@easykit/design/*": ["./src/*"],
+      "@easykit/design": ["./src/index.ts"]
     },
     "jsx": "preserve",
     "esModuleInterop": true,

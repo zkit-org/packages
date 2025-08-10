@@ -1,7 +1,8 @@
-import { cn } from '@easykit/design/lib'
-import classNames from 'classnames'
-import type { FC, PropsWithChildren, ReactNode } from 'react'
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card as UICard } from '../../ui/card'
+
+import type { FC, PropsWithChildren, ReactNode } from 'react'
+import classNames from 'classnames'
+import { cn } from '@easykit/design/lib'
 
 export interface CardProps extends PropsWithChildren {
   footer?: ReactNode
@@ -17,7 +18,7 @@ export const Card: FC<CardProps> = (props) => {
   const { title = '', description = '', className, contentClassName, footer, shadow = false } = props
 
   return (
-    <UICard onClick={props.onClick} className={classNames(shadow ? null : 'shadow-none', className)}>
+    <UICard className={classNames(shadow ? null : 'shadow-none', className)} onClick={props.onClick}>
       {title || description ? (
         <CardHeader className="pb-0">
           {title ? <CardTitle>{title}</CardTitle> : null}

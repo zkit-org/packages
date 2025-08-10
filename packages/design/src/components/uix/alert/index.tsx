@@ -1,6 +1,7 @@
-import { cn } from '@/lib'
+import { Alert as UIAlert, AlertDescription as UIAlertDescription, AlertTitle as UIAlertTitle } from '../../ui/alert'
+
 import type { ComponentProps, ReactNode } from 'react'
-import { Alert as UIAlert, AlertDescription as UIAlertDescription, AlertTitle as UIAlertTitle } from "../../ui/alert";
+import { cn } from '@/lib'
 
 export type AlertProps = ComponentProps<typeof UIAlert> & {
   title?: ReactNode
@@ -24,14 +25,14 @@ export const Alert = (props: AlertProps) => {
   } = props
 
   let className = props.className
-  const children = childrenProp || description;
+  const children = childrenProp || description
 
   if (variant === 'destructive') {
-    className = cn('text-destructive bg-destructive/10 border-destructive/20', className)
+    className = cn('border-destructive/20 bg-destructive/10 text-destructive', className)
   }
 
   return (
-    <UIAlert {...rest} variant={variant} className={cn('flex gap-2', className)}>
+    <UIAlert {...rest} className={cn('flex gap-2', className)} variant={variant}>
       {icon}
       <div className="flex flex-1 flex-col gap-2">
         {title && <UIAlertTitle className={titleClassName}>{title}</UIAlertTitle>}

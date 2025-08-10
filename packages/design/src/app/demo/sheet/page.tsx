@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import {Button, Sheet, SheetContent, SheetTitle} from "@easykit/design";
-import {useState} from "react";
+import { useState } from 'react'
+import { Button, Sheet, SheetContent, SheetTitle } from '@easykit/design'
 
 const Page = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <div className="p-4">
       <Button onClick={() => setOpen(true)}>确认</Button>
-      <Sheet open={open} onOpenChange={setOpen}>
+      <Sheet onOpenChange={setOpen} open={open}>
         <SheetTitle />
         <SheetContent>content</SheetContent>
       </Sheet>
@@ -17,4 +17,4 @@ const Page = () => {
   )
 }
 
-export default Page;
+export default Page

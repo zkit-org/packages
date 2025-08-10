@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
+import { useCallback } from 'react'
 import { CheckboxGroup } from '@easykit/design'
-import {useCallback} from "react";
 
 const Page = () => {
-
   const onChange = useCallback((value: string[]) => {
-    console.log("onChange", value);
-  }, []);
+    console.log('onChange', value)
+  }, [])
 
   return (
     <div className="p-4">
       <CheckboxGroup
         checkboxClassName="mt-2"
+        onChange={onChange}
         options={[
           {
             label: 'Option 1',
@@ -23,10 +23,9 @@ const Page = () => {
             value: '2',
           },
         ]}
-        onChange={onChange}
       />
     </div>
   )
 }
 
-export default Page;
+export default Page

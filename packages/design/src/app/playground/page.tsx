@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import {Button, DataTable, Input} from "@easykit/design";
+import { Button, DataTable, Input } from '@easykit/design'
 
 const Page = () => {
   return (
@@ -13,20 +13,6 @@ const Page = () => {
       </div>
       <div>
         <DataTable
-          loading={true}
-          filter={{
-            items: [
-              {
-                field: 'keyword',
-                render: () => <Input placeholder="请输入关键词" />,
-              },
-              {
-                field: 'teamId',
-                label: '所属团队',
-                render: () => <Input placeholder="请输入关键词" />,
-              },
-            ],
-          }}
           columns={[
             {
               accessorKey: 'name',
@@ -48,6 +34,21 @@ const Page = () => {
               className: 'w-[200px] min-w-[200px]',
             },
           ]}
+          data={[{}]}
+          filter={{
+            items: [
+              {
+                field: 'keyword',
+                render: () => <Input placeholder="请输入关键词" />,
+              },
+              {
+                field: 'teamId',
+                label: '所属团队',
+                render: () => <Input placeholder="请输入关键词" />,
+              },
+            ],
+          }}
+          loading={true}
           rowActions={[
             {
               id: 'detail',
@@ -60,11 +61,10 @@ const Page = () => {
               label: '动态',
             },
           ]}
-          data={[{}]}
         />
       </div>
     </div>
   )
 }
 
-export default Page;
+export default Page

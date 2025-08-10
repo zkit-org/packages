@@ -1,12 +1,13 @@
+import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select as UISelect } from '../../ui/select'
+
+import { forwardRef, type MouseEvent, type ReactNode, useState } from 'react'
+import { XIcon } from 'lucide-react'
 import { Empty } from '@easykit/design/components/uix/empty'
 import { cn } from '@easykit/design/lib'
-import { XIcon } from 'lucide-react'
-import { type MouseEvent, type ReactNode, forwardRef, useState } from 'react'
-import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select as UISelect } from '../../ui/select'
 
 export interface SelectOptionProps {
   value: string
-  label: string
+  label: ReactNode
   disabled?: boolean
 }
 
@@ -59,7 +60,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
   }
 
   return (
-    <UISelect {...rest} onValueChange={handleChange} value={currentValue} defaultValue={defaultValue}>
+    <UISelect {...rest} defaultValue={defaultValue} onValueChange={handleChange} value={currentValue}>
       <div className={cn('relative inline-block', allowClear && currentValue ? 'group' : '', className)}>
         <SelectTrigger className={cn('flex w-full', triggerClassName)}>
           <SelectValue placeholder={placeholder} />
@@ -74,14 +75,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
         )}
       </div>
       <SelectContent
-        side={props.side}
-        sideOffset={props.sideOffset}
         align={props.align}
         alignOffset={props.alignOffset}
+        side={props.side}
+        sideOffset={props.sideOffset}
       >
         {options?.length
           ? options.map((option) => (
-              <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
+              <SelectItem disabled={option.disabled} key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
             ))

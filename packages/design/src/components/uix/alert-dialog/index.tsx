@@ -1,3 +1,5 @@
+import { type FC, type ReactNode, useContext, useMemo, useState } from 'react'
+import get from 'lodash/get'
 import {
   AlertDialogContent,
   AlertDialogDescription,
@@ -6,18 +8,16 @@ import {
   AlertDialogTitle,
   AlertDialog as UIAlertDialog,
 } from '@easykit/design/components/ui/alert-dialog'
-import {Button} from "@easykit/design/components/uix/button";
-import {UIXContext} from "@easykit/design/components/uix/config-provider";
+import { Button } from '@easykit/design/components/uix/button'
+import { UIXContext } from '@easykit/design/components/uix/config-provider'
 import { render as ReactDOMRender } from '@easykit/design/lib'
-import get from "lodash/get"
-import { type FC, type ReactNode, useContext, useMemo, useState } from 'react'
 
 export interface ConfirmProps {
   title: ReactNode
   description: ReactNode
   cancelText?: string
   okText?: string
-  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  // biome-ignore lint/suspicious/noConfusingVoidType: <onOk>
   onOk?: () => boolean | void | Promise<boolean | void>
   onCancel?: () => void
   open?: boolean
@@ -25,19 +25,14 @@ export interface ConfirmProps {
 }
 
 const AlertDialog: FC<ConfirmProps> = (props) => {
-  const {
-    description,
-    title,
-    onOk,
-    onCancel,
-  } = props;
+  const { description, title, onOk, onCancel } = props
 
-  const config = useContext(UIXContext);
-  const okText = props.okText || get(config.locale, "Alert.okText");
-  const cancelText = props.cancelText || get(config.locale, "Alert.cancelText");
+  const config = useContext(UIXContext)
+  const okText = props.okText || get(config.locale, 'Alert.okText')
+  const cancelText = props.cancelText || get(config.locale, 'Alert.cancelText')
 
-  const [open, setOpen] = useState(props.open);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(props.open)
+  const [loading, setLoading] = useState(false)
 
   return (
     <UIAlertDialog {...props} open={open}>
@@ -48,11 +43,11 @@ const AlertDialog: FC<ConfirmProps> = (props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button
-            variant="outline"
             onClick={() => {
               setOpen(false)
               onCancel?.()
             }}
+            variant="outline"
           >
             {cancelText}
           </Button>
@@ -90,24 +85,24 @@ export const useAlert = () => {
   return useMemo(() => {
     return {
       confirm: (props: ConfirmProps) => {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        let root: any;
-        const div = document.createElement('div');
-        document.body.appendChild(div);
+        // biome-ignore lint/suspicious/noExplicitAny: <root>
+        let root: any
+        const div = document.createElement('div')
+        document.body.appendChild(div)
         const close = () => {
           setTimeout(() => {
-            root = root?._unmount();
+            root = root?._unmount()
             if (div.parentNode) {
-              div.parentNode.removeChild(div);
+              div.parentNode.removeChild(div)
             }
-          }, 200);
+          }, 200)
         }
         const onCancel = () => {
           close()
-          props.onCancel?.();
+          props.onCancel?.()
         }
-        root = ReactDOMRender(<AlertDialog {...props} open={true} onCancel={onCancel}/>, div);
-      }
+        root = ReactDOMRender(<AlertDialog {...props} onCancel={onCancel} open={true} />, div)
+      },
     }
   }, [])
 }

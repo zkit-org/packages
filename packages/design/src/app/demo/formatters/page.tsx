@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import {ValueFormatter} from "@easykit/design";
-import "@/plugin/formatters"
+import { ValueFormatter } from '@easykit/design'
+import '@/plugin/formatters'
 
 const Page = () => {
   return (
     <div className="p-4">
-      <ValueFormatter value={['a', 'b']} formatters={['join']} />
+      <ValueFormatter formatters={['join']} value={['a', 'b']} />
     </div>
   )
 }
 
-export default Page;
+export default Page

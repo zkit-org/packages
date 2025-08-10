@@ -1,4 +1,8 @@
+import { type FC, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { CaretSortIcon, Cross2Icon } from '@radix-ui/react-icons'
+import classNames from 'classnames'
 import {
+  cn,
   Empty,
   type EmptyProps,
   Popover,
@@ -8,13 +12,9 @@ import {
   Spin,
   Tree,
   type TreeData,
-  cn,
   useSize,
 } from '@easykit/design'
 import { Button } from '@easykit/design/components/ui/button'
-import { CaretSortIcon, Cross2Icon } from '@radix-ui/react-icons'
-import classNames from 'classnames'
-import { type FC, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
 export type TreeSelectProps = {
   className?: string
@@ -78,17 +78,17 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
   }, [value])
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild disabled={loading}>
         <Button
-          ref={containerRef}
-          variant="outline"
           aria-expanded={open}
           className={cn(
             'group h-9 min-w-[150px] items-center justify-between px-2 py-1 align-middle hover:bg-secondary/40',
             className
           )}
           disabled={loading}
+          ref={containerRef}
+          variant="outline"
         >
           <div className="flex flex-1 items-center justify-center">
             <div className="flex flex-1">{showValue}</div>
@@ -98,12 +98,12 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
               <div className="flex items-center">
                 <CaretSortIcon className={cn('block h-4 w-4', showClear ? 'group-hover:hidden' : '')} />
                 <Cross2Icon
+                  className={cn('hidden h-4 w-4', showClear ? 'group-hover:block' : '')}
                   onClick={(e) => {
                     setSelectedKeys([])
                     onChange?.(undefined)
                     e.stopPropagation()
                   }}
-                  className={cn('hidden h-4 w-4', showClear ? 'group-hover:block' : '')}
                 />
               </div>
             )}
@@ -116,7 +116,6 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
             <Tree
               expandedKeys={expandedKeys}
               onExpand={(expandedKeys) => setExpandedKeys(expandedKeys as string[])}
-              selectedKeys={selectedKeys}
               onSelect={(selectedKeys, { selected }) => {
                 if (selected) {
                   onChange?.(selectedKeys[0] as string)
@@ -124,6 +123,7 @@ export const TreeSelect: FC<TreeSelectProps> = (props) => {
                 }
                 setOpen(false)
               }}
+              selectedKeys={selectedKeys}
               treeData={treeData}
             />
           ) : (

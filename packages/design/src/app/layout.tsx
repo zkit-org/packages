@@ -1,6 +1,6 @@
-import {MainLayout} from "@/components/layout/main";
-import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import type { Metadata } from 'next'
+import { MainLayout } from '@/components/layout/main'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: ReactNode;
+  children: ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
@@ -18,5 +18,5 @@ export default function RootLayout({
         <MainLayout>{children}</MainLayout>
       </body>
     </html>
-  );
+  )
 }

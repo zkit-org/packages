@@ -1,16 +1,15 @@
-'use client';
+'use client'
 
-import {Select} from "@easykit/design";
+import { Select } from '@easykit/design'
 
 const Page = () => {
   return (
     <div className="p-4">
       <Select
-        placeholder="Select a fruit"
+        allowClear={true}
         onChange={(value) => {
           console.log(value)
         }}
-        allowClear={true}
         options={[
           {
             label: 'Apple',
@@ -26,9 +25,10 @@ const Page = () => {
             value: 'orange',
           },
         ]}
+        placeholder="Select a fruit"
       />
     </div>
   )
 }
 
-export default Page;
+export default Page

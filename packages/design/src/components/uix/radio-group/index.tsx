@@ -1,16 +1,16 @@
-import {Label} from "@easykit/design/components/ui/label";
+import { type FC, forwardRef, type PropsWithChildren, useState } from 'react'
+import { Label } from '@easykit/design/components/ui/label'
 import { RadioGroupItem, RadioGroup as UIRadioGroup } from '@easykit/design/components/ui/radio-group'
-import { type FC, type PropsWithChildren, forwardRef, useState } from 'react'
 
 export interface SimpleRadioGroupOptionProps {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
 export interface SimpleRadioGroupProps extends PropsWithChildren {
-  value?: string;
-  onChange?: (value: string) => void;
-  options?: SimpleRadioGroupOptionProps[];
+  value?: string
+  onChange?: (value: string) => void
+  options?: SimpleRadioGroupOptionProps[]
 }
 
 export const SimpleRadioGroup: FC<SimpleRadioGroupProps> = forwardRef((props, _ref) => {
@@ -19,12 +19,12 @@ export const SimpleRadioGroup: FC<SimpleRadioGroupProps> = forwardRef((props, _r
   const [labelKey] = useState(Date.now())
 
   return (
-    <UIRadioGroup value={value} onValueChange={onChange}>
+    <UIRadioGroup onValueChange={onChange} value={value}>
       {options.map((option) => {
         const id = `${labelKey}-${option.value}`
         return (
-          <div key={option.value} className="flex items-center space-x-2">
-            <RadioGroupItem value={option.value} id={id} />
+          <div className="flex items-center space-x-2" key={option.value}>
+            <RadioGroupItem id={id} value={option.value} />
             <Label htmlFor={id}>{option.label}</Label>
           </div>
         )

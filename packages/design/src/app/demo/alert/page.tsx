@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { Alert, Button, useAlert } from '@easykit/design'
 import { Info } from 'lucide-react'
+import { Alert, Button, useAlert } from '@easykit/design'
 
 const Page = () => {
   const alert = useAlert()

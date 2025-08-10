@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import {ComboSelect} from "@easykit/design";
-import { debounce } from 'lodash'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { debounce } from 'lodash'
+import { ComboSelect } from '@easykit/design'
 
 const Page = () => {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <result>
   const [result, setResult] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [value, setValue] = useState<string[]>(['1001'])
@@ -34,29 +34,29 @@ const Page = () => {
   return (
     <div className="p-4">
       <ComboSelect<{ label: string; value: string }>
-        options={options}
-        loading={loading}
-        initLoading={initLoading}
-        placeholder="请选择"
-        multiple={true}
         className="w-[220px]"
-        search={true}
+        filter={(value, search, option) => {
+          console.log('filter', value, search, option)
+          return (option?.label as string)?.includes(search) || value.includes(search)
+        }}
+        initLoading={initLoading}
+        loading={loading}
+        multiple={true}
+        onChange={(value) => {
+          setValue(value as string[])
+        }}
         onSearch={(value) => {
           setLoading(true)
           setResult([])
           onSearch(value)
         }}
-        filter={(value, search, option) => {
-          console.log('filter', value, search, option)
-          return (option?.label as string)?.includes(search) || value.includes(search)
-        }}
+        options={options}
+        placeholder="请选择"
+        search={true}
         value={value}
-        onChange={(value) => {
-          setValue(value as string[])
-        }}
       />
     </div>
   )
 }
 
-export default Page;
+export default Page

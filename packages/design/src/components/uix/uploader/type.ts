@@ -2,9 +2,9 @@ export type UploadFile = File & {
   uid: string
   status: 'init' | 'uploading' | 'done' | 'error'
   progress: number
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <response>
   response?: any
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <error>
   error?: any
   controller?: AbortController
 }

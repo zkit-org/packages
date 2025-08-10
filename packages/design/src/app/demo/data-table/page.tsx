@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import {Card, DataTable, Input} from "@easykit/design";
-import {useState} from "react";
+import { useState } from 'react'
+import { Card, DataTable, Input } from '@easykit/design'
 
 type Project = {
-  id: number;
-  name: string;
-  createTime: number;
+  id: number
+  name: string
+  createTime: number
 }
 
 const initialParams = {
@@ -18,36 +18,13 @@ const initialParams = {
 }
 
 const Page = () => {
-  const [loading] = useState(false);
+  const [loading] = useState(false)
 
   return (
     <div className="p-4">
       <Card className="shadow-none">
         <DataTable<Project>
           checkbox={true}
-          inCard={true}
-          filter={{
-            items: [
-              {
-                field: 'keyword',
-                render: () => <Input placeholder="请输入关键词" />,
-              },
-              {
-                field: 'teamId',
-                label: '所属团队',
-                render: () => <Input placeholder="请输入关键词" />,
-              },
-            ],
-            defaultValues: initialParams,
-            query: initialParams,
-          }}
-          // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-          load={async () => {}}
-          pagination={{
-            total: 110,
-            page: 2,
-            size: 20,
-          }}
           columns={[
             {
               accessorKey: 'id',
@@ -69,18 +46,6 @@ const Page = () => {
               className: 'w-[200px] min-w-[200px]',
             },
           ]}
-          rowActions={() => [
-            {
-              id: 'detail',
-              type: 'item',
-              label: '详情',
-            },
-            {
-              id: 'activity',
-              type: 'item',
-              label: '动态',
-            },
-          ]}
           data={[
             {
               id: 1,
@@ -93,6 +58,23 @@ const Page = () => {
               createTime: new Date('2025-01-02').getTime(),
             },
           ]}
+          filter={{
+            items: [
+              {
+                field: 'keyword',
+                render: () => <Input placeholder="请输入关键词" />,
+              },
+              {
+                field: 'teamId',
+                label: '所属团队',
+                render: () => <Input placeholder="请输入关键词" />,
+              },
+            ],
+            defaultValues: initialParams,
+            query: initialParams,
+          }}
+          inCard={true}
+          load={async () => {}}
           loading={loading}
           onRowActionClick={({ id: key }, { original }) => {
             const { id } = original
@@ -110,10 +92,27 @@ const Page = () => {
             // const { identifier } = row.original;
             // router.push(`/i18n/${identifier}/dashboard`);
           }}
+          pagination={{
+            total: 110,
+            page: 2,
+            size: 20,
+          }}
+          rowActions={() => [
+            {
+              id: 'detail',
+              type: 'item',
+              label: '详情',
+            },
+            {
+              id: 'activity',
+              type: 'item',
+              label: '动态',
+            },
+          ]}
         />
       </Card>
     </div>
   )
 }
 
-export default Page;
+export default Page

@@ -1,10 +1,10 @@
-import {Switch as UISwitch} from "@easykit/design/components/ui/switch";
 import { type FC, forwardRef, useState } from 'react'
+import { Switch as UISwitch } from '@easykit/design/components/ui/switch'
 
 export interface SwitchProps {
-  value?: boolean;
-  onChange?: (value: boolean) => void;
-  readonly?: boolean;
+  value?: boolean
+  onChange?: (value: boolean) => void
+  readonly?: boolean
 }
 
 export const Switch: FC<SwitchProps> = forwardRef((props, _ref) => {

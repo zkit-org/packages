@@ -1,10 +1,9 @@
-// biome-ignore lint/style/noNamespaceImport: <explanation>
+import { type FC, forwardRef, type PropsWithChildren } from 'react'
 import * as BUILT_IN from '@easykit/design/lib/formatters'
-import { type FC, type PropsWithChildren, forwardRef } from 'react'
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <formatters>
 export type Formatters = ([string, any[]] | string)[]
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <functionMap>
 export type FunctionMap = Record<string, (value: any, ...args: any[]) => any>
 
 const _handles: FunctionMap = {}
@@ -13,13 +12,13 @@ export const register = (handles: FunctionMap) => {
   Object.assign(_handles, handles)
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <v>
 export const formatValue = (v: any, formatters: Formatters, all?: FunctionMap) => {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <merged>
   const merged: any = { ...BUILT_IN, ..._handles, ...(all ?? {}) }
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <fallback>
   const fallback = (v: any, ..._p: any[]) => v
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <params>
   let params: any[] = []
   let result = v
 
@@ -43,9 +42,9 @@ export const formatValue = (v: any, formatters: Formatters, all?: FunctionMap) =
 }
 
 export interface ValueFormatterProps extends PropsWithChildren {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <value>
   value?: any
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <formatters>
   formatters?: any[]
   handles?: FunctionMap
 }

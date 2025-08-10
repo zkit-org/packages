@@ -1,10 +1,9 @@
-'use client';
+'use client'
 
-import {Checkbox} from "@easykit/design";
 import { useEffect, useState } from 'react'
+import { Checkbox } from '@easykit/design'
 
 const Page = () => {
-
   const [value, setValue] = useState(false)
 
   useEffect(() => {
@@ -13,11 +12,11 @@ const Page = () => {
 
   return (
     <div className="p-4">
-      <Checkbox checked={value} onCheckedChange={(v) => setValue(v as boolean)} label="test">
+      <Checkbox checked={value} label="test" onCheckedChange={(v) => setValue(v as boolean)}>
         Test
       </Checkbox>
     </div>
   )
 }
 
-export default Page;
+export default Page

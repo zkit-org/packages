@@ -1,7 +1,7 @@
 'use client'
 
-import { type UploadFile, Uploader } from '@easykit/design'
 import { useEffect, useState } from 'react'
+import { Uploader, type UploadFile } from '@easykit/design'
 
 const Page = () => {
   const [files, setFiles] = useState<UploadFile[]>([])
@@ -14,7 +14,6 @@ const Page = () => {
     <div className="p-4">
       <Uploader
         maxFiles={1}
-        value={files}
         onChange={setFiles}
         uploadHandle={(props) => {
           props.onSuccess({
@@ -25,6 +24,7 @@ const Page = () => {
             },
           })
         }}
+        value={files}
       />
     </div>
   )

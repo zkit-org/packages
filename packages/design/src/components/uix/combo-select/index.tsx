@@ -1,3 +1,12 @@
+import type { ButtonProps } from '../button'
+import { Checkbox } from '../checkbox'
+
+import { type ForwardedRef, forwardRef, type ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { CaretSortIcon, CheckIcon, Cross2Icon, PlusCircledIcon } from '@radix-ui/react-icons'
+import type { DebouncedFunc } from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
+import get from 'lodash/get'
+import remove from 'lodash/remove'
 import { Button } from '@easykit/design/components/ui/button'
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@easykit/design/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@easykit/design/components/ui/popover'
@@ -6,14 +15,6 @@ import { UIXContext } from '@easykit/design/components/uix/config-provider'
 import { Spin } from '@easykit/design/components/uix/spin'
 import { useSize } from '@easykit/design/hooks/resize'
 import { cn } from '@easykit/design/lib'
-import { CaretSortIcon, CheckIcon, Cross2Icon, PlusCircledIcon } from '@radix-ui/react-icons'
-import type { DebouncedFunc } from 'lodash'
-import cloneDeep from 'lodash/cloneDeep'
-import get from 'lodash/get'
-import remove from 'lodash/remove'
-import { type ForwardedRef, type ReactNode, forwardRef, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import type { ButtonProps } from '../button'
-import { Checkbox } from '../checkbox'
 
 export interface ComboSelectOptionProps<Data> {
   value: string
@@ -46,13 +47,17 @@ function SelectedLabels({
   selectedValues,
   options,
   placeholderDom,
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}: { selectedValues: string[]; options: ComboSelectOptionProps<any>[]; placeholderDom: ReactNode }) {
+}: {
+  selectedValues: string[]
+  // biome-ignore lint/suspicious/noExplicitAny: <options>
+  options: ComboSelectOptionProps<any>[]
+  placeholderDom: ReactNode
+}) {
   if (selectedValues?.length) {
     return (
       <>
         {selectedValues.map((v) => {
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          // biome-ignore lint/suspicious/noExplicitAny: <options>
           const label = options.find((option: any) => option.value === v)?.label || v
           return label ? (
             <div className="my-0.5 mr-1 rounded bg-secondary px-2 py-[3px] text-sm" key={v}>
@@ -130,13 +135,12 @@ function ComboSelectCommandList<Data>({
     <CommandList>
       {loading
         ? null
-        : // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        : // biome-ignore lint/suspicious/noExplicitAny: <options>
           options.map((option: any) => {
             const isSelected = selectedValues.includes(option.value)
             return (
               <CommandItem
                 key={option.value}
-                value={option.value}
                 onSelect={() =>
                   handleSelect(
                     option.value,
@@ -150,6 +154,7 @@ function ComboSelectCommandList<Data>({
                     setOpen
                   )
                 }
+                value={option.value}
               >
                 {multiple ? <Checkbox checked={isSelected} /> : null}
                 {option.label}
@@ -180,8 +185,7 @@ type ComboSelectButtonProps<Data> = {
 } & Omit<ButtonProps, 'onChange'>
 
 const ComboSelectButton = forwardRef(
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-  <Data,>(props: ComboSelectButtonProps<Data>, ref: ForwardedRef<HTMLButtonElement>) => {
+  <Data,>(props: ComboSelectButtonProps<Data>, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
     const {
       multiple,
       selectedValues,
@@ -198,12 +202,10 @@ const ComboSelectButton = forwardRef(
       // onSearch,
       onClick,
     } = props
+    const elementRef = forwardedRef
 
     return (
       <Button
-        ref={ref}
-        type="button"
-        variant="outline"
         className={cn(
           'group h-9 min-w-[150px] items-center justify-between px-2 py-1 align-middle hover:bg-secondary/40',
           multiple ? 'border-dashed' : null,
@@ -211,12 +213,15 @@ const ComboSelectButton = forwardRef(
           className
         )}
         onClick={onClick}
+        ref={elementRef}
+        type="button"
+        variant="outline"
       >
         <div className={cn('flex min-h-7.5 flex-1 flex-wrap items-center justify-start', multiple ? '-my-0.5' : null)}>
           {initLoading ? (
             <Skeleton className="h-6 w-full min-w-20" />
           ) : multiple ? (
-            <SelectedLabels selectedValues={selectedValues} options={options} placeholderDom={placeholderDom} />
+            <SelectedLabels options={options} placeholderDom={placeholderDom} selectedValues={selectedValues} />
           ) : (
             <span>
               {valueState ? options.find((option) => option.value === valueState)?.label || valueState : placeholderDom}
@@ -298,23 +303,23 @@ export function ComboSelect<Data = unknown>(props: ComboSelectProps<Data>) {
   const placeholderDom = <span className="font-normal text-muted-foreground">{placeholder}</span>
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <ComboSelectButton
-          ref={containerRef}
-          multiple={multiple}
-          selectedValues={selectedValues}
           className={className}
-          placeholderDom={placeholderDom}
-          options={options}
-          valueState={valueState}
-          loading={loading}
           initLoading={initLoading}
-          showClear={showClear}
-          setSelectedValues={setSelectedValues}
-          setValueState={setValueState}
+          loading={loading}
+          multiple={multiple}
           onChange={onChange}
           onSearch={onSearch}
+          options={options}
+          placeholderDom={placeholderDom}
+          ref={containerRef}
+          selectedValues={selectedValues}
+          setSelectedValues={setSelectedValues}
+          setValueState={setValueState}
+          showClear={showClear}
+          valueState={valueState}
         />
       </PopoverTrigger>
       <PopoverContent className="p-0" style={{ width: size.width }}>
@@ -329,7 +334,7 @@ export function ComboSelect<Data = unknown>(props: ComboSelectProps<Data>) {
               : 0
           }
         >
-          {search ? <CommandInput onValueChange={onSearch} placeholder={searchPlaceholder} className="h-9" /> : null}
+          {search ? <CommandInput className="h-9" onValueChange={onSearch} placeholder={searchPlaceholder} /> : null}
           {loading ? (
             <div className="px-2">
               <Skeleton className="my-2 h-6 w-full" />
@@ -340,17 +345,17 @@ export function ComboSelect<Data = unknown>(props: ComboSelectProps<Data>) {
             <CommandEmpty>{empty}</CommandEmpty>
           )}
           <ComboSelectCommandList
-            loading={loading}
-            options={options}
-            selectedValues={selectedValues}
-            multiple={multiple}
             limit={limit}
-            setSelectedValues={setSelectedValues}
-            setValueState={setValueState}
+            loading={loading}
+            multiple={multiple}
             onChange={onChange}
             onSearch={onSearch}
-            value={value || ''}
+            options={options}
+            selectedValues={selectedValues}
             setOpen={setOpen}
+            setSelectedValues={setSelectedValues}
+            setValueState={setValueState}
+            value={value || ''}
           />
         </Command>
       </PopoverContent>

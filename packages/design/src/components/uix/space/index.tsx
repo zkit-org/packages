@@ -1,9 +1,9 @@
-import {cn} from "@easykit/design/lib";
 import type { FC, PropsWithChildren } from 'react'
+import { cn } from '@easykit/design/lib'
 
 export interface SpaceProps extends PropsWithChildren {
-  className?: string;
-  direction?: "horizontal" | "vertical";
+  className?: string
+  direction?: 'horizontal' | 'vertical'
 }
 
 export const Space: FC<SpaceProps> = (props) => {
@@ -20,4 +20,4 @@ export const Space: FC<SpaceProps> = (props) => {
       {props.children}
     </div>
   )
-};
+}

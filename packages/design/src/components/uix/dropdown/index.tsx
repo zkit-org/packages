@@ -1,3 +1,4 @@
+import type { FC, MouseEvent, PropsWithChildren, ReactNode } from 'react'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,26 +13,25 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@easykit/design/components/ui/dropdown-menu'
-import {cn} from "@easykit/design/lib";
-import type { FC, MouseEvent, PropsWithChildren, ReactNode } from 'react'
+import { cn } from '@easykit/design/lib'
 
-type Align = "start" | "center" | "end";
+type Align = 'start' | 'center' | 'end'
 type Side = 'top' | 'bottom' | 'left' | 'right'
 
-export type onDropdownMenuClick = (item: DropdownMenuItemProps, e: MouseEvent) => void;
-export type onCheckedChange = (item: DropdownMenuItemProps, checked: boolean) => void;
+export type onDropdownMenuClick = (item: DropdownMenuItemProps, e: MouseEvent) => void
+export type onCheckedChange = (item: DropdownMenuItemProps, checked: boolean) => void
 
 export interface DropdownMenuItemProps {
-  label?: ReactNode;
-  id: string;
-  type: "label" | "separator" | "item" | "checkbox";
-  checked?: boolean;
-  shortcut?: string;
-  disabled?: boolean;
-  children?: DropdownMenuItemProps[];
-  onItemClick?: onDropdownMenuClick;
-  onCheckedChange?: onCheckedChange;
-  hidden?: boolean;
+  label?: ReactNode
+  id: string
+  type: 'label' | 'separator' | 'item' | 'checkbox'
+  checked?: boolean
+  shortcut?: string
+  disabled?: boolean
+  children?: DropdownMenuItemProps[]
+  onItemClick?: onDropdownMenuClick
+  onCheckedChange?: onCheckedChange
+  hidden?: boolean
 }
 
 export interface DropdownProps extends PropsWithChildren {
@@ -49,8 +49,8 @@ export interface DropdownProps extends PropsWithChildren {
 }
 
 type Callback = {
-  onItemClick?: onDropdownMenuClick;
-  onCheckedChange?: onCheckedChange;
+  onItemClick?: onDropdownMenuClick
+  onCheckedChange?: onCheckedChange
 }
 
 const renderItem = (item: DropdownMenuItemProps, call: Callback) => {
@@ -65,9 +65,9 @@ const renderItem = (item: DropdownMenuItemProps, call: Callback) => {
   if (item.type === 'checkbox') {
     return (
       <DropdownMenuCheckboxItem
-        key={item.id}
-        className="capitalize"
         checked={item.checked}
+        className="capitalize"
+        key={item.id}
         onCheckedChange={(value) => checkedCall?.(item, value)}
       >
         {item.label}
@@ -85,7 +85,7 @@ const renderItem = (item: DropdownMenuItemProps, call: Callback) => {
     )
   }
   return (
-    <DropdownMenuItem onClick={(e) => clickCall?.(item, e)} key={item.id} disabled={item.disabled}>
+    <DropdownMenuItem disabled={item.disabled} key={item.id} onClick={(e) => clickCall?.(item, e)}>
       {item.label}
       {item.shortcut && <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>}
     </DropdownMenuItem>
@@ -106,7 +106,7 @@ export const Dropdown: FC<DropdownProps> = (props) => {
   } = props
   if (!items?.length && hideOnEmpty) return null
   return (
-    <DropdownMenu modal={modal} open={open} onOpenChange={props.onOpenChange}>
+    <DropdownMenu modal={modal} onOpenChange={props.onOpenChange} open={open}>
       <DropdownMenuTrigger asChild={asChild}>{props.children}</DropdownMenuTrigger>
       <DropdownMenuContent align={align} className={cn(props.className)} side={side}>
         {items.filter((item) => !item.hidden).map((child) => renderItem(child, { onItemClick, onCheckedChange }))}

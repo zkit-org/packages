@@ -1,7 +1,6 @@
-import {cn} from "@easykit/design/lib";
-import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
-import { ExclamationTriangleIcon, InfoCircledIcon } from '@radix-ui/react-icons'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
+import { CheckIcon, Cross2Icon, ExclamationTriangleIcon, InfoCircledIcon } from '@radix-ui/react-icons'
+import { cn } from '@easykit/design/lib'
 
 export interface ResultProps extends PropsWithChildren {
   status: 'success' | 'error' | 'info' | 'warning'
@@ -15,17 +14,12 @@ const ICON_MAP = {
   error: Cross2Icon,
   info: InfoCircledIcon,
   warning: ExclamationTriangleIcon,
-};
+}
 
 export const Result: FC<ResultProps> = (props) => {
-  const {
-    status = 'info',
-    title,
-    subTitle,
-    extra,
-  } = props;
+  const { status = 'info', title, subTitle, extra } = props
 
-  const Icon = ICON_MAP[status];
+  const Icon = ICON_MAP[status]
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -47,4 +41,4 @@ export const Result: FC<ResultProps> = (props) => {
       {extra ? <div className="mt-4">{extra}</div> : null}
     </div>
   )
-};
+}

@@ -1,3 +1,5 @@
+import type * as React from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import {
   DialogContent,
   DialogDescription,
@@ -6,24 +8,22 @@ import {
   DialogTitle,
   Dialog as UIDialog,
 } from '@easykit/design/components/ui/dialog'
-import {Spin} from "@easykit/design/components/uix/spin";
+import { Spin } from '@easykit/design/components/uix/spin'
 import { cn } from '@easykit/design/lib'
-import type { FC, PropsWithChildren } from 'react'
-import type * as React from 'react'
 
-export type EventCallback = () => void;
+export type EventCallback = () => void
 
 export interface DialogProps extends PropsWithChildren {
-  visible?: boolean;
-  onCancel?: EventCallback;
-  onOk?: EventCallback;
-  className?: string;
-  maskClosable?: boolean;
-  closable?: boolean;
-  title?: string;
-  description?: string;
-  footer?: React.ReactNode;
-  loading?: boolean;
+  visible?: boolean
+  onCancel?: EventCallback
+  onOk?: EventCallback
+  className?: string
+  maskClosable?: boolean
+  closable?: boolean
+  title?: string
+  description?: string
+  footer?: React.ReactNode
+  loading?: boolean
 }
 
 export const Dialog: FC<DialogProps> = (props) => {
@@ -42,14 +42,13 @@ export const Dialog: FC<DialogProps> = (props) => {
   return (
     <UIDialog open={visible}>
       <DialogContent
-        autoFocus={false}
-        showClose={closable}
-        onCloseClick={onCancel}
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-        onOverlayClick={maskClosable ? onCancel : () => {}}
-        onClick={(e) => e.stopPropagation()}
-        className={cn(className)}
         aria-describedby={undefined}
+        autoFocus={false}
+        className={cn(className)}
+        onClick={(e) => e.stopPropagation()}
+        onCloseClick={onCancel}
+        onOverlayClick={maskClosable ? onCancel : () => {}}
+        showClose={closable}
       >
         {title || description ? (
           <DialogHeader>

@@ -1,16 +1,16 @@
-import { TableCell, TableRow, type TreeTableProps } from '@easykit/design'
-import {ExpandAction} from "@easykit/design/components/uix/tree-table/action";
-import {DEFAULT_CHILDREN_PROPERTY, DEFAULT_INDENT_WIDTH} from "@easykit/design/components/uix/tree-table/config";
 import type { ReactNode } from 'react'
+import { TableCell, TableRow, type TreeTableProps } from '@easykit/design'
+import { ExpandAction } from '@easykit/design/components/uix/tree-table/action'
+import { DEFAULT_CHILDREN_PROPERTY, DEFAULT_INDENT_WIDTH } from '@easykit/design/components/uix/tree-table/config'
 
 export type RenderRowProps<TData> = {
-  data: TData[];
-  tableProps: TreeTableProps<TData>;
-  deep: number;
-  expandedKeys: string[];
-  onExpand?: (key: string, expanded: boolean) => void;
+  data: TData[]
+  tableProps: TreeTableProps<TData>
+  deep: number
+  expandedKeys: string[]
+  onExpand?: (key: string, expanded: boolean) => void
 }
- 
+
 export function renderRow<TData>(props: RenderRowProps<TData>): ReactNode {
   const {
     childrenProperty = DEFAULT_CHILDREN_PROPERTY,
@@ -28,9 +28,9 @@ export function renderRow<TData>(props: RenderRowProps<TData>): ReactNode {
     return [
       <TableRow key={key}>
         {columns.map((col, index) => {
-          const content = col.render ? col.render(item[col.dataKey], item) : <>{String(item[col.dataKey])}</>
+          const content = col.render ? col.render(item[col.dataKey], item) : String(item[col.dataKey])
           return (
-            <TableCell key={col.dataKey as string} className={col.className}>
+            <TableCell className={col.className} key={col.dataKey as string}>
               {index === 0 ? (
                 <div className="flex items-center justify-start">
                   <div
@@ -39,7 +39,7 @@ export function renderRow<TData>(props: RenderRowProps<TData>): ReactNode {
                       paddingLeft: (indentWidth + 8) * deep,
                     }}
                   >
-                    <ExpandAction onClick={() => onExpand?.(key, !expanded)} enable={hasChildren} expanded={expanded} />
+                    <ExpandAction enable={hasChildren} expanded={expanded} onClick={() => onExpand?.(key, !expanded)} />
                   </div>
                   {content}
                 </div>

@@ -1,5 +1,6 @@
-import axios from 'axios'
 import type { HandleProps } from './type'
+
+import axios from 'axios'
 
 export const defaultUploadHandle = (props: HandleProps) => {
   const { file, action, headers, data, onProgress, onSuccess, onError } = props
@@ -13,7 +14,7 @@ export const defaultUploadHandle = (props: HandleProps) => {
   file.controller = controller
   const formData = new FormData()
   formData.append('file', file)
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <appendData>
   const appendData = (data || {}) as unknown as any
   for (const key of Object.keys(appendData)) {
     formData.append(key, appendData[key])

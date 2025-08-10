@@ -1,9 +1,9 @@
-import { Empty, type EmptyProps, Spin, Table, TableBody, TableHead, TableHeader, TableRow } from '@easykit/design'
-import { renderRow } from '@easykit/design/components/uix/tree-table/utils'
+import { type ReactNode, useCallback, useEffect, useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 import remove from 'lodash/remove'
 import uniq from 'lodash/uniq'
-import { type ReactNode, useCallback, useEffect, useState } from 'react'
+import { Empty, type EmptyProps, Spin, Table, TableBody, TableHead, TableHeader, TableRow } from '@easykit/design'
+import { renderRow } from '@easykit/design/components/uix/tree-table/utils'
 
 export type TreeTableColumn<TData> = {
   className?: string
@@ -11,7 +11,7 @@ export type TreeTableColumn<TData> = {
   formatters?: string[]
   title: ReactNode
   dataKey: keyof TData
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <value>
   render?: (value: any, data: TData) => ReactNode
 }
 
@@ -56,7 +56,7 @@ export function TreeTable<TData>(props: TreeTableProps<TData>) {
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
-                <TableHead key={col.dataKey as string} className={col.headerClassName}>
+                <TableHead className={col.headerClassName} key={col.dataKey as string}>
                   {col.title}
                 </TableHead>
               ))}

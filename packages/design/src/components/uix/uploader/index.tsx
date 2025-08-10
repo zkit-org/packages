@@ -1,16 +1,16 @@
-import { Button, Progress } from '@easykit/design'
-import { useMessage } from '@easykit/design'
-import {UIXContext} from "@easykit/design/components/uix/config-provider";
-import { cn } from '@easykit/design/lib'
-import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, FileIcon } from '@radix-ui/react-icons'
-import classNames from "classnames";
-import get from "lodash/get";
-import remove from 'lodash/remove'
-import { type PropsWithChildren, forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { type DropzoneOptions, useDropzone } from 'react-dropzone'
-import { v4 as uuidv4 } from 'uuid'
 import type { HandleProps, UploadFile } from './type'
 import { defaultUploadHandle } from './utils'
+
+import { forwardRef, type PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, FileIcon } from '@radix-ui/react-icons'
+import classNames from 'classnames'
+import get from 'lodash/get'
+import remove from 'lodash/remove'
+import { type DropzoneOptions, useDropzone } from 'react-dropzone'
+import { v4 as uuidv4 } from 'uuid'
+import { Button, Progress, useMessage } from '@easykit/design'
+import { UIXContext } from '@easykit/design/components/uix/config-provider'
+import { cn } from '@easykit/design/lib'
 
 export type UploaderProps = PropsWithChildren<{
   showFileList?: boolean
@@ -33,7 +33,7 @@ const initFile = (file: UploadFile) => {
   return file
 }
 
-export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) => {
+export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, forwardedRef) => {
   const {
     className,
     onDropAccepted,
@@ -49,6 +49,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
     maxFiles,
     ...rest
   } = props
+  const elementRef = forwardedRef
 
   const [files, setFiles] = useState<UploadFile[]>((value || []).map(initFile))
   const filesRef = useRef<UploadFile[]>(files)
@@ -161,13 +162,13 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
 
   const renderFile = (file: UploadFile) => {
     return (
-      <div key={file.uid} className={cn('flex items-center justify-center border-b', 'last:border-none')}>
+      <div className={cn('flex items-center justify-center border-b', 'last:border-none')} key={file.uid}>
         <div className="flex h-8 w-8 items-center justify-center">
           <FileIcon />
         </div>
         <div className="w-[50%] overflow-hidden overflow-ellipsis whitespace-nowrap text-sm">{file.name}</div>
         <div className="mx-1 flex-1">
-          {file.status === 'uploading' && <Progress value={file.progress} className="w-full" />}
+          {file.status === 'uploading' && <Progress className="w-full" value={file.progress} />}
           {file.status === 'error' && (
             <div className="flex items-center justify-end text-red-500">
               <CrossCircledIcon className="mr-1" />
@@ -181,7 +182,7 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
           )}
         </div>
         <div
-          className={cn('flex h-8 w-8 items-center justify-center ', 'cursor-pointer hover:bg-[var(--action-hover)] ')}
+          className={cn('flex h-8 w-8 items-center justify-center', 'cursor-pointer hover:bg-[var(--action-hover)]')}
           onClick={() => {
             remove(filesRef.current, (item: UploadFile) => item.uid === file.uid)
             file.controller?.abort()
@@ -196,15 +197,13 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
   }
 
   return (
-    <div ref={ref} className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2" ref={elementRef}>
       <div {...getRootProps()} className={classNames(children ? 'inline-block w-auto' : '', 'outline-none')}>
         <input {...getInputProps()} />
         {children ? (
           children
         ) : (
           <div
-            // biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
-            tabIndex={0}
             className={cn(
               'flex items-center justify-center p-6 text-card-foreground/50',
               'rounded-md border-2 border-border border-dashed bg-card',
@@ -213,16 +212,14 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
               isMaxFilesReached && 'cursor-not-allowed opacity-50',
               className
             )}
+            // biome-ignore lint/a11y/noNoninteractiveTabindex: <tabIndex>
+            tabIndex={0}
           >
             <p>{isMaxFilesReached ? maxFilesExceededText : placeholder}</p>
           </div>
         )}
       </div>
-      {showFileList && files.length ? (
-        <>
-          <div className="rounded-sm border">{files.map(renderFile)}</div>
-        </>
-      ) : null}
+      {showFileList && files.length ? <div className="rounded-sm border">{files.map(renderFile)}</div> : null}
       {!!files.filter(({ status }) => status === 'init').length && showButton ? (
         <div>
           <Button
@@ -237,4 +234,4 @@ export const Uploader = forwardRef<HTMLDivElement, UploaderProps>((props, ref) =
       ) : null}
     </div>
   )
-});
+})

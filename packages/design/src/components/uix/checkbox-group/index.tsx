@@ -1,21 +1,21 @@
-import { Checkbox } from '@easykit/design/components/uix/checkbox'
-import classNames from "classnames";
+import { type FC, forwardRef, type ReactNode, useState } from 'react'
+import classNames from 'classnames'
 import remove from 'lodash/remove'
-import { type FC, type ReactNode, forwardRef, useState } from 'react'
+import { Checkbox } from '@easykit/design/components/uix/checkbox'
 
 export interface CheckboxGroupOptionProps {
-  label: ReactNode;
-  value: string;
-  disabled?: boolean;
+  label: ReactNode
+  value: string
+  disabled?: boolean
 }
 
 export interface CheckboxGroupProps {
-  options?: CheckboxGroupOptionProps[];
-  value?: string[];
-  onChange?: (value: string[]) => void;
-  itemClassName?: string;
-  checkboxClassName?: string;
-  className?: string;
+  options?: CheckboxGroupOptionProps[]
+  value?: string[]
+  onChange?: (value: string[]) => void
+  itemClassName?: string
+  checkboxClassName?: string
+  className?: string
 }
 
 export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, _ref) => {
@@ -40,14 +40,14 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = forwardRef((props, _ref) =>
         const id = `checkbox-group-${option.value}`
         return (
           <label
-            key={option.value}
-            htmlFor={id}
             className={classNames('flex items-center justify-start', 'ml-1 space-x-1', itemClassName)}
+            htmlFor={id}
+            key={option.value}
           >
             <Checkbox
-              id={id}
-              className={checkboxClassName}
               checked={checkedValues.includes(option.value)}
+              className={checkboxClassName}
+              id={id}
               onCheckedChange={(checked: boolean) => onCheckedChange(option.value, checked)}
             />
             <span>{option.label}</span>

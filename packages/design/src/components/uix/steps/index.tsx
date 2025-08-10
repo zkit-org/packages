@@ -1,6 +1,6 @@
-import {cn} from "@easykit/design/lib";
-import {CheckIcon, Cross2Icon} from "@radix-ui/react-icons";
-import { Children, type FC, type PropsWithChildren, type ReactElement, cloneElement } from 'react'
+import { Children, cloneElement, type FC, type PropsWithChildren, type ReactElement } from 'react'
+import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
+import { cn } from '@easykit/design/lib'
 
 export interface StepsProps extends PropsWithChildren {
   current?: number
@@ -8,21 +8,16 @@ export interface StepsProps extends PropsWithChildren {
 }
 
 export interface StepsItemProps extends PropsWithChildren {
-  title: string;
-  description?: string;
-  className?: string;
-  status?: 'wait' | 'process' | 'finish' | 'error';
-  index?: number;
-  last?: boolean;
+  title: string
+  description?: string
+  className?: string
+  status?: 'wait' | 'process' | 'finish' | 'error'
+  index?: number
+  last?: boolean
 }
 
 export const StepsItem: FC<StepsItemProps> = (props) => {
-  const {
-    index,
-    status,
-    last,
-    description,
-  } = props;
+  const { index, status, last, description } = props
   return (
     <div className={cn('flex', last ? null : 'flex-1')}>
       <div
@@ -48,24 +43,24 @@ export const StepsItem: FC<StepsItemProps> = (props) => {
       )}
     </div>
   )
-};
+}
 
 export const Steps: FC<StepsProps> = (props) => {
-  const {current} = props;
-  const size = Children.count(props.children);
-  return <div className={cn("flex", props.className)}>
-    {
-      Children.map(props.children, (child, index) => {
-        const c = child as ReactElement;
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const { current } = props
+  const size = Children.count(props.children)
+  return (
+    <div className={cn('flex', props.className)}>
+      {Children.map(props.children, (child, index) => {
+        const c = child as ReactElement
+        // biome-ignore lint/suspicious/noExplicitAny: <props>
         return cloneElement<any>(c, {
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          // biome-ignore lint/suspicious/noExplicitAny: <props>
           ...(c as any).props,
           index,
           last: index === size - 1,
           status: index < current! ? 'finish' : index === current ? 'process' : 'wait',
         })
-      })
-    }
-  </div>
-};
+      })}
+    </div>
+  )
+}

@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import {Tree} from "@easykit/design";
-import {useState} from "react";
+import { useState } from 'react'
+import { Tree } from '@easykit/design'
 
 const Page = () => {
-  const [checkedKeys, setCheckedKeys] = useState<string[]>(['3', '2-2']);
+  const [checkedKeys, setCheckedKeys] = useState<string[]>(['3', '2-2'])
 
   return (
     <div className="p-4">
       <Tree
+        checkable={true}
         checkedKeys={checkedKeys}
         onCheck={(keys) => {
           setCheckedKeys(keys as string[])
         }}
         selectable={false}
-        checkable={true}
         treeData={[
           {
             key: '1',
@@ -55,4 +55,4 @@ const Page = () => {
   )
 }
 
-export default Page;
+export default Page

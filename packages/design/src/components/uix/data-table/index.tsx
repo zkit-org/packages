@@ -1,39 +1,41 @@
-import {
-  Action,
-  Checkbox,
-  Dropdown,
-  type DropdownMenuItemProps,
-  Filters,
-  type FiltersProps,
-  Pagination,
-  type PaginationProps,
-  Spin,
-  cn,
-  generateColumnStorageKey,
-} from '@easykit/design'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table'
+
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import {
   type ColumnDef,
-  type Row,
-  type SortingState,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  type Row,
+  type SortingState,
   useReactTable,
+  type VisibilityState,
 } from '@tanstack/react-table'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
 import isString from 'lodash/isString'
 import isUndefined from 'lodash/isUndefined'
-import { useContext, useEffect, useMemo, useState } from 'react'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table'
+import {
+  Action,
+  Checkbox,
+  cn,
+  Dropdown,
+  type DropdownMenuItemProps,
+  Filters,
+  type FiltersProps,
+  generateColumnStorageKey,
+  Pagination,
+  type PaginationProps,
+  Spin,
+} from '@easykit/design'
 import './style.css'
-import { UIXContext } from '@easykit/design/components/uix/config-provider'
-import { type Formatters, type FunctionMap, formatValue } from '@easykit/design/components/uix/value-formatter'
+
 import { LayoutIcon } from '@radix-ui/react-icons'
 import classNames from 'classnames'
 import get from 'lodash/get'
+import { UIXContext } from '@easykit/design/components/uix/config-provider'
+import { type Formatters, type FunctionMap, formatValue } from '@easykit/design/components/uix/value-formatter'
 
 export interface StickyColumnProps {
   key: string
@@ -140,7 +142,7 @@ export const getSticky = (
   return { enable: false }
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <hasActions>
 const hasActions = (rowActions: DropdownMenuItemProps[] | ((cell: any) => DropdownMenuItemProps[])) => {
   if (isFunction(rowActions)) {
     return true
@@ -151,7 +153,6 @@ const hasActions = (rowActions: DropdownMenuItemProps[] | ((cell: any) => Dropdo
   return false
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export function DataTable<TData>(props: DataTableProps<TData>) {
   const {
     data,
@@ -212,23 +213,23 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
         id: 'select',
         enableSorting: false,
         enableHiding: false,
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: <header>
         header: ({ table }: { table: any }) => (
           <div className="flex items-center justify-center pr-2">
             <Checkbox
+              aria-label="Select all"
               checked={table.getIsAllPageRowsSelected()}
               onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-              aria-label="Select all"
             />
           </div>
         ),
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: <cell>
         cell: ({ row }: { row: any }) => (
           <div className="flex items-center justify-center pr-2">
             <Checkbox
+              aria-label="Select row"
               checked={row.getIsSelected()}
               onCheckedChange={(value) => row.toggleSelected(!!value)}
-              aria-label="Select row"
             />
           </div>
         ),
@@ -241,7 +242,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
         enableHiding: false,
         size: 50,
         enableResizing: false,
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: <cell>
         cell: ({ row }: { row: any }) => {
           let items = rowActions
           if (isFunction(rowActions)) {
@@ -250,10 +251,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           return (
             <div className="flex w-full justify-end" onClick={(e) => e.stopPropagation()}>
               <Dropdown
-                items={items as DropdownMenuItemProps[]}
-                onItemClick={(item) => onRowActionClick?.(item, row)}
                 align="end"
                 asChild={true}
+                items={items as DropdownMenuItemProps[]}
+                onItemClick={(item) => onRowActionClick?.(item, row)}
               >
                 <Action className="!p-0 h-6 w-6">
                   <DotsHorizontalIcon />
@@ -313,7 +314,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
       .getAllColumns()
       .filter((column) => column.getCanHide())
       .map((column) => {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: <column>
         const item = columns.find((col: any) => {
           const key = col.id || col.accessorKey
           return key.replace(/\./g, '_') === column.id
@@ -361,9 +362,9 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             filter ? 'justify-between' : 'justify-end'
           )}
         >
-          {filter ? <Filters {...filter} loading={loading} load={load} /> : null}
+          {filter ? <Filters {...filter} load={load} loading={loading} /> : null}
           {showVisibilityControl ? (
-            <Dropdown align="end" items={columnSettings} asChild={true}>
+            <Dropdown align="end" asChild={true} items={columnSettings}>
               <Action className="!p-0 h-9 w-9">
                 <LayoutIcon className="h-[18px] w-[18px]" />
               </Action>
@@ -376,7 +377,6 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           <TableHeader className={cn(!showHeader && 'hidden')}>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {/* biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation> */}
                 {headerGroup.headers.map((header) => {
                   // 在未挂载时禁用粘性列功能，避免 SSR 水合错误
                   const sticky = mounted
@@ -391,9 +391,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                         sticky.enable ? 'table-sticky-col sticky' : null,
                         sticky.last ? 'table-sticky-col-last' : null,
                         sticky.first ? 'table-sticky-col-first' : null,
-                        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                        // biome-ignore lint/suspicious/noExplicitAny: <className>
                         (header.column.columnDef as any).className
                       )}
+                      key={header.id}
                       style={
                         sticky.enable
                           ? {
@@ -403,7 +404,6 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                             }
                           : undefined
                       }
-                      key={header.id}
                     >
                       {sticky.enable ? <div className="inner flex h-10 items-center px-2">{content}</div> : content}
                     </TableHead>
@@ -416,11 +416,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  key={row.id}
                   onClick={() => props.onRowClick?.(row)}
                 >
-                  {/* biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation> */}
                   {row.getVisibleCells().map((cell) => {
                     // 在未挂载时禁用粘性列功能，避免 SSR 水合错误
                     const sticky = mounted
@@ -428,7 +427,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                       : { enable: false }
                     const ctx = cell.getContext()
                     const render = ctx.renderValue
-                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                    // biome-ignore lint/suspicious/noExplicitAny: <formatters>
                     const formatters = (cell.column.columnDef as any).formatters || []
                     ctx.renderValue = () => {
                       return formatValue(render(), formatters, cellHandles)
@@ -436,12 +435,12 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                     const content = flexRender(cell.column.columnDef.cell, ctx)
                     return (
                       <TableCell
-                        key={cell.id}
                         className={cn(
                           sticky.enable ? 'table-sticky-col sticky' : null,
                           sticky.last ? 'table-sticky-col-last' : null,
                           sticky.first ? 'table-sticky-col-first' : null
                         )}
+                        key={cell.id}
                         style={
                           sticky.enable
                             ? {
@@ -460,7 +459,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={tableColumns.length} className="h-24 text-center">
+                <TableCell className="h-24 text-center" colSpan={tableColumns.length}>
                   {empty}
                 </TableCell>
               </TableRow>

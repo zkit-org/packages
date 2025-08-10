@@ -1,4 +1,29 @@
 import {
+  Children,
+  cloneElement,
+  type FC,
+  type FormHTMLAttributes,
+  forwardRef,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+  useImperativeHandle,
+  useMemo,
+} from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import classNames from 'classnames'
+import isObject from 'lodash/isObject'
+import type { Control, FieldValues, WatchObserver } from 'react-hook-form'
+import {
+  type ControllerRenderProps,
+  type DefaultValues,
+  type SubmitHandler,
+  type UseFormReturn,
+  useForm,
+} from 'react-hook-form'
+import type { ZodType } from 'zod'
+import {
   FormControl,
   FormDescription,
   FormField,
@@ -8,30 +33,6 @@ import {
   FormItem as UIFormItem,
 } from '@easykit/design/components/ui/form'
 import { cn } from '@easykit/design/lib'
-import { zodResolver } from '@hookform/resolvers/zod'
-import classNames from 'classnames'
-import isObject from 'lodash/isObject'
-import {
-  type FC,
-  type FormHTMLAttributes,
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactNode,
-  type Ref,
-  cloneElement,
-  forwardRef,
-  useImperativeHandle,
-} from 'react'
-import { Children, useMemo } from 'react'
-import {
-  type ControllerRenderProps,
-  type DefaultValues,
-  type SubmitHandler,
-  type UseFormReturn,
-  useForm,
-} from 'react-hook-form'
-import type { Control, FieldValues, WatchObserver } from 'react-hook-form'
-import type { ZodType } from 'zod'
 
 export interface RenderProps extends ControllerRenderProps {
   placeholder?: string
@@ -54,22 +55,22 @@ export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormE
   stopPropagation?: boolean
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <props>
 export const FormItem: FC<FieldItem<any>> = (props) => {
   const render = (field: ControllerRenderProps) => {
     if (Children.count(props.children) === 1) {
       const ele = props.children as ReactElement
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: <props>
       const onChangeOrigin = (ele as any).props.onChange
       const onChange = field.onChange
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: <e>
       const onChangeWrap = (e: any) => {
         onChange(e)
         onChangeOrigin?.(e)
       }
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny: <cloneElement>
       return cloneElement<any>(ele, {
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: <props>
         ...(ele as any).props,
         ...field,
         onChange: onChangeWrap,
@@ -112,9 +113,9 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormR
       if (isObject(child) && 'type' in (child as ReactElement)) {
         const ele = child as ReactElement
         if (ele.type === FormItem) {
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          // biome-ignore lint/suspicious/noExplicitAny: <cloneElement>
           return cloneElement<any>(ele, {
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            // biome-ignore lint/suspicious/noExplicitAny: <props>
             ...(ele as any).props,
             control: form.control,
           })
@@ -130,13 +131,13 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormR
     <UIForm {...form}>
       <form
         {...rest}
+        className={cn('space-y-4', className)}
         onSubmit={(e) => {
           stopPropagation && e.stopPropagation()
           if (onSubmit) {
             form.handleSubmit(onSubmit)(e)
           }
         }}
-        className={cn('space-y-4', className)}
       >
         {children}
       </form>
