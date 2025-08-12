@@ -8,8 +8,10 @@ import {
   type ReactElement,
   type ReactNode,
   type Ref,
+  useEffect,
   useImperativeHandle,
   useMemo,
+  useState,
 } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import classNames from 'classnames'
@@ -20,7 +22,7 @@ import {
   type DefaultValues,
   type SubmitHandler,
   type UseFormReturn,
-  useForm,
+  useForm as useFormHook,
 } from 'react-hook-form'
 import type { ZodType } from 'zod'
 import {
@@ -46,6 +48,11 @@ export interface FieldItem<T extends FieldValues> extends PropsWithChildren {
   className?: string
 }
 
+export type FormInstance<T extends FieldValues> = UseFormReturn<T> & {
+  _setForm?: (ref: UseFormReturn<T> | null) => void
+  submit: () => void
+}
+
 export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> & {
   schema?: ZodType<T>
   defaultValues?: DefaultValues<T>
@@ -53,6 +60,7 @@ export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormE
   className?: string
   onValuesChange?: WatchObserver<T>
   stopPropagation?: boolean
+  form?: FormInstance<T>
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: <props>
@@ -99,14 +107,40 @@ export const FormItem: FC<FieldItem<any>> = (props) => {
   )
 }
 
-function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormReturn<T> | undefined>) {
-  const { schema = null, defaultValues, onSubmit, className, onValuesChange, stopPropagation = true, ...rest } = props
+function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInstance<T> | undefined>) {
+  const {
+    schema = null,
+    defaultValues,
+    onSubmit,
+    className,
+    onValuesChange,
+    stopPropagation = true,
+    form: formInstance,
+    ...rest
+  } = props
 
-  const form = useForm<T>({
+  const form = useFormHook<T>({
     resolver: zodResolver(schema!),
     defaultValues: defaultValues,
   })
   form.watch(onValuesChange!)
+
+  const innerInstance = useMemo<FormInstance<T>>(() => {
+    return {
+      ...form,
+      submit: () => {
+        if (onSubmit) {
+          form.handleSubmit(onSubmit)()
+        }
+      },
+    }
+  }, [form, onSubmit])
+
+  useEffect(() => {
+    if (formInstance) {
+      formInstance._setForm?.(innerInstance)
+    }
+  }, [formInstance, innerInstance])
 
   const children = useMemo<ReactNode>(() => {
     return Children.map(props.children, (child) => {
@@ -125,7 +159,7 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormR
     })
   }, [form.control, props.children])
 
-  useImperativeHandle(ref, () => form, [form])
+  useImperativeHandle(ref, () => innerInstance, [innerInstance])
 
   return (
     <UIForm {...form}>
@@ -133,6 +167,7 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormR
         {...rest}
         className={cn('space-y-4', className)}
         onSubmit={(e) => {
+          console.log('onSubmit', e)
           stopPropagation && e.stopPropagation()
           if (onSubmit) {
             form.handleSubmit(onSubmit)(e)
@@ -145,6 +180,55 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<UseFormR
   )
 }
 
-export const Form = forwardRef(FormInner) as <T extends FieldValues>(
-  props: FormProps<T> & { ref?: Ref<UseFormReturn<T> | undefined> }
-) => ReactElement
+const useForm = <T extends FieldValues = FieldValues>(): FormInstance<T> => {
+  const [form, setForm] = useState<UseFormReturn<T> | null>(null)
+  return useMemo(() => {
+    return {
+      ...(form || ({} as UseFormReturn<T>)),
+      _setForm: (form: UseFormReturn<T> | null) => {
+        setForm(form)
+      },
+    } as FormInstance<T>
+  }, [form])
+}
+
+const useWatch = <T extends FieldValues = FieldValues>(name: string, form: FormInstance<T>) => {
+  const [value, setValue] = useState<unknown>(undefined)
+
+  useEffect(() => {
+    if (!form?.watch) return
+
+    const subscription = form.watch((data) => {
+      const fieldValue = (data as Record<string, unknown>)[name]
+      setValue(fieldValue)
+    })
+
+    // 初始化时获取一次值
+    if (form.getValues) {
+      try {
+        const currentValue = form.getValues()
+        setValue((currentValue as Record<string, unknown>)[name])
+      } catch {
+        // ignore error
+      }
+    }
+
+    return () => {
+      if (subscription && typeof subscription.unsubscribe === 'function') {
+        subscription.unsubscribe()
+      }
+    }
+  }, [form, name])
+
+  return value
+}
+
+export const Form = Object.assign(
+  forwardRef(FormInner) as <T extends FieldValues>(
+    props: FormProps<T> & { ref?: Ref<UseFormReturn<T> | undefined> }
+  ) => ReactElement,
+  {
+    useForm,
+    useWatch,
+  }
+)

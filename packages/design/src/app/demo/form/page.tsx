@@ -1,7 +1,6 @@
 'use client'
 
-import { useCallback, useRef } from 'react'
-import type { UseFormReturn } from 'react-hook-form'
+import { useCallback } from 'react'
 import { object, string, type z } from 'zod'
 import { Alert, Button, Form, FormItem, Select } from '@easykit/design'
 
@@ -14,11 +13,14 @@ const getSchema = () =>
 type FormData = z.infer<ReturnType<typeof getSchema>>
 
 const Page = () => {
-  const formRef = useRef<UseFormReturn<FormData>>(null)
+  const form = Form.useForm<FormData>()
 
   const onSubmit = useCallback((data: FormData) => {
     console.log('onSubmit', data)
   }, [])
+
+  const teamId = Form.useWatch('teamId', form)
+  console.log('teamId', teamId)
 
   return (
     <div className="p-4">
@@ -27,17 +29,14 @@ const Page = () => {
           teamId: '1',
           projectId: '1',
         }}
+        form={form}
         onSubmit={onSubmit}
-        onValuesChange={(data) => {
-          console.log('onValuesChange', data)
-        }}
-        ref={formRef}
         schema={getSchema()}
       >
         <FormItem description="请选择团队" label="团队" name="teamId">
           <Select
             onChange={() => {
-              formRef.current?.setValue('projectId', '')
+              form.setValue('projectId', '')
             }}
             options={[
               {
@@ -74,8 +73,8 @@ const Page = () => {
             placeholder="请选择"
           />
         </FormItem>
-        <Button type="submit">Submit</Button>
       </Form>
+      <Button onClick={() => form.submit()}>Submit</Button>
     </div>
   )
 }
