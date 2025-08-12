@@ -8,6 +8,7 @@ import {
   type ReactElement,
   type ReactNode,
   type Ref,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -137,10 +138,8 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
   }, [form, onSubmit])
 
   useEffect(() => {
-    if (formInstance) {
-      formInstance._setForm?.(innerInstance)
-    }
-  }, [formInstance, innerInstance])
+    formInstance?._setForm?.(innerInstance)
+  }, [formInstance?._setForm, innerInstance])
 
   const children = useMemo<ReactNode>(() => {
     return Children.map(props.children, (child) => {
@@ -182,14 +181,18 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
 
 const useForm = <T extends FieldValues = FieldValues>(): FormInstance<T> => {
   const [form, setForm] = useState<UseFormReturn<T> | null>(null)
+  
+  // 使用 useCallback 稳定 _setForm 函数引用
+  const _setForm = useCallback((form: UseFormReturn<T> | null) => {
+    setForm(form)
+  }, [])
+  
   return useMemo(() => {
     return {
       ...(form || ({} as UseFormReturn<T>)),
-      _setForm: (form: UseFormReturn<T> | null) => {
-        setForm(form)
-      },
+      _setForm,
     } as FormInstance<T>
-  }, [form])
+  }, [form, _setForm])
 }
 
 const useWatch = <T extends FieldValues = FieldValues>(name: string, form: FormInstance<T>) => {
