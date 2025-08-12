@@ -12,6 +12,7 @@ import {
   useEffect,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -126,8 +127,12 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
   })
   form.watch(onValuesChange!)
 
-  const innerInstance = useMemo<FormInstance<T>>(() => {
-    return {
+  // 使用 useRef 来保持稳定的 innerInstance 引用
+  const innerInstanceRef = useRef<FormInstance<T> | null>(null)
+
+  if (!innerInstanceRef.current) {
+    // 创建稳定的实例引用，只创建一次
+    innerInstanceRef.current = {
       ...form,
       submit: () => {
         if (onSubmit) {
@@ -135,11 +140,26 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
         }
       },
     }
+  }
+
+  // 当 form 或 onSubmit 变化时，更新实例的方法，但保持引用不变
+  useEffect(() => {
+    if (innerInstanceRef.current) {
+      Object.assign(innerInstanceRef.current, form, {
+        submit: () => {
+          if (onSubmit) {
+            form.handleSubmit(onSubmit)()
+          }
+        },
+      })
+    }
   }, [form, onSubmit])
 
   useEffect(() => {
-    formInstance?._setForm?.(innerInstance)
-  }, [formInstance?._setForm, innerInstance])
+    if (formInstance?._setForm && innerInstanceRef.current) {
+      formInstance._setForm(innerInstanceRef.current)
+    }
+  }, [formInstance])
 
   const children = useMemo<ReactNode>(() => {
     return Children.map(props.children, (child) => {
@@ -158,7 +178,7 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
     })
   }, [form.control, props.children])
 
-  useImperativeHandle(ref, () => innerInstance, [innerInstance])
+  useImperativeHandle(ref, () => innerInstanceRef.current!, [])
 
   return (
     <UIForm {...form}>
@@ -180,19 +200,30 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
 }
 
 const useForm = <T extends FieldValues = FieldValues>(): FormInstance<T> => {
-  const [form, setForm] = useState<UseFormReturn<T> | null>(null)
-  
-  // 使用 useCallback 稳定 _setForm 函数引用
+  // 使用 useRef 来保持稳定的引用
+  const formRef = useRef<UseFormReturn<T> | null>(null)
+  const instanceRef = useRef<FormInstance<T> | null>(null)
+
+  // 稳定的 _setForm 函数引用
   const _setForm = useCallback((form: UseFormReturn<T> | null) => {
-    setForm(form)
+    formRef.current = form
+    if (form && instanceRef.current) {
+      // 直接更新实例属性，无需强制重新渲染
+      Object.assign(instanceRef.current, form, { _setForm })
+    }
   }, [])
-  
-  return useMemo(() => {
-    return {
-      ...(form || ({} as UseFormReturn<T>)),
+
+  if (!instanceRef.current) {
+    // 创建稳定的实例引用
+    instanceRef.current = {
       _setForm,
+      submit: () => {
+        // 动态获取当前的 form 实例
+      },
     } as FormInstance<T>
-  }, [form, _setForm])
+  }
+
+  return instanceRef.current
 }
 
 const useWatch = <T extends FieldValues = FieldValues>(name: string, form: FormInstance<T>) => {
