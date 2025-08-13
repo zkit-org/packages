@@ -6,7 +6,6 @@ import { cn } from '@easykit/design/lib'
 export interface ButtonProps extends ComponentProps<typeof UIButton> {
   loading?: boolean
   long?: boolean
-  htmlType?: 'submit' | 'reset' | 'button' | undefined
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, forwardedRef) => {
