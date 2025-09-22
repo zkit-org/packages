@@ -1,6 +1,6 @@
 {
   "name": "@easykit/design",
-  "version": "0.0.149",
+  "version": "0.0.150",
   "keywords": [
     "easykit",
     "design",
@@ -17,7 +17,6 @@
   },
   "scripts": {
     "dev": "next dev -p 4000 --turbopack",
-    "build": "tsc && vite build",
     "build:next": "next build",
     "start": "next start",
     "lint:next": "next lint",
@@ -67,7 +66,6 @@
     "react-dropzone": "14.2.3",
     "react-hook-form": "7.52.1",
     "react-resizable-panels": "2.0.20",
-    "rollup-plugin-copy": "^3.5.0",
     "slate": "0.103.0",
     "slate-history": "0.100.0",
     "slate-react": "0.106.0",
@@ -76,36 +74,34 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.4",
     "@types/uuid": "10.0.0"
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./locales/zh-cn": {
-      "types": "./dist/assets/locales/zh-cn.d.ts",
-      "default": "./dist/locales/zh-cn.js"
+      "types": "./src/assets/locales/zh-cn.ts",
+      "default": "./src/assets/locales/zh-cn.ts"
     },
     "./locales/zh-tw": {
-      "types": "./dist/assets/locales/zh-tw.d.ts",
-      "default": "./dist/locales/zh-tw.js"
+      "types": "./src/assets/locales/zh-tw.ts",
+      "default": "./src/assets/locales/zh-tw.ts"
     },
     "./locales/en-us": {
-      "types": "./dist/assets/locales/en-us.d.ts",
-      "default": "./dist/locales/en-us.js"
+      "types": "./src/assets/locales/en-us.ts",
+      "default": "./src/assets/locales/en-us.ts"
     },
-    "./style.css": "./dist/style.css",
-    "./theme.css": "./dist/theme.css"
+    "./theme.css": "./src/assets/style/theme.css"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "/dist",
+    "/src",
     "package.json",
     "README.md"
   ]
