@@ -8,5 +8,11 @@ export type SpinProps = {
 };
 
 export const Spin: FC<SpinProps> = (props) => {
-  return <IconSpin className={cn("animate-spin", props.className)} />;
+  return (
+    <IconSpin
+      className={cn("animate-spin", props.className)}
+      onPointerEnterCapture={undefined}
+      onPointerLeaveCapture={undefined}
+    />
+  );
 };

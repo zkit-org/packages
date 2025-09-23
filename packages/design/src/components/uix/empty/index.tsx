@@ -21,7 +21,13 @@ export const Empty: FC<EmptyProps> = (props) => {
   return (
     <div className={classNames("flex flex-col items-center justify-center p-4", className)}>
       <div className={iconClassName}>
-        {props.icon || <IconEmpty className="text-6xl text-muted-foreground opacity-60" />}
+        {props.icon || (
+          <IconEmpty
+            className="text-6xl text-muted-foreground opacity-60"
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          />
+        )}
       </div>
       <div className={classNames("text-secondary-foreground/70 text-xs", textClassName)}>{text}</div>
     </div>
