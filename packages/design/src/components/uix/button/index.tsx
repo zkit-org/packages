@@ -1,9 +1,9 @@
-import type { ComponentProps } from 'react'
 import { forwardRef } from 'react'
 import { Button as UIButton } from '@easykit/design/components/ui/button'
 import { Spin } from '@easykit/design/components/uix/spin'
 import { cn } from '@easykit/design/lib'
-export interface ButtonProps extends ComponentProps<typeof UIButton> {
+
+export interface ButtonProps extends React.ComponentProps<'button'> {
   loading?: boolean
   long?: boolean
 }

@@ -2,11 +2,9 @@
 
 import type { FC, PropsWithChildren } from 'react'
 import { ThemeProvider } from 'next-themes'
-import { ThemeSwitcher } from '@/components/theme-switcher'
-import '@/assets/style/theme.css'
-
 import { ConfigProvider } from '@easykit/design'
-import zhCN from '@easykit/design/assets/locales/zh-cn'
+import zhCN from '@easykit/design/locales/zh-cn'
+import { ThemeSwitcher } from '@/components/theme-switcher'
 
 export const MainLayout: FC<PropsWithChildren> = (props) => {
   return (

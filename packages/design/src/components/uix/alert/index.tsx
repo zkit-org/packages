@@ -1,7 +1,7 @@
 import { Alert as UIAlert, AlertDescription as UIAlertDescription, AlertTitle as UIAlertTitle } from '../../ui/alert'
 
 import type { ComponentProps, ReactNode } from 'react'
-import { cn } from '@/lib'
+import { cn } from '@easykit/design/lib'
 
 export type AlertProps = ComponentProps<typeof UIAlert> & {
   title?: ReactNode

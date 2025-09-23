@@ -224,6 +224,18 @@ importers:
         specifier: ^2.0.0
         version: 2.3.1(vite@5.4.19(@types/node@20.14.9)(lightningcss@1.30.1)(sass@1.77.6))
 
+  apps/playground:
+    dependencies:
+      '@arco-iconbox/react-atom-ui':
+        specifier: 0.0.4
+        version: 0.0.4(react@19.1.0)
+      '@easykit/design':
+        specifier: workspace:*
+        version: link:../../packages/design
+      next-themes:
+        specifier: 0.4.4
+        version: 0.4.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+
   packages/design:
     dependencies:
       '@arco-iconbox/react-atom-ui':

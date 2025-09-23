@@ -1,5 +1,3 @@
-import { type FC, type ReactNode, useContext, useMemo, useState } from 'react'
-import get from 'lodash/get'
 import {
   AlertDialogContent,
   AlertDialogDescription,
@@ -7,9 +5,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialog as UIAlertDialog,
-} from '@easykit/design/components/ui/alert-dialog'
-import { Button } from '@easykit/design/components/uix/button'
-import { UIXContext } from '@easykit/design/components/uix/config-provider'
+} from '../../ui/alert-dialog'
+import { Button } from '../button'
+import { UIXContext } from '../config-provider'
+
+import { type FC, type ReactNode, useContext, useMemo, useState } from 'react'
+import get from 'lodash/get'
 import { render as ReactDOMRender } from '@easykit/design/lib'
 
 export interface ConfirmProps {

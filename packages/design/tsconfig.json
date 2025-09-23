@@ -3,10 +3,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/lib/*": ["./src/lib/*"],
+      "@easykit/design": ["./src/index.ts"],
       "@easykit/design/*": ["./src/*"],
-      "@easykit/design": ["./src/index.ts"]
+      "@easykit/design/components/*": ["./src/components/*"],
+      "@easykit/design/hooks/*": ["./src/hooks/*"],
+      "@easykit/design/lib/*": ["./src/lib/*"],
+      "@easykit/design/utils/*": ["./src/utils/*"],
+      "@easykit/design/types/*": ["./src/types/*"],
+      "@easykit/design/locales/*": ["./src/locales/*"],
+      "@easykit/design/style/*": ["./src/style/*"]
     },
     "jsx": "preserve",
     "esModuleInterop": true,

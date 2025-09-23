@@ -1,7 +1,7 @@
 import { createContext, type FC, type PropsWithChildren } from 'react'
 import omit from 'lodash/omit'
-import zhCN from '@easykit/design/assets/locales/zh-cn'
 import { Toaster } from '@easykit/design/components/ui/sonner'
+import zhCN from '@easykit/design/locales/zh-cn'
 
 export interface UIXContextProps {
   locale?: typeof zhCN

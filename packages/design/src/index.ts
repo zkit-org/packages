@@ -156,4 +156,4 @@ export {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from '@/components/ui/input-otp'
+} from '@easykit/design/components/ui/input-otp'

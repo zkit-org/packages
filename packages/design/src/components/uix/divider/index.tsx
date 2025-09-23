@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '@easykit/design/lib/utils'
 
 export interface DividerProps extends PropsWithChildren {
   orientation: 'left' | 'center' | 'right'

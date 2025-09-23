@@ -16,10 +16,6 @@
     "url": "https://github.com/zkit-org/packages.git"
   },
   "scripts": {
-    "dev": "next dev -p 4000 --turbopack",
-    "build:next": "next build",
-    "start": "next start",
-    "lint:next": "next lint",
     "lint": "biome lint"
   },
   "type": "module",
@@ -82,6 +78,34 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./components/*": {
+      "types": "./src/components/*",
+      "default": "./src/components/*"
+    },
+    "./components/ui/*": {
+      "types": "./src/components/ui/*",
+      "default": "./src/components/ui/*"
+    },
+    "./components/uix/*": {
+      "types": "./src/components/uix/*",
+      "default": "./src/components/uix/*"
+    },
+    "./lib/*": {
+      "types": "./src/lib/*",
+      "default": "./src/lib/*"
+    },
+    "./lib": {
+      "types": "./src/lib/index.ts",
+      "default": "./src/lib/index.ts"
+    },
+    "./hooks/*": {
+      "types": "./src/hooks/*",
+      "default": "./src/hooks/*"
+    },
+    "./locales/*": {
+      "types": "./src/assets/locales/*",
+      "default": "./src/assets/locales/*"
     },
     "./locales/zh-cn": {
       "types": "./src/assets/locales/zh-cn.ts",
