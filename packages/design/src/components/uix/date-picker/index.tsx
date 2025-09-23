@@ -1,49 +1,50 @@
-import { forwardRef, useContext, useState } from 'react'
-import { Cross2Icon } from '@radix-ui/react-icons'
-import { addDays, format } from 'date-fns'
-import get from 'lodash/get'
-import { Calendar as CalendarIcon } from 'lucide-react'
-import { Button, Calendar, cn, Popover, PopoverContent, PopoverTrigger, Select } from '@easykit/design'
-import { UIXContext } from '@easykit/design/components/uix/config-provider'
+import { forwardRef, useContext, useState } from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { addDays, format } from "date-fns";
+import get from "lodash/get";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { Button, Calendar, cn, Popover, PopoverContent, PopoverTrigger, Select } from "@easykit/design";
+import { UIXContext } from "@easykit/design/components/uix/config-provider";
 
 export type DatePickerProps = {
-  placeholder?: string
-  format?: string
-  preset?: boolean
-  className?: string
-  allowClear?: boolean
-}
+  placeholder?: string;
+  format?: string;
+  preset?: boolean;
+  className?: string;
+  allowClear?: boolean;
+};
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, _ref) => {
-  const { preset = false, allowClear = false } = props
-  const [date, setDate] = useState<Date>()
-  const [presetValue, setPresetValue] = useState<string>('')
+  const { preset = false, allowClear = false } = props;
+  const [date, setDate] = useState<Date>();
+  const [presetValue, setPresetValue] = useState<string>("");
 
-  const config = useContext(UIXContext)
-  const locale = get(config.locale, 'DatePicker.locale')
-  const formatConfig = props.format || get(config.locale, 'DatePicker.format') || 'yyyy-MM-dd'
-  const options = get(config.locale, 'DatePicker.options')
+  const config = useContext(UIXContext);
+  const locale = get(config.locale, "DatePicker.locale");
+  const formatConfig = props.format || get(config.locale, "DatePicker.format") || "yyyy-MM-dd";
+  const options = get(config.locale, "DatePicker.options");
 
   const calendar = (
     <Calendar
       locale={locale}
       mode="single"
       onSelect={(v) => {
-        setDate(v)
-        setPresetValue('')
+        setDate(v);
+        setPresetValue("");
       }}
       selected={date}
     />
-  )
+  );
 
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           className={cn(
-            'group w-full justify-start space-x-1 text-left font-normal',
-            !date && 'text-muted-foreground',
-            props.className
+            "group w-full justify-start space-x-1 text-left font-normal",
+            !date && "text-muted-foreground",
+            props.className,
           )}
           variant="outline"
         >
@@ -53,22 +54,22 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, _r
             <Cross2Icon
               className="hidden group-hover:block"
               onClick={(e) => {
-                setDate(undefined)
-                setPresetValue('')
-                e.stopPropagation()
+                setDate(undefined);
+                setPresetValue("");
+                e.stopPropagation();
               }}
             />
           ) : null}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className={cn('flex w-fit', preset ? 'flex-col space-y-2 p-2' : 'p-0')}>
+      <PopoverContent align="start" className={cn("flex w-fit", preset ? "flex-col space-y-2 p-2" : "p-0")}>
         {preset ? (
           <>
             <Select
               className="w-full"
               onChange={(value) => {
-                setDate(addDays(new Date(), Number.parseInt(value)))
-                setPresetValue(value)
+                setDate(addDays(new Date(), Number.parseInt(value, 10)));
+                setPresetValue(value);
               }}
               options={options || []}
               placeholder="请选择"
@@ -81,7 +82,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, _r
         )}
       </PopoverContent>
     </Popover>
-  )
-})
+  );
+});
 
-DatePicker.displayName = 'DatePicker'
+DatePicker.displayName = "DatePicker";

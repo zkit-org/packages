@@ -1,53 +1,54 @@
-import { type ReactNode, useCallback, useEffect, useState } from 'react'
-import cloneDeep from 'lodash/cloneDeep'
-import remove from 'lodash/remove'
-import uniq from 'lodash/uniq'
-import { Empty, type EmptyProps, Spin, Table, TableBody, TableHead, TableHeader, TableRow } from '@easykit/design'
-import { renderRow } from '@easykit/design/components/uix/tree-table/utils'
+import { type ReactNode, useCallback, useEffect, useState } from "react";
+import cloneDeep from "lodash/cloneDeep";
+import remove from "lodash/remove";
+import uniq from "lodash/uniq";
+
+import { Empty, type EmptyProps, Spin, Table, TableBody, TableHead, TableHeader, TableRow } from "@easykit/design";
+import { renderRow } from "./utils";
 
 export type TreeTableColumn<TData> = {
-  className?: string
-  headerClassName?: string
-  formatters?: string[]
-  title: ReactNode
-  dataKey: keyof TData
+  className?: string;
+  headerClassName?: string;
+  formatters?: string[];
+  title: ReactNode;
+  dataKey: keyof TData;
   // biome-ignore lint/suspicious/noExplicitAny: <value>
-  render?: (value: any, data: TData) => ReactNode
-}
+  render?: (value: any, data: TData) => ReactNode;
+};
 
 export type TreeTableProps<TData> = {
-  data: TData[]
-  columns: TreeTableColumn<TData>[]
-  rowKey?: keyof TData
-  childrenProperty?: string
-  showHeader?: boolean
-  indentWidth?: number
-  expandedKeys?: string[]
-  defaultExpandedKeys?: string[]
-  onExpand?: (expandedKeys: string[]) => void
-  loading?: boolean
-  emptyProps?: EmptyProps
-}
+  data: TData[];
+  columns: TreeTableColumn<TData>[];
+  rowKey?: keyof TData;
+  childrenProperty?: string;
+  showHeader?: boolean;
+  indentWidth?: number;
+  expandedKeys?: string[];
+  defaultExpandedKeys?: string[];
+  onExpand?: (expandedKeys: string[]) => void;
+  loading?: boolean;
+  emptyProps?: EmptyProps;
+};
 
 export function TreeTable<TData>(props: TreeTableProps<TData>) {
-  const { columns, data, showHeader = true, defaultExpandedKeys = [], loading = false, emptyProps } = props
-  const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultExpandedKeys)
+  const { columns, data, showHeader = true, defaultExpandedKeys = [], loading = false, emptyProps } = props;
+  const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultExpandedKeys);
 
   useEffect(() => {
-    setExpandedKeys(props.expandedKeys ?? [])
-  }, [props.expandedKeys])
+    setExpandedKeys(props.expandedKeys ?? []);
+  }, [props.expandedKeys]);
 
   const onExpand = useCallback(
     (key: string, expanded: boolean) => {
-      const keys = cloneDeep(expandedKeys)
+      const keys = cloneDeep(expandedKeys);
       if (expanded) {
-        setExpandedKeys(uniq([...keys, key]))
+        setExpandedKeys(uniq([...keys, key]));
       } else {
-        setExpandedKeys(remove(keys, (item) => item !== key))
+        setExpandedKeys(remove(keys, (item) => item !== key));
       }
     },
-    [expandedKeys]
-  )
+    [expandedKeys],
+  );
 
   return (
     <div className="relative">
@@ -81,5 +82,5 @@ export function TreeTable<TData>(props: TreeTableProps<TData>) {
         <Empty {...(emptyProps ?? {})} />
       )}
     </div>
-  )
+  );
 }

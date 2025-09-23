@@ -2,7 +2,7 @@ import {Extension} from '@tiptap/core';
 import { Fragment, type Node, type ResolvedPos, Slice } from '@tiptap/pm/model'
 import { NodeSelection, Plugin, PluginKey, TextSelection } from '@tiptap/pm/state'
 
-// @ts-ignore
+// @ts-expect-error
 import type { EditorView } from '@tiptap/pm/view'
 import { serializeForClipboard } from './clipboard-serializer'
 
@@ -171,7 +171,7 @@ export function DragHandlePlugin(options: GlobalDragHandleOptions & { pluginKey:
 
     // If the selected node is a list item, we need to save the type of the wrapping list e.g. OL or UL
     if (view.state.selection instanceof NodeSelection && view.state.selection.node.type.name === 'listItem') {
-      listType = node.parentElement!.tagName
+      listType = node.parentElement?.tagName
     }
 
     const slice = view.state.selection.content()
@@ -279,7 +279,7 @@ export function DragHandlePlugin(options: GlobalDragHandleOptions & { pluginKey:
           const compStyle = window.getComputedStyle(node)
           const parsedLineHeight = Number.parseInt(compStyle.lineHeight, 10)
           const lineHeight = Number.isNaN(parsedLineHeight)
-            ? Number.parseInt(compStyle.fontSize) * 1.2
+            ? Number.parseInt(compStyle.fontSize, 10) * 1.2
             : parsedLineHeight
           const paddingTop = Number.parseInt(compStyle.paddingTop, 10)
 
@@ -305,7 +305,7 @@ export function DragHandlePlugin(options: GlobalDragHandleOptions & { pluginKey:
             rect.top -= (boundingRect.height + 8) / 2
           }
           if (root.node().type.name === 'codeBlock') {
-            rect.top -= lineHeight + Number.parseInt(compStyle.fontSize)
+            rect.top -= lineHeight + Number.parseInt(compStyle.fontSize, 10)
           }
           if (!dragHandleElement) return
 

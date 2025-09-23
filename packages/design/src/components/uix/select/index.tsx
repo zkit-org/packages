@@ -1,30 +1,30 @@
-import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select as UISelect } from '../../ui/select'
+import { forwardRef, type MouseEvent, type ReactNode, useState } from "react";
+import { XIcon } from "lucide-react";
 
-import { forwardRef, type MouseEvent, type ReactNode, useState } from 'react'
-import { XIcon } from 'lucide-react'
-import { Empty } from '@easykit/design/components/uix/empty'
-import { cn } from '@easykit/design/lib'
+import { Empty } from "@easykit/design/components/uix/empty";
+import { cn } from "@easykit/design/lib";
+import { SelectContent, SelectItem, SelectTrigger, SelectValue, Select as UISelect } from "../../ui/select";
 
 export interface SelectOptionProps {
-  value: string
-  label: ReactNode
-  disabled?: boolean
+  value: string;
+  label: ReactNode;
+  disabled?: boolean;
 }
 
 export interface SelectProps {
-  options: SelectOptionProps[]
-  value?: string
-  defaultValue?: string
-  onChange?: (value: string) => void
-  placeholder?: string
-  className?: string
-  side?: 'top' | 'right' | 'bottom' | 'left'
-  sideOffset?: number
-  align?: 'start' | 'center' | 'end'
-  alignOffset?: number
-  empty?: ReactNode
-  allowClear?: boolean
-  triggerClassName?: string
+  options: SelectOptionProps[];
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  side?: "top" | "right" | "bottom" | "left";
+  sideOffset?: number;
+  align?: "start" | "center" | "end";
+  alignOffset?: number;
+  empty?: ReactNode;
+  allowClear?: boolean;
+  triggerClassName?: string;
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) => {
@@ -39,30 +39,30 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
     allowClear,
     triggerClassName,
     ...rest
-  } = props
+  } = props;
 
-  const [innerValue, setInnerValue] = useState<string | undefined>(defaultValue)
-  const isControlled = value !== undefined
-  const currentValue = isControlled ? value : innerValue
+  const [innerValue, setInnerValue] = useState<string | undefined>(defaultValue);
+  const isControlled = value !== undefined;
+  const currentValue = isControlled ? value : innerValue;
 
   const handleChange = (val: string) => {
     if (onChange) {
-      onChange(val)
+      onChange(val);
     }
     if (!isControlled) {
-      setInnerValue(val)
+      setInnerValue(val);
     }
-  }
+  };
 
   const clear = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation()
-    handleChange('')
-  }
+    e.stopPropagation();
+    handleChange("");
+  };
 
   return (
     <UISelect {...rest} defaultValue={defaultValue} onValueChange={handleChange} value={currentValue}>
-      <div className={cn('relative inline-block', allowClear && currentValue ? 'group' : '', className)}>
-        <SelectTrigger className={cn('flex w-full', triggerClassName)}>
+      <div className={cn("relative inline-block", allowClear && currentValue ? "group" : "", className)}>
+        <SelectTrigger className={cn("flex w-full", triggerClassName)}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         {allowClear && currentValue && (
@@ -89,5 +89,5 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, _ref) =
           : empty || <Empty />}
       </SelectContent>
     </UISelect>
-  )
-})
+  );
+});

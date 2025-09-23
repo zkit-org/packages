@@ -52,7 +52,7 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): ReactElement => {
         isImageLeft: ctx.editor.isActive('imageBlock', { align: 'left' }),
         isImageCenter: ctx.editor.isActive('imageBlock', { align: 'center' }),
         isImageRight: ctx.editor.isActive('imageBlock', { align: 'right' }),
-        width: Number.parseInt(ctx.editor.getAttributes('imageBlock')?.width || 0),
+        width: Number.parseInt(ctx.editor.getAttributes('imageBlock')?.width || 0, 10),
       }
     },
   })

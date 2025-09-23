@@ -1,26 +1,27 @@
-import { type FC, forwardRef, useState } from 'react'
-import { Switch as UISwitch } from '@easykit/design/components/ui/switch'
+import { type FC, forwardRef, useState } from "react";
+
+import { Switch as UISwitch } from "@easykit/design/components/ui/switch";
 
 export interface SwitchProps {
-  value?: boolean
-  onChange?: (value: boolean) => void
-  readonly?: boolean
+  value?: boolean;
+  onChange?: (value: boolean) => void;
+  readonly?: boolean;
 }
 
 export const Switch: FC<SwitchProps> = forwardRef((props, _ref) => {
-  const { onChange, readonly = false } = props
+  const { onChange, readonly = false } = props;
 
-  const [checked, setChecked] = useState(props.value)
+  const [checked, setChecked] = useState(props.value);
 
   const core = (
     <UISwitch
       checked={checked}
       onCheckedChange={(checked) => {
-        setChecked(checked)
-        onChange?.(checked)
+        setChecked(checked);
+        onChange?.(checked);
       }}
     />
-  )
+  );
   return readonly ? (
     <div className="relative inline-block">
       {core}
@@ -28,5 +29,5 @@ export const Switch: FC<SwitchProps> = forwardRef((props, _ref) => {
     </div>
   ) : (
     core
-  )
-})
+  );
+});

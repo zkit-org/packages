@@ -1,97 +1,98 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <any> */
-import { isObject } from './is'
 
-import type { ReactElement } from 'react'
-import ReactDOM from 'react-dom'
-import { createRoot as reactDOMCreateRoot } from 'react-dom/client'
+import type { ReactElement } from "react";
+import ReactDOM from "react-dom";
+import { createRoot as reactDOMCreateRoot } from "react-dom/client";
+
+import { isObject } from "./is";
 
 type CreateRootFnType = (container: Element | DocumentFragment) => {
-  render: (container: ReactElement) => void
-  unmount: () => void
-  _unmount: () => void
-}
+  render: (container: ReactElement) => void;
+  unmount: () => void;
+  _unmount: () => void;
+};
 
-const reactDOMCreateRootCopy = reactDOMCreateRoot as CreateRootFnType
+const reactDOMCreateRootCopy = reactDOMCreateRoot as CreateRootFnType;
 
-const __SECRET_INTERNALS__ = '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED'
+const __SECRET_INTERNALS__ = "__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED";
 
 const CopyReactDOM = ReactDOM as typeof ReactDOM & {
-  createRoot: CreateRootFnType
+  createRoot: CreateRootFnType;
   // https://github.com/facebook/react/blob/4ff5f5719b348d9d8db14aaa49a48532defb4ab7/packages/react-dom/src/client/ReactDOM.js#L181
   [__SECRET_INTERNALS__]: {
-    usingClientEntryPoint?: boolean
-  }
-}
+    usingClientEntryPoint?: boolean;
+  };
+};
 
 let copyRender: (
   app: ReactElement,
-  container: Element | DocumentFragment
+  container: Element | DocumentFragment,
 ) => {
-  render: (container: ReactElement) => void
-  _unmount: () => void
-}
+  render: (container: ReactElement) => void;
+  _unmount: () => void;
+};
 
-const isReact18 = Number(CopyReactDOM.version?.split('.')[0]) > 17
-const isReact19 = Number(CopyReactDOM.version?.split('.')[0]) > 18
+const isReact18 = Number(CopyReactDOM.version?.split(".")[0]) > 17;
+const isReact19 = Number(CopyReactDOM.version?.split(".")[0]) > 18;
 
 const updateUsingClientEntryPoint = (skipWarning?: boolean) => {
   // https://github.com/facebook/react/blob/17806594cc28284fe195f918e8d77de3516848ec/packages/react-dom/npm/client.js#L10
   // Avoid console warning
   if (isObject(CopyReactDOM[__SECRET_INTERNALS__])) {
-    CopyReactDOM[__SECRET_INTERNALS__].usingClientEntryPoint = skipWarning
+    CopyReactDOM[__SECRET_INTERNALS__].usingClientEntryPoint = skipWarning;
   }
-}
+};
 
-let createRoot: CreateRootFnType
+let createRoot: CreateRootFnType;
 try {
-  createRoot = CopyReactDOM.createRoot
+  createRoot = CopyReactDOM.createRoot;
 } catch (_) {
   //
 }
 
 if (isReact19) {
   copyRender = (app: ReactElement, container: Element | DocumentFragment) => {
-    updateUsingClientEntryPoint(true)
-    const root = reactDOMCreateRootCopy(container)
-    updateUsingClientEntryPoint(false)
+    updateUsingClientEntryPoint(true);
+    const root = reactDOMCreateRootCopy(container);
+    updateUsingClientEntryPoint(false);
 
-    root.render(app)
+    root.render(app);
 
     root._unmount = () => {
       setTimeout(() => {
-        root?.unmount?.()
-      })
-    }
-    return root
-  }
+        root?.unmount?.();
+      });
+    };
+    return root;
+  };
 } else if (isReact18) {
   copyRender = (app: ReactElement, container: Element | DocumentFragment) => {
-    updateUsingClientEntryPoint(true)
-    const root = createRoot(container)
-    updateUsingClientEntryPoint(false)
+    updateUsingClientEntryPoint(true);
+    const root = createRoot(container);
+    updateUsingClientEntryPoint(false);
 
-    root.render(app)
+    root.render(app);
 
     root._unmount = () => {
       setTimeout(() => {
-        root?.unmount?.()
-      })
-    }
-    return root
-  }
+        root?.unmount?.();
+      });
+    };
+    return root;
+  };
 } else {
   copyRender = (app: ReactElement, container: Element | DocumentFragment) => {
-    ;(CopyReactDOM as any).render(app, container)
+    (CopyReactDOM as any).render(app, container);
 
     return {
       render: (app: ReactElement) => {
-        ;(CopyReactDOM as any).render(app, container)
+        (CopyReactDOM as any).render(app, container);
       },
       _unmount() {
-        ;(CopyReactDOM as any).unmountComponentAtNode(container)
+        (CopyReactDOM as any).unmountComponentAtNode(container);
       },
-    }
-  }
+    };
+  };
 }
 
-export const render = copyRender
+export const render = copyRender;

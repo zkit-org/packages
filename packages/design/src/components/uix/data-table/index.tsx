@@ -1,7 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/table'
-
-import { useContext, useEffect, useMemo, useState } from 'react'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { useContext, useEffect, useMemo, useState } from "react";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   type ColumnDef,
   flexRender,
@@ -11,11 +9,12 @@ import {
   type SortingState,
   useReactTable,
   type VisibilityState,
-} from '@tanstack/react-table'
-import isArray from 'lodash/isArray'
-import isFunction from 'lodash/isFunction'
-import isString from 'lodash/isString'
-import isUndefined from 'lodash/isUndefined'
+} from "@tanstack/react-table";
+import isArray from "lodash/isArray";
+import isFunction from "lodash/isFunction";
+import isString from "lodash/isString";
+import isUndefined from "lodash/isUndefined";
+
 import {
   Action,
   Checkbox,
@@ -28,130 +27,132 @@ import {
   Pagination,
   type PaginationProps,
   Spin,
-} from '@easykit/design'
-import './style.css'
+} from "@easykit/design";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
+import "./style.css";
 
-import { LayoutIcon } from '@radix-ui/react-icons'
-import classNames from 'classnames'
-import get from 'lodash/get'
-import { UIXContext } from '@easykit/design/components/uix/config-provider'
-import { type Formatters, type FunctionMap, formatValue } from '@easykit/design/components/uix/value-formatter'
+import { LayoutIcon } from "@radix-ui/react-icons";
+import classNames from "classnames";
+import get from "lodash/get";
+
+import { UIXContext } from "@easykit/design/components/uix/config-provider";
+import { type Formatters, type FunctionMap, formatValue } from "@easykit/design/components/uix/value-formatter";
 
 export interface StickyColumnProps {
-  key: string
-  position: 'left' | 'right'
-  size: number
+  key: string;
+  position: "left" | "right";
+  size: number;
 }
 
 export type DataTableColumn<TData> = ColumnDef<TData, unknown> & {
-  className?: string
-  formatters?: Formatters
-}
+  className?: string;
+  formatters?: Formatters;
+};
 
 export interface DataTableProps<TData> {
-  autoHidePagination?: boolean
-  inCard?: boolean
-  columns: DataTableColumn<TData>[]
-  data: TData[]
-  showColumnVisibility?: boolean
-  stickyColumns?: StickyColumnProps[]
-  checkbox?: boolean
-  rowActions?: DropdownMenuItemProps[] | ((cell: TData) => DropdownMenuItemProps[])
-  onRowActionClick?: (item: DropdownMenuItemProps, row: Row<TData>) => void
-  loading?: boolean
-  load?: (params?: unknown) => Promise<unknown> | unknown
-  filter?: FiltersProps
-  pagination?: PaginationProps | boolean
-  cellHandles?: FunctionMap
-  empty?: string
-  showHeader?: boolean
-  onRowClick?: (row: Row<TData>) => void
+  autoHidePagination?: boolean;
+  inCard?: boolean;
+  columns: DataTableColumn<TData>[];
+  data: TData[];
+  showColumnVisibility?: boolean;
+  stickyColumns?: StickyColumnProps[];
+  checkbox?: boolean;
+  rowActions?: DropdownMenuItemProps[] | ((cell: TData) => DropdownMenuItemProps[]);
+  onRowActionClick?: (item: DropdownMenuItemProps, row: Row<TData>) => void;
+  loading?: boolean;
+  load?: (params?: unknown) => Promise<unknown> | unknown;
+  filter?: FiltersProps;
+  pagination?: PaginationProps | boolean;
+  cellHandles?: FunctionMap;
+  empty?: string;
+  showHeader?: boolean;
+  onRowClick?: (row: Row<TData>) => void;
 }
 
 // 本地存储相关函数
-const LOCAL_STORAGE_PREFIX = 'datatable_columns_'
+const LOCAL_STORAGE_PREFIX = "datatable_columns_";
 
 const saveColumnVisibility = (storageKey: string, visibility: VisibilityState) => {
   try {
-    localStorage.setItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`, JSON.stringify(visibility))
+    localStorage.setItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`, JSON.stringify(visibility));
   } catch (_error) {
     // console.warn('Failed to save column visibility to localStorage:', error)
   }
-}
+};
 
 const loadColumnVisibility = (storageKey: string): VisibilityState => {
   try {
-    const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`)
-    return stored ? JSON.parse(stored) : {}
+    const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}${storageKey}`);
+    return stored ? JSON.parse(stored) : {};
   } catch (_error) {
     // console.warn('Failed to load column visibility from localStorage:', error)
-    return {}
+    return {};
   }
-}
+};
 
 export const getSticky = (
   id: string,
   leftStickyColumns: StickyColumnProps[],
-  rightStickyColumns: StickyColumnProps[]
+  rightStickyColumns: StickyColumnProps[],
 ) => {
-  const inLeft = !!leftStickyColumns.find(({ key }) => key === id)
+  const inLeft = !!leftStickyColumns.find(({ key }) => key === id);
   if (inLeft) {
-    let offset = 0
-    let width = 0
-    let index = 0
+    let offset = 0;
+    let width = 0;
+    let index = 0;
     for (const col of leftStickyColumns) {
-      index++
+      index++;
       if (col.key === id) {
-        width = col.size
-        break
+        width = col.size;
+        break;
       }
-      offset += col.size
+      offset += col.size;
     }
     return {
       width,
       offset,
       enable: true,
-      position: 'left',
+      position: "left",
       last: index === leftStickyColumns.length,
       first: false,
-    }
+    };
   }
-  const inRight = !!rightStickyColumns.find(({ key }) => key === id)
+  const inRight = !!rightStickyColumns.find(({ key }) => key === id);
   if (inRight) {
-    let offset = 0
-    let width = 0
-    let i = 0
+    let offset = 0;
+    let width = 0;
+    let i = 0;
     for (let index = rightStickyColumns.length - 1; index >= 0; index--) {
-      i++
-      const col = rightStickyColumns[index]
+      i++;
+      const col = rightStickyColumns[index];
       if (col.key === id) {
-        width = col.size
-        break
+        width = col.size;
+        break;
       }
-      offset += col.size
+      offset += col.size;
     }
     return {
       width,
       offset,
       enable: true,
-      position: 'right',
+      position: "right",
       last: false,
       first: i === rightStickyColumns.length,
-    }
+    };
   }
-  return { enable: false }
-}
+  return { enable: false };
+};
 
 // biome-ignore lint/suspicious/noExplicitAny: <hasActions>
 const hasActions = (rowActions: DropdownMenuItemProps[] | ((cell: any) => DropdownMenuItemProps[])) => {
   if (isFunction(rowActions)) {
-    return true
+    return true;
   }
   if (isArray(rowActions)) {
-    return !!rowActions.length
+    return !!rowActions.length;
   }
-  return false
-}
+  return false;
+};
 
 export function DataTable<TData>(props: DataTableProps<TData>) {
   const {
@@ -170,47 +171,47 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
     showHeader = true,
     autoHidePagination = true,
     inCard = false,
-  } = props
+  } = props;
 
-  const config = useContext(UIXContext)
-  const empty = props.empty || get(config.locale, 'DataTable.empty')
+  const config = useContext(UIXContext);
+  const empty = props.empty || get(config.locale, "DataTable.empty");
   // 生成存储key
   const storageKey = useMemo(() => {
-    return generateColumnStorageKey(columns)
-  }, [columns])
-  const [sorting, setSorting] = useState<SortingState>([])
+    return generateColumnStorageKey(columns);
+  }, [columns]);
+  const [sorting, setSorting] = useState<SortingState>([]);
   // 初始化时不从本地存储读取，避免 SSR 水合错误
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = useState({})
-  const [mounted, setMounted] = useState(false)
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     // 只在客户端挂载后才读取本地存储的列可见性
-    setColumnVisibility(loadColumnVisibility(storageKey))
-    setMounted(true)
-  }, [storageKey])
+    setColumnVisibility(loadColumnVisibility(storageKey));
+    setMounted(true);
+  }, [storageKey]);
 
   // 当列可见性改变时，保存到本地存储（但跳过初始的空状态）
   useEffect(() => {
     if (mounted) {
-      saveColumnVisibility(storageKey, columnVisibility)
+      saveColumnVisibility(storageKey, columnVisibility);
     }
-  }, [columnVisibility, storageKey, mounted])
+  }, [columnVisibility, storageKey, mounted]);
 
   // 当columns改变时，重新加载存储的状态
   useEffect(() => {
     if (mounted) {
-      const newStorageKey = generateColumnStorageKey(columns)
-      const storedVisibility = loadColumnVisibility(newStorageKey)
-      setColumnVisibility(storedVisibility)
+      const newStorageKey = generateColumnStorageKey(columns);
+      const storedVisibility = loadColumnVisibility(newStorageKey);
+      setColumnVisibility(storedVisibility);
     }
-  }, [columns, mounted])
+  }, [columns, mounted]);
 
   const tableColumns = useMemo<ColumnDef<TData, unknown>[]>(() => {
-    const newColumns: ColumnDef<TData, unknown>[] = []
+    const newColumns: ColumnDef<TData, unknown>[] = [];
     if (checkbox) {
       newColumns.push({
-        id: 'select',
+        id: "select",
         enableSorting: false,
         enableHiding: false,
         // biome-ignore lint/suspicious/noExplicitAny: <header>
@@ -233,20 +234,20 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             />
           </div>
         ),
-      })
+      });
     }
-    newColumns.push(...columns)
+    newColumns.push(...columns);
     if (hasActions(rowActions!)) {
       newColumns.push({
-        id: 'actions',
+        id: "actions",
         enableHiding: false,
         size: 50,
         enableResizing: false,
         // biome-ignore lint/suspicious/noExplicitAny: <cell>
         cell: ({ row }: { row: any }) => {
-          let items = rowActions
+          let items = rowActions;
           if (isFunction(rowActions)) {
-            items = rowActions(row.original)
+            items = rowActions(row.original);
           }
           return (
             <div className="flex w-full justify-end" onClick={(e) => e.stopPropagation()}>
@@ -261,12 +262,12 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                 </Action>
               </Dropdown>
             </div>
-          )
+          );
         },
-      })
+      });
     }
-    return newColumns
-  }, [columns, checkbox, rowActions, onRowActionClick])
+    return newColumns;
+  }, [columns, checkbox, rowActions, onRowActionClick]);
 
   const table = useReactTable({
     data,
@@ -281,33 +282,33 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   const leftStickyColumns = useMemo<StickyColumnProps[]>(() => {
-    const columns: StickyColumnProps[] = []
+    const columns: StickyColumnProps[] = [];
     if (checkbox) {
       columns.push({
-        key: 'select',
-        position: 'left',
+        key: "select",
+        position: "left",
         size: 40,
-      })
+      });
     }
-    columns.push(...stickyColumns.filter(({ position }) => position === 'left'))
-    return columns
-  }, [stickyColumns, checkbox])
+    columns.push(...stickyColumns.filter(({ position }) => position === "left"));
+    return columns;
+  }, [stickyColumns, checkbox]);
 
   const rightStickyColumns = useMemo<StickyColumnProps[]>(() => {
-    const columns: StickyColumnProps[] = []
-    columns.push(...stickyColumns.filter(({ position }) => position === 'right'))
+    const columns: StickyColumnProps[] = [];
+    columns.push(...stickyColumns.filter(({ position }) => position === "right"));
     if (hasActions(rowActions!)) {
       columns.push({
-        key: 'actions',
-        position: 'right',
+        key: "actions",
+        position: "right",
         size: 40,
-      })
+      });
     }
-    return columns
-  }, [stickyColumns, rowActions])
+    return columns;
+  }, [stickyColumns, rowActions]);
 
   const columnSettings = useMemo<DropdownMenuItemProps[]>(() => {
     return table
@@ -316,50 +317,50 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
       .map((column) => {
         // biome-ignore lint/suspicious/noExplicitAny: <column>
         const item = columns.find((col: any) => {
-          const key = col.id || col.accessorKey
-          return key.replace(/\./g, '_') === column.id
-        })
-        let label = column.id
+          const key = col.id || col.accessorKey;
+          return key.replace(/\./g, "_") === column.id;
+        });
+        let label = column.id;
         if (item) {
           if (isFunction(item.header)) {
-            label = item.header({ table, column, header: table.getFlatHeaders().find((col) => col.id === column.id)! })
+            label = item.header({ table, column, header: table.getFlatHeaders().find((col) => col.id === column.id)! });
           } else if (isString(item.header)) {
-            label = item.header
+            label = item.header;
           }
         }
-        const checked = columnVisibility[column.id]
+        const checked = columnVisibility[column.id];
         return {
           id: column.id,
           label,
-          type: 'checkbox',
+          type: "checkbox",
           checked: isUndefined(checked) ? column.getIsVisible() : checked,
           onCheckedChange: (_item, value) => column.toggleVisibility(value),
-        }
-      })
-  }, [table, columns, columnVisibility])
+        };
+      });
+  }, [table, columns, columnVisibility]);
 
   const showVisibilityControl = useMemo(
     () => showColumnVisibility && columnSettings.length,
-    [showColumnVisibility, columnSettings]
-  )
+    [showColumnVisibility, columnSettings],
+  );
 
-  const showToolbar = useMemo(() => filter || showVisibilityControl, [filter, showVisibilityControl])
+  const showToolbar = useMemo(() => filter || showVisibilityControl, [filter, showVisibilityControl]);
 
   const showPagination = useMemo(() => {
     if (autoHidePagination) {
-      return pagination && (pagination as PaginationProps).total > (pagination as PaginationProps).size
+      return pagination && (pagination as PaginationProps).total > (pagination as PaginationProps).size;
     }
-    return pagination
-  }, [pagination, autoHidePagination])
+    return pagination;
+  }, [pagination, autoHidePagination]);
 
   return (
     <>
       {showToolbar ? (
         <div
           className={cn(
-            'border-0 border-secondary border-b border-solid pb-2',
-            'flex items-end',
-            filter ? 'justify-between' : 'justify-end'
+            "border-0 border-secondary border-b border-solid pb-2",
+            "flex items-end",
+            filter ? "justify-between" : "justify-end",
           )}
         >
           {filter ? <Filters {...filter} load={load} loading={loading} /> : null}
@@ -372,27 +373,27 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
           ) : null}
         </div>
       ) : null}
-      <div className={cn('relative')}>
-        <Table className={classNames('data-table', inCard ? 'in-card' : null, !mounted && 'invisible')}>
-          <TableHeader className={cn(!showHeader && 'hidden')}>
+      <div className={cn("relative")}>
+        <Table className={classNames("data-table", inCard ? "in-card" : null, !mounted && "invisible")}>
+          <TableHeader className={cn(!showHeader && "hidden")}>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   // 在未挂载时禁用粘性列功能，避免 SSR 水合错误
                   const sticky = mounted
                     ? getSticky(header.column.id, leftStickyColumns, rightStickyColumns)
-                    : { enable: false }
+                    : { enable: false };
                   const content = header.isPlaceholder
                     ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())
+                    : flexRender(header.column.columnDef.header, header.getContext());
                   return (
                     <TableHead
                       className={cn(
-                        sticky.enable ? 'table-sticky-col sticky' : null,
-                        sticky.last ? 'table-sticky-col-last' : null,
-                        sticky.first ? 'table-sticky-col-first' : null,
+                        sticky.enable ? "table-sticky-col sticky" : null,
+                        sticky.last ? "table-sticky-col-last" : null,
+                        sticky.first ? "table-sticky-col-first" : null,
                         // biome-ignore lint/suspicious/noExplicitAny: <className>
-                        (header.column.columnDef as any).className
+                        (header.column.columnDef as any).className,
                       )}
                       key={header.id}
                       style={
@@ -407,7 +408,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                     >
                       {sticky.enable ? <div className="inner flex h-10 items-center px-2">{content}</div> : content}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -416,7 +417,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                   key={row.id}
                   onClick={() => props.onRowClick?.(row)}
                 >
@@ -424,21 +425,21 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                     // 在未挂载时禁用粘性列功能，避免 SSR 水合错误
                     const sticky = mounted
                       ? getSticky(cell.column.id, leftStickyColumns, rightStickyColumns)
-                      : { enable: false }
-                    const ctx = cell.getContext()
-                    const render = ctx.renderValue
+                      : { enable: false };
+                    const ctx = cell.getContext();
+                    const render = ctx.renderValue;
                     // biome-ignore lint/suspicious/noExplicitAny: <formatters>
-                    const formatters = (cell.column.columnDef as any).formatters || []
+                    const formatters = (cell.column.columnDef as any).formatters || [];
                     ctx.renderValue = () => {
-                      return formatValue(render(), formatters, cellHandles)
-                    }
-                    const content = flexRender(cell.column.columnDef.cell, ctx)
+                      return formatValue(render(), formatters, cellHandles);
+                    };
+                    const content = flexRender(cell.column.columnDef.cell, ctx);
                     return (
                       <TableCell
                         className={cn(
-                          sticky.enable ? 'table-sticky-col sticky' : null,
-                          sticky.last ? 'table-sticky-col-last' : null,
-                          sticky.first ? 'table-sticky-col-first' : null
+                          sticky.enable ? "table-sticky-col sticky" : null,
+                          sticky.last ? "table-sticky-col-last" : null,
+                          sticky.first ? "table-sticky-col-first" : null,
                         )}
                         key={cell.id}
                         style={
@@ -453,7 +454,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                       >
                         {sticky.enable ? <div className="inner flex h-10 items-center px-2">{content}</div> : content}
                       </TableCell>
-                    )
+                    );
                   })}
                 </TableRow>
               ))
@@ -466,15 +467,15 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             )}
           </TableBody>
         </Table>
-        <div className={cn('py-4', !mounted && 'invisible')}>
+        <div className={cn("py-4", !mounted && "invisible")}>
           {showPagination && (
             <Pagination
               {...(pagination as PaginationProps)}
               onChange={(page: number) => {
-                load?.({ page })
+                load?.({ page });
               }}
               onSizeChange={(size: number) => {
-                load?.({ size, page: 1 })
+                load?.({ size, page: 1 });
               }}
             />
           )}
@@ -486,5 +487,5 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
         ) : null}
       </div>
     </>
-  )
+  );
 }

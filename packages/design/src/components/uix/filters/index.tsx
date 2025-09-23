@@ -1,31 +1,32 @@
-import { cloneElement, type FC, type PropsWithChildren, type ReactElement, useContext } from 'react'
-import get from 'lodash/get'
-import pick from 'lodash/pick'
-import type { Control } from 'react-hook-form'
-import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
-import { Button } from '@easykit/design/components/uix/button'
-import { UIXContext } from '@easykit/design/components/uix/config-provider'
+import { cloneElement, type FC, type PropsWithChildren, type ReactElement, useContext } from "react";
+import get from "lodash/get";
+import pick from "lodash/pick";
+import type { Control } from "react-hook-form";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+
+import { Button } from "@easykit/design/components/uix/button";
+import { UIXContext } from "@easykit/design/components/uix/config-provider";
 
 export interface FilterItemProps {
-  field: string
-  render: () => ReactElement
-  label?: string
+  field: string;
+  render: () => ReactElement;
+  label?: string;
 }
 
 export interface FiltersProps extends PropsWithChildren {
-  items?: FilterItemProps[]
+  items?: FilterItemProps[];
   // biome-ignore lint/suspicious/noExplicitAny: <defaultValues>
-  defaultValues?: any
+  defaultValues?: any;
   // biome-ignore lint/suspicious/noExplicitAny: <query>
-  query?: any
-  loading?: boolean
-  load?: (params?: unknown) => Promise<unknown> | unknown
-  searchText?: string
-  resetText?: string
+  query?: any;
+  loading?: boolean;
+  load?: (params?: unknown) => Promise<unknown> | unknown;
+  searchText?: string;
+  resetText?: string;
 }
 
 const renderItem = (item: FilterItemProps, form: { control: Control }) => {
-  const ele = item.render()
+  const ele = item.render();
 
   return (
     <div className="m-2 my-1" key={item.field}>
@@ -40,33 +41,33 @@ const renderItem = (item: FilterItemProps, form: { control: Control }) => {
               // biome-ignore lint/suspicious/noExplicitAny: <props>
               ...(ele as any).props,
               ...field,
-              value: field.value === 0 ? 0 : field.value || '', // a component is changing an uncontrolled input to be controlled
+              value: field.value === 0 ? 0 : field.value || "", // a component is changing an uncontrolled input to be controlled
             })
           }
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const Filters: FC<FiltersProps> = (props) => {
-  const { items = [], defaultValues = null, loading, load, query } = props
-  const fields = items.map((item) => item.field)
+  const { items = [], defaultValues = null, loading, load, query } = props;
+  const fields = items.map((item) => item.field);
   const { reset, control, handleSubmit } = useForm({
     defaultValues: pick(query, fields),
-  })
+  });
 
-  const config = useContext(UIXContext)
-  const searchText = props.searchText || get(config.locale, 'Filters.searchText')
-  const resetText = props.resetText || get(config.locale, 'Filters.resetText')
+  const config = useContext(UIXContext);
+  const searchText = props.searchText || get(config.locale, "Filters.searchText");
+  const resetText = props.resetText || get(config.locale, "Filters.resetText");
 
   // biome-ignore lint/suspicious/noExplicitAny: <data>
   const onSubmit: SubmitHandler<any> = (data) => {
     load?.({
       ...pick(data, fields),
       page: 1,
-    })
-  }
+    });
+  };
 
   return (
     <div className="relative">
@@ -82,12 +83,12 @@ export const Filters: FC<FiltersProps> = (props) => {
                 className="ml-2"
                 disabled={loading}
                 onClick={() => {
-                  const filteredDefaultValues = pick(defaultValues, fields)
+                  const filteredDefaultValues = pick(defaultValues, fields);
                   load?.({
                     ...filteredDefaultValues,
                     page: 1,
-                  })
-                  reset(filteredDefaultValues)
+                  });
+                  reset(filteredDefaultValues);
                 }}
                 type="reset"
                 variant="secondary"
@@ -100,5 +101,5 @@ export const Filters: FC<FiltersProps> = (props) => {
       </form>
       {loading ? <div className="dark:!bg-black/5 absolute top-0 right-0 bottom-0 left-0 bg-white/50" /> : null}
     </div>
-  )
-}
+  );
+};

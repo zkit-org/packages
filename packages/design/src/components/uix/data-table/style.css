@@ -35,6 +35,6 @@
   @apply bg-[var(--sticky-row-hover-color)];
 }
 
-.data-table tr[data-state=selected] td.table-sticky-col .inner {
+.data-table tr[data-state="selected"] td.table-sticky-col .inner {
   @apply bg-[hsl(var(--muted))];
 }

@@ -1,74 +1,74 @@
-import 'dayjs/locale/zh-tw'
-import { zhTW } from 'date-fns/locale'
+import "dayjs/locale/zh-tw";
+import { zhTW } from "date-fns/locale";
 
 export default {
-  key: 'zh-TW',
+  key: "zh-TW",
   Alert: {
-    okText: '確定',
-    cancelText: '取消',
+    okText: "確定",
+    cancelText: "取消",
   },
   ComboSelect: {
-    empty: '暫無數據',
-    clearText: '清空',
+    empty: "暫無數據",
+    clearText: "清空",
   },
   DataTable: {
-    empty: '暫無數據',
+    empty: "暫無數據",
   },
   Filters: {
-    searchText: '搜尋',
-    resetText: '重置',
+    searchText: "搜尋",
+    resetText: "重置",
   },
   Pagination: {
-    totalPage: '共 %total 條',
-    total: '%page 頁',
-    size: '%size 條/頁',
-    go: '前往',
-    goSuffix: '頁',
+    totalPage: "共 %total 條",
+    total: "%page 頁",
+    size: "%size 條/頁",
+    go: "前往",
+    goSuffix: "頁",
   },
   Tree: {
-    emptyText: '暫無數據',
+    emptyText: "暫無數據",
   },
   TreeTable: {
-    emptyText: '暫無數據',
+    emptyText: "暫無數據",
   },
   DateRangePicker: {
     locale: zhTW,
-    format: 'yyyy-MM-dd',
+    format: "yyyy-MM-dd",
   },
   Uploader: {
-    placeholder: '請拖曳文件到此處或點擊選擇文件',
-    uploadText: '上傳',
-    maxFilesExceeded: '已達到最大文件數量限制',
-    partialFilesAdded: '，只能再添加 %count 個文件',
+    placeholder: "請拖曳文件到此處或點擊選擇文件",
+    uploadText: "上傳",
+    maxFilesExceeded: "已達到最大文件數量限制",
+    partialFilesAdded: "，只能再添加 %count 個文件",
   },
   DatePicker: {
     locale: zhTW,
-    format: 'yyyy-MM-dd',
-    presetPlaceholder: '快速選擇',
+    format: "yyyy-MM-dd",
+    presetPlaceholder: "快速選擇",
     options: [
       {
-        label: '今天',
-        value: '0',
+        label: "今天",
+        value: "0",
       },
       {
-        label: '明天',
-        value: '1',
+        label: "明天",
+        value: "1",
       },
       {
-        label: '三天後',
-        value: '3',
+        label: "三天後",
+        value: "3",
       },
       {
-        label: '一周後',
-        value: '7',
+        label: "一周後",
+        value: "7",
       },
       {
-        label: '一月後',
-        value: '30',
+        label: "一月後",
+        value: "30",
       },
     ],
   },
   Empty: {
-    text: '暫無數據',
+    text: "暫無數據",
   },
-}
+};

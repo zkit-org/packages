@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -13,18 +13,18 @@ export const useOutside = (call: () => void, refs: any) => {
 
     // biome-ignore lint/suspicious/noExplicitAny: <event>
     const handleClickOutside = (event: any) => {
-      if (!refs) return
+      if (!refs) return;
       // biome-ignore lint/suspicious/noExplicitAny: <hit>
-      const hit = refs.filter((ref: any) => !ref.current.contains(event.target))
+      const hit = refs.filter((ref: any) => !ref.current.contains(event.target));
       if (hit.length === refs.length) {
-        call()
+        call();
       }
-    }
+    };
     // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [refs, call])
-}
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [refs, call]);
+};

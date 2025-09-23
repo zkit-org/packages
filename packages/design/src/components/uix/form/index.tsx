@@ -14,19 +14,20 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import classNames from 'classnames'
-import isObject from 'lodash/isObject'
-import type { Control, FieldValues, WatchObserver } from 'react-hook-form'
+} from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import classNames from "classnames";
+import isObject from "lodash/isObject";
+import type { Control, FieldValues, WatchObserver } from "react-hook-form";
 import {
   type ControllerRenderProps,
   type DefaultValues,
   type SubmitHandler,
   type UseFormReturn,
   useForm as useFormHook,
-} from 'react-hook-form'
-import type { ZodType } from 'zod'
+} from "react-hook-form";
+import type { ZodType } from "zod";
+
 import {
   FormControl,
   FormDescription,
@@ -35,79 +36,79 @@ import {
   FormMessage,
   Form as UIForm,
   FormItem as UIFormItem,
-} from '@easykit/design/components/ui/form'
-import { cn } from '@easykit/design/lib'
+} from "@easykit/design/components/ui/form";
+import { cn } from "@easykit/design/lib";
 
 export interface RenderProps extends ControllerRenderProps {
-  placeholder?: string
+  placeholder?: string;
 }
 
 export interface FieldItem<T extends FieldValues> extends PropsWithChildren {
-  name: string
-  label?: string | ReactNode
-  description?: string
-  control?: Control<T>
-  className?: string
+  name: string;
+  label?: string | ReactNode;
+  description?: string;
+  control?: Control<T>;
+  className?: string;
 }
 
 export type FormInstance<T extends FieldValues> = UseFormReturn<T> & {
-  _setForm?: (ref: UseFormReturn<T> | null) => void
-  submit: () => void
-}
+  _setForm?: (ref: UseFormReturn<T> | null) => void;
+  submit: () => void;
+};
 
-export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> & {
-  schema?: ZodType<T>
-  defaultValues?: DefaultValues<T>
-  onSubmit?: SubmitHandler<T>
-  className?: string
-  onValuesChange?: WatchObserver<T>
-  stopPropagation?: boolean
-  form?: FormInstance<T>
-}
+export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit"> & {
+  schema?: ZodType<T>;
+  defaultValues?: DefaultValues<T>;
+  onSubmit?: SubmitHandler<T>;
+  className?: string;
+  onValuesChange?: WatchObserver<T>;
+  stopPropagation?: boolean;
+  form?: FormInstance<T>;
+};
 
 // biome-ignore lint/suspicious/noExplicitAny: <props>
 export const FormItem: FC<FieldItem<any>> = (props) => {
   const render = (field: ControllerRenderProps) => {
     if (Children.count(props.children) === 1) {
-      const ele = props.children as ReactElement
+      const ele = props.children as ReactElement;
       // biome-ignore lint/suspicious/noExplicitAny: <props>
-      const onChangeOrigin = (ele as any).props.onChange
-      const onChange = field.onChange
+      const onChangeOrigin = (ele as any).props.onChange;
+      const onChange = field.onChange;
       // biome-ignore lint/suspicious/noExplicitAny: <e>
       const onChangeWrap = (e: any) => {
-        onChange(e)
-        onChangeOrigin?.(e)
-      }
+        onChange(e);
+        onChangeOrigin?.(e);
+      };
       // biome-ignore lint/suspicious/noExplicitAny: <cloneElement>
       return cloneElement<any>(ele, {
         // biome-ignore lint/suspicious/noExplicitAny: <props>
         ...(ele as any).props,
         ...field,
         onChange: onChangeWrap,
-        value: field.value === 0 ? 0 : field.value || '', // a component is changing an uncontrolled input to be controlled
-      })
+        value: field.value === 0 ? 0 : field.value || "", // a component is changing an uncontrolled input to be controlled
+      });
     }
-    return props.children
-  }
+    return props.children;
+  };
 
   return (
     <FormField
       control={props.control}
       name={props.name}
       render={(p) => {
-        const { field } = p
+        const { field } = p;
         return (
-          <UIFormItem className={classNames('flex flex-col', props.className)}>
+          <UIFormItem className={classNames("flex flex-col", props.className)}>
             {props.label ? <FormLabel>{props.label}</FormLabel> : null}
             <FormControl>{render(field)}</FormControl>
             {props.description ? <FormDescription>{props.description}</FormDescription> : null}
             <FormMessage />
           </UIFormItem>
-        )
+        );
       }}
     />
-  )
-}
+  );
+};
 
 function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInstance<T> | undefined>) {
   const {
@@ -119,16 +120,16 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
     stopPropagation = true,
     form: formInstance,
     ...rest
-  } = props
+  } = props;
 
   const form = useFormHook<T>({
     resolver: zodResolver(schema!),
     defaultValues: defaultValues,
-  })
-  form.watch(onValuesChange!)
+  });
+  form.watch(onValuesChange!);
 
   // 使用 useRef 来保持稳定的 innerInstance 引用
-  const innerInstanceRef = useRef<FormInstance<T> | null>(null)
+  const innerInstanceRef = useRef<FormInstance<T> | null>(null);
 
   if (!innerInstanceRef.current) {
     // 创建稳定的实例引用，只创建一次
@@ -136,10 +137,10 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
       ...form,
       submit: () => {
         if (onSubmit) {
-          form.handleSubmit(onSubmit)()
+          form.handleSubmit(onSubmit)();
         }
       },
-    }
+    };
   }
 
   // 当 form 或 onSubmit 变化时，更新实例的方法，但保持引用不变
@@ -148,70 +149,70 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
       Object.assign(innerInstanceRef.current, form, {
         submit: () => {
           if (onSubmit) {
-            form.handleSubmit(onSubmit)()
+            form.handleSubmit(onSubmit)();
           }
         },
-      })
+      });
     }
-  }, [form, onSubmit])
+  }, [form, onSubmit]);
 
   useEffect(() => {
     if (formInstance?._setForm && innerInstanceRef.current) {
-      formInstance._setForm(innerInstanceRef.current)
+      formInstance._setForm(innerInstanceRef.current);
     }
-  }, [formInstance])
+  }, [formInstance]);
 
   const children = useMemo<ReactNode>(() => {
     return Children.map(props.children, (child) => {
-      if (isObject(child) && 'type' in (child as ReactElement)) {
-        const ele = child as ReactElement
+      if (isObject(child) && "type" in (child as ReactElement)) {
+        const ele = child as ReactElement;
         if (ele.type === FormItem) {
           // biome-ignore lint/suspicious/noExplicitAny: <cloneElement>
           return cloneElement<any>(ele, {
             // biome-ignore lint/suspicious/noExplicitAny: <props>
             ...(ele as any).props,
             control: form.control,
-          })
+          });
         }
       }
-      return child
-    })
-  }, [form.control, props.children])
+      return child;
+    });
+  }, [form.control, props.children]);
 
-  useImperativeHandle(ref, () => innerInstanceRef.current!, [])
+  useImperativeHandle(ref, () => innerInstanceRef.current!, []);
 
   return (
     <UIForm {...form}>
       <form
         {...rest}
-        className={cn('space-y-4', className)}
+        className={cn("space-y-4", className)}
         onSubmit={(e) => {
-          console.log('onSubmit', e)
-          stopPropagation && e.stopPropagation()
+          console.log("onSubmit", e);
+          stopPropagation && e.stopPropagation();
           if (onSubmit) {
-            form.handleSubmit(onSubmit)(e)
+            form.handleSubmit(onSubmit)(e);
           }
         }}
       >
         {children}
       </form>
     </UIForm>
-  )
+  );
 }
 
 const useForm = <T extends FieldValues = FieldValues>(): FormInstance<T> => {
   // 使用 useRef 来保持稳定的引用
-  const formRef = useRef<UseFormReturn<T> | null>(null)
-  const instanceRef = useRef<FormInstance<T> | null>(null)
+  const formRef = useRef<UseFormReturn<T> | null>(null);
+  const instanceRef = useRef<FormInstance<T> | null>(null);
 
   // 稳定的 _setForm 函数引用
   const _setForm = useCallback((form: UseFormReturn<T> | null) => {
-    formRef.current = form
+    formRef.current = form;
     if (form && instanceRef.current) {
       // 直接更新实例属性，无需强制重新渲染
-      Object.assign(instanceRef.current, form, { _setForm })
+      Object.assign(instanceRef.current, form, { _setForm });
     }
-  }, [])
+  }, []);
 
   if (!instanceRef.current) {
     // 创建稳定的实例引用
@@ -220,49 +221,49 @@ const useForm = <T extends FieldValues = FieldValues>(): FormInstance<T> => {
       submit: () => {
         // 动态获取当前的 form 实例
       },
-    } as FormInstance<T>
+    } as FormInstance<T>;
   }
 
-  return instanceRef.current
-}
+  return instanceRef.current;
+};
 
 const useWatch = <T extends FieldValues = FieldValues>(name: string, form: FormInstance<T>) => {
-  const [value, setValue] = useState<unknown>(undefined)
+  const [value, setValue] = useState<unknown>(undefined);
 
   useEffect(() => {
-    if (!form?.watch) return
+    if (!form?.watch) return;
 
     const subscription = form.watch((data) => {
-      const fieldValue = (data as Record<string, unknown>)[name]
-      setValue(fieldValue)
-    })
+      const fieldValue = (data as Record<string, unknown>)[name];
+      setValue(fieldValue);
+    });
 
     // 初始化时获取一次值
     if (form.getValues) {
       try {
-        const currentValue = form.getValues()
-        setValue((currentValue as Record<string, unknown>)[name])
+        const currentValue = form.getValues();
+        setValue((currentValue as Record<string, unknown>)[name]);
       } catch {
         // ignore error
       }
     }
 
     return () => {
-      if (subscription && typeof subscription.unsubscribe === 'function') {
-        subscription.unsubscribe()
+      if (subscription && typeof subscription.unsubscribe === "function") {
+        subscription.unsubscribe();
       }
-    }
-  }, [form, name])
+    };
+  }, [form, name]);
 
-  return value
-}
+  return value;
+};
 
 export const Form = Object.assign(
   forwardRef(FormInner) as <T extends FieldValues>(
-    props: FormProps<T> & { ref?: Ref<UseFormReturn<T> | undefined> }
+    props: FormProps<T> & { ref?: Ref<UseFormReturn<T> | undefined> },
   ) => ReactElement,
   {
     useForm,
     useWatch,
-  }
-)
+  },
+);

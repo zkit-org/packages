@@ -1,22 +1,23 @@
-import type { FC, PropsWithChildren, ReactNode } from 'react'
+import type { FC, PropsWithChildren, ReactNode } from "react";
+
 import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
   Tooltip as TooltipUI,
-} from '@easykit/design/components/ui/tooltip'
+} from "@easykit/design/components/ui/tooltip";
 
-type Side = 'top' | 'right' | 'bottom' | 'left'
+type Side = "top" | "right" | "bottom" | "left";
 
 export type TooltipProps = PropsWithChildren & {
-  content: ReactNode
-  side?: Side
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-}
+  content: ReactNode;
+  side?: Side;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+};
 
 export const Tooltip: FC<TooltipProps> = (props) => {
-  const { open, onOpenChange } = props
+  const { open, onOpenChange } = props;
   return (
     <TooltipProvider>
       <TooltipUI onOpenChange={onOpenChange} open={open}>
@@ -24,5 +25,5 @@ export const Tooltip: FC<TooltipProps> = (props) => {
         <TooltipContent side={props.side}>{props.content}</TooltipContent>
       </TooltipUI>
     </TooltipProvider>
-  )
-}
+  );
+};

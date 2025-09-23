@@ -20,7 +20,7 @@ export const Toggle = ({onChange, active = false, size = 'large'}: ToggleProps) 
   )
 
   const pinClass = cn(
-    'rounded-full pointer-events-none block transition-transform',
+    'pointer-events-none block rounded-full transition-transform',
     'bg-white dark:bg-black',
     size === 'small' && 'h-2 w-2',
     size === 'large' && 'h-4 w-4',

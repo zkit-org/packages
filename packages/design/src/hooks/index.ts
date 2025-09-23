@@ -1,2 +1,2 @@
-export * from './resize'
-export * from './use.outside' 
+export * from "./resize";
+export * from "./use.outside";

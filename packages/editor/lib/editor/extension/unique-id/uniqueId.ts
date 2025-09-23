@@ -75,7 +75,7 @@ export const UniqueId = Extension.create<UniqueIdOptions>({
         tr.setNodeAttribute(pos, 'data-node-name', node.type.name)
 
       if (!node.attrs[attributeName!])
-        tr.setNodeAttribute(pos, attributeName!, generateID!())
+        tr.setNodeAttribute(pos, attributeName!, generateID?.())
     })
 
     this.editor.view.dispatch(tr)
@@ -93,7 +93,7 @@ export const UniqueId = Extension.create<UniqueIdOptions>({
           const transform = combineTransactionSteps(oldDoc, trs as Transaction[])
 
           for (const { newRange } of getChangedRanges(transform)) {
-            const newNodes = findChildrenInRange(newDoc, newRange, (node) => types!.includes(node.type.name))
+            const newNodes = findChildrenInRange(newDoc, newRange, (node) => types?.includes(node.type.name))
 
             const newIds = newNodes.map(({ node }) => node.attrs[attributeName!]).filter((item) => !!item)
             for (const { node, pos } of newNodes) {
@@ -103,12 +103,12 @@ export const UniqueId = Extension.create<UniqueIdOptions>({
               const uniqueId = node.attrs[attributeName!]
 
               if (!uniqueId) {
-                tr.setNodeAttribute(pos, attributeName!, generateID!())
+                tr.setNodeAttribute(pos, attributeName!, generateID?.())
                 continue
               }
 
               if (tr.mapping.invert().mapResult(pos) && findDuplicates(newIds).includes(uniqueId))
-                tr.setNodeAttribute(pos, attributeName!, generateID!())
+                tr.setNodeAttribute(pos, attributeName!, generateID?.())
             }
           }
 

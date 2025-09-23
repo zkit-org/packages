@@ -25,7 +25,7 @@ export const ImageUploader = ({ onUpload, uploadImage }: UseUploaderProps) => {
   }
 
   const wrapperClass = cn(
-    'flex flex-col items-center justify-center px-8 py-10 rounded-lg bg-opacity-80',
+    'flex flex-col items-center justify-center rounded-lg bg-opacity-80 px-8 py-10',
     draggedInside && 'bg-neutral-100'
   )
 

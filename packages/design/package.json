@@ -1,6 +1,6 @@
 {
   "name": "@easykit/design",
-  "version": "0.0.151",
+  "version": "0.0.152",
   "keywords": [
     "easykit",
     "design",
@@ -16,7 +16,8 @@
     "url": "https://github.com/zkit-org/packages.git"
   },
   "scripts": {
-    "lint": "biome lint"
+    "lint": "biome lint",
+    "check": "biome check --write ./src"
   },
   "type": "module",
   "dependencies": {
@@ -80,28 +81,32 @@
       "default": "./src/index.ts"
     },
     "./components/*": {
-      "types": "./src/components/*",
-      "default": "./src/components/*"
+      "types": "./src/components/*/index.tsx",
+      "default": "./src/components/*/index.tsx"
     },
     "./components/ui/*": {
-      "types": "./src/components/ui/*",
-      "default": "./src/components/ui/*"
+      "types": "./src/components/ui/*.tsx",
+      "default": "./src/components/ui/*.tsx"
     },
     "./components/uix/*": {
-      "types": "./src/components/uix/*",
-      "default": "./src/components/uix/*"
+      "types": "./src/components/uix/*/index.tsx",
+      "default": "./src/components/uix/*/index.tsx"
     },
     "./lib/*": {
-      "types": "./src/lib/*",
-      "default": "./src/lib/*"
+      "types": "./src/lib/*.ts",
+      "default": "./src/lib/*.ts"
     },
     "./lib": {
       "types": "./src/lib/index.ts",
       "default": "./src/lib/index.ts"
     },
     "./hooks/*": {
-      "types": "./src/hooks/*",
-      "default": "./src/hooks/*"
+      "types": "./src/hooks/*.ts",
+      "default": "./src/hooks/*.ts"
+    },
+    "./hooks": {
+      "types": "./src/hooks/index.ts",
+      "default": "./src/hooks/index.ts"
     },
     "./locales/*": {
       "types": "./src/assets/locales/*",

@@ -1,7 +1,65 @@
 {
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
   "root": true,
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "useSortedClasses": {
+          "level": "info",
+          "fix": "safe",
+          "options": {
+            "attributes": ["className", "class", "classList"],
+            "functions": ["cn", "clsx", "cva", "tw", "classnames"]
+          }
+        }
+      },
+      "correctness": {
+        "noUnknownFunction": "off"
+      },
+      "suspicious": {
+        "recommended": true
+      },
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "a11y": {
+        "useFocusableInteractive": "off",
+        "useSemanticElements": "off",
+        "useAriaPropsForRole": "off",
+        "useKeyWithClickEvents": "off",
+        "noStaticElementInteractions": "off"
+      }
+    }
+  },
+  "css": {
+    "linter": {
+      "enabled": false
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
   "assist": {
+    "enabled": true,
     "actions": {
       "source": {
         "organizeImports": {
@@ -10,173 +68,20 @@
             "groups": [
               ":BUN:",
               ":NODE:",
-              ":PATH:",
+              ["npm:*", "npm:*/**"],
+              ["react"],
               ":PACKAGE_WITH_PROTOCOL:",
               ":URL:",
+              [":PACKAGE:", "!@easykit/**"],
               ":BLANK_LINE:",
-              [
-                "npm:*",
-                "npm:*/**"
-              ],
-              [
-                "react"
-              ],
-              [
-                ":PACKAGE:",
-                "!@easykit/**"
-              ],
-              [
-                "@easykit/**"
-              ],
-              [
-                ":ALIAS:",
-                "!**/*.css"
-              ],
-              [
-                "**/*.css"
-              ]
+              ["@easykit/**"],
+              [":ALIAS:", "!**/*.css"],
+              ":PATH:",
+              ["**/*.css"]
             ]
           }
         },
-        "useSortedAttributes": "on",
-        "useSortedKeys": "off"
-      }
-    }
-  },
-  "vcs": {
-    "clientKind": "git",
-    "defaultBranch": "main",
-    "enabled": true,
-    "useIgnoreFile": true
-  },
-  "css": {
-    "formatter": {
-      "enabled": true
-    },
-    "linter": {
-      "enabled": true
-    }
-  },
-  "files": {
-    "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!**/*.svg",
-      "!**/.next/**",
-      "!**/pnpm-lock.yaml",
-      "!**/node_modules/**",
-      "!**/packages/design/src/components/ui/**"
-    ]
-  },
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": true,
-    "includes": [
-      "**",
-      "!**/*/generated-new.ts",
-      "!**/*/generated-v2.ts",
-      "!**/node_modules/**",
-      "!**/packages/design/src/components/ui/**"
-    ],
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineWidth": 120
-  },
-  "javascript": {
-    "formatter": {
-      "jsxQuoteStyle": "double",
-      "quoteStyle": "single",
-      "semicolons": "asNeeded",
-      "trailingCommas": "es5"
-    }
-  },
-  "json": {
-    "formatter": {
-      "enabled": true,
-      "indentStyle": "space",
-      "indentWidth": 2,
-      "lineWidth": 120
-    },
-    "linter": {
-      "enabled": true
-    }
-  },
-  "linter": {
-    "enabled": true,
-    "domains": {
-      "next": "recommended"
-    },
-    "includes": [
-      "**",
-      "!**/node_modules/**",
-      "!**/dist/**",
-      "!**/packages/design/src/components/ui/**"
-    ],
-    "rules": {
-      "recommended": true,
-      "a11y": {
-        "noStaticElementInteractions": "off",
-        "useKeyWithClickEvents": "off"
-      },
-      "complexity": {},
-      "correctness": {
-        "noNodejsModules": "off",
-        "noUndeclaredDependencies": "off",
-        "useExhaustiveDependencies": "info",
-        "useImportExtensions": "off"
-      },
-      "nursery": {
-        "noSecrets": "off",
-        "useExplicitType": "off",
-        "useSortedClasses": {
-          "fix": "safe",
-          "level": "info",
-          "options": {
-            "attributes": [
-              "classList"
-            ],
-            "functions": [
-              "cn",
-              "clsx",
-              "cva",
-              "tw"
-            ]
-          }
-        }
-      },
-      "performance": {
-        "noBarrelFile": "off",
-        "noNamespaceImport": "off"
-      },
-      "security": {},
-      "style": {
-        "noDefaultExport": "off",
-        "noEnum": "off",
-        "noImplicitBoolean": "off",
-        "noInferrableTypes": "error",
-        "noNestedTernary": "off",
-        "noNonNullAssertion": "off",
-        "noParameterAssign": "error",
-        "noProcessEnv": "off",
-        "noUnusedTemplateLiteral": "error",
-        "noUselessElse": "error",
-        "useAsConstAssertion": "error",
-        "useBlockStatements": "off",
-        "useComponentExportOnlyModules": "off",
-        "useDefaultParameterLast": "error",
-        "useEnumInitializers": "error",
-        "useExplicitLengthCheck": "off",
-        "useNamingConvention": "off",
-        "useNumberNamespace": "error",
-        "useSelfClosingElements": "error",
-        "useSingleVarDeclarator": "error"
-      },
-      "suspicious": {
-        "noArrayIndexKey": "warn",
-        "noConsole": "off",
-        "noDuplicateObjectKeys": "error",
-        "noExplicitAny": "warn",
-        "noReactSpecificProps": "off"
+        "useSortedAttributes": "on"
       }
     }
   }
