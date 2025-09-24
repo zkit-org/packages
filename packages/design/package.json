@@ -1,6 +1,6 @@
 {
   "name": "@easykit/design",
-  "version": "0.0.153",
+  "version": "0.0.154",
   "keywords": [
     "easykit",
     "design",
@@ -16,12 +16,12 @@
     "url": "https://github.com/zkit-org/packages.git"
   },
   "scripts": {
-    "lint": "biome lint",
-    "check": "biome check --write ./src"
+    "lint": "biome lint ./src",
+    "check": "biome check --write --unsafe ./src",
+    "icon": "svgr src/assets/icons --out-dir src/components/icons --typescript --icon"
   },
   "type": "module",
   "dependencies": {
-    "@arco-iconbox/react-atom-ui": "0.0.4",
     "@emotion/react": "11.11.4",
     "@hookform/resolvers": "3.7.0",
     "@radix-ui/react-alert-dialog": "1.1.2",
@@ -91,6 +91,10 @@
     "./components/uix/*": {
       "types": "./src/components/uix/*/index.tsx",
       "default": "./src/components/uix/*/index.tsx"
+    },
+    "./components/icons": {
+      "types": "./src/components/icons/index.ts",
+      "default": "./src/components/icons/index.ts"
     },
     "./lib/*": {
       "types": "./src/lib/*.ts",

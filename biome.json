@@ -44,7 +44,8 @@
         "useSemanticElements": "off",
         "useAriaPropsForRole": "off",
         "useKeyWithClickEvents": "off",
-        "noStaticElementInteractions": "off"
+        "noStaticElementInteractions": "off",
+        "noSvgWithoutTitle": "off"
       }
     }
   },

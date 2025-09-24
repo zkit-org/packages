@@ -10,11 +10,12 @@
     "check:design": "pnpm --filter @easykit/design run check",
     "lint:editor": "pnpm --filter @easykit/editor run lint",
     "build:playground": "pnpm --filter @easykit/playground run build",
-    "build:editor": "pnpm --filter @easykit/editor run build"
+    "build:editor": "pnpm --filter @easykit/editor run build",
+    "icon:design": "pnpm --filter @easykit/design run icon"
   },
   "dependencies": {
-    "@easykit/design": "workspace:*",
     "@arco-iconbox/react-clover": "0.0.28",
+    "@easykit/design": "workspace:*",
     "@radix-ui/react-checkbox": "1.1.1",
     "@radix-ui/react-icons": "1.3.0",
     "@radix-ui/react-popper": "^1.2.0",
@@ -60,6 +61,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
+    "@svgr/cli": "^8.1.0",
     "@types/gulp": "4.0.17",
     "@types/lodash": "4.17.6",
     "@types/node": "20.14.9",

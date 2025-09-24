@@ -1,6 +1,6 @@
 'use client';
 
-import {Button, Input, Loading} from "@easykit/design";
+import { Button, Empty, Input, Loading } from "@easykit/design";
 
 export default function Home() {
   return (
@@ -11,7 +11,8 @@ export default function Home() {
         </Button>
         <Input />
         <div className="h-8 w-8 bg-destructive" />
+        <Empty />
       </Loading>
     </div>
-  )
+  );
 }

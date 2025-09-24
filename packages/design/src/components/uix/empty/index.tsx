@@ -1,8 +1,8 @@
 import { type FC, type ReactNode, useContext } from "react";
-import { IconEmpty } from "@arco-iconbox/react-atom-ui";
 import classNames from "classnames";
 import get from "lodash/get";
 
+import { Empty as IconEmpty } from "@easykit/design/components/icons";
 import { UIXContext } from "@easykit/design/components/uix/config-provider";
 
 export type EmptyProps = {
@@ -21,13 +21,7 @@ export const Empty: FC<EmptyProps> = (props) => {
   return (
     <div className={classNames("flex flex-col items-center justify-center p-4", className)}>
       <div className={iconClassName}>
-        {props.icon || (
-          <IconEmpty
-            className="text-6xl text-muted-foreground opacity-60"
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          />
-        )}
+        {props.icon || <IconEmpty className="text-6xl text-muted-foreground opacity-60" />}
       </div>
       <div className={classNames("text-secondary-foreground/70 text-xs", textClassName)}>{text}</div>
     </div>
