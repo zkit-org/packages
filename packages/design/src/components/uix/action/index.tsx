@@ -15,7 +15,7 @@ export const Action: FC<ActionProps> = (props) => {
     ...rest,
     disabled,
     className: classNames(
-      "p-2 flex justify-center items-center rounded-sm border border-transparent border-solid",
+      "p-2 flex justify-center items-center rounded-sm border border-transparent border-solid focus-visible:outline-none",
       theme === "light" && "hover:bg-white/20",
       theme === "light" && "focus:bg-white/30 focus:border-white/30",
       theme === "light" && "active:bg-white/30 active:border-white/30",
