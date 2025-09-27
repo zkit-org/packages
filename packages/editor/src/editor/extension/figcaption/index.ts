@@ -1,0 +1,1 @@
+export { Figcaption } from "./Figcaption";

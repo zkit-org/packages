@@ -17,12 +17,8 @@
     "url": "https://github.com/zkit-org/packages.git"
   },
   "scripts": {
-    "dev": "next dev -p 4001 --turbopack",
-    "build": "tsc && vite build",
-    "build:next": "next build",
-    "start": "next start",
-    "lint:next": "next lint",
-    "lint": "biome lint"
+    "lint": "biome lint ./src",
+    "format": "biome format --write ./src"
   },
   "type": "module",
   "dependencies": {
@@ -75,35 +71,33 @@
     "tailwind-merge": "2.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.4",
     "@types/uuid": "10.0.0"
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./locales/zh-cn": {
-      "types": "./dist/locales/zh-cn.d.ts",
-      "default": "./dist/locales/zh-cn.js"
+      "types": "./src/locales/zh-cn.ts",
+      "default": "./src/locales/zh-cn.ts"
     },
     "./locales/zh-tw": {
-      "types": "./dist/locales/zh-tw.d.ts",
-      "default": "./dist/locales/zh-tw.js"
+      "types": "./src/locales/zh-tw.ts",
+      "default": "./src/locales/zh-tw.ts"
     },
     "./locales/en-us": {
-      "types": "./dist/locales/en-us.d.ts",
-      "default": "./dist/locales/en-us.js"
-    },
-    "./style.css": "./dist/style.css"
+      "types": "./src/locales/en-us.ts",
+      "default": "./src/locales/en-us.ts"
+    }
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "/dist",
+    "/src",
     "package.json",
     "README.md"
   ]

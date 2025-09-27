@@ -1,0 +1,626 @@
+@import "../globals.css";
+
+.ProseMirror {
+  --margin-y: 1rem;
+  @apply selection:bg-muted;
+}
+
+/** 图片上传 start **/
+.ProseMirror .node-imageUpload {
+  transition: border 0.16s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  @apply rounded-lg border-2 border-dotted border-foreground/20;
+  @apply hover:border-foreground/40;
+}
+
+.ProseMirror .node-imageUpload.has-focus,
+.ProseMirror .node-imageUpload:has(.is-active) {
+  @apply border-foreground/50;
+}
+
+/** 图片上传 end **/
+
+/* 引用 start */
+.ProseMirror figure[data-type="blockquoteFigure"] {
+  @apply my-[var(--margin-y)] text-secondary-foreground;
+}
+
+.ProseMirror > blockquote blockquote,
+.ProseMirror [data-type="blockquoteFigure"] blockquote {
+  @apply m-0;
+}
+
+.ProseMirror > blockquote blockquote > :first-child,
+.ProseMirror [data-type="blockquoteFigure"] blockquote > :first-child {
+  @apply mt-0;
+}
+
+.ProseMirror > blockquote blockquote > :last-child,
+.ProseMirror [data-type="blockquoteFigure"] blockquote > :last-child {
+  @apply mb-0;
+}
+
+.ProseMirror [data-type="blockquoteFigure"] > div {
+  @apply border-0 border-l-4 border-primary px-4 py-2;
+}
+
+.ProseMirror [data-type="blockquoteFigure"] > blockquote {
+  @apply text-lg leading-7;
+}
+
+.ProseMirror [data-type="blockquoteFigure"] figcaption {
+  @apply mt-2 overflow-hidden text-xs text-right text-secondary-foreground/50;
+}
+
+/* 引用 end */
+
+/* columns start */
+.ProseMirror [data-type="columns"] {
+  margin-top: 3.5rem;
+  margin-bottom: 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.ProseMirror [data-type="columns"].layout-sidebar-left {
+  grid-template-columns: 40fr 60fr;
+}
+
+.ProseMirror [data-type="columns"].layout-sidebar-right {
+  grid-template-columns: 60fr 40fr;
+}
+
+.ProseMirror [data-type="columns"].layout-two-column {
+  grid-template-columns: 1fr 1fr;
+}
+
+.ProseMirror [data-type="column"] {
+  overflow: auto;
+}
+
+/* columns end */
+
+/* 代码块，代码段 start */
+.ProseMirror code {
+  @apply rounded-sm caret-white bg-black/80 text-white shadow-sm px-1 py-0.5 selection:bg-white/20;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+}
+
+.ProseMirror pre {
+  @apply my-[var(--margin-y)] rounded-lg border border-black/10 bg-black/80 p-4 text-white caret-white;
+}
+
+.ProseMirror pre code {
+  @apply bg-transparent p-0 text-inherit shadow-none;
+}
+
+.ProseMirror pre .hljs-comment,
+.ProseMirror pre .hljs-quote {
+  @apply text-[rgb(163,163,163)];
+}
+
+.ProseMirror pre .hljs-attribute,
+.ProseMirror pre .hljs-link,
+.ProseMirror pre .hljs-name,
+.ProseMirror pre .hljs-regexp,
+.ProseMirror pre .hljs-selector-class,
+.ProseMirror pre .hljs-selector-id,
+.ProseMirror pre .hljs-tag,
+.ProseMirror pre .hljs-template-variable,
+.ProseMirror pre .hljs-variable {
+  @apply text-[rgb(252,165,165)];
+}
+
+.ProseMirror pre .hljs-built_in,
+.ProseMirror pre .hljs-builtin-name,
+.ProseMirror pre .hljs-literal,
+.ProseMirror pre .hljs-meta,
+.ProseMirror pre .hljs-number,
+.ProseMirror pre .hljs-params,
+.ProseMirror pre .hljs-type {
+  @apply text-[rgb(253,186,116)];
+}
+
+.ProseMirror pre .hljs-bullet,
+.ProseMirror pre .hljs-string,
+.ProseMirror pre .hljs-symbol {
+  @apply text-[rgb(190,242,100)];
+}
+
+.ProseMirror pre .hljs-section,
+.ProseMirror pre .hljs-title {
+  @apply text-[rgb(253,224,71)];
+}
+
+.ProseMirror pre .hljs-keyword,
+.ProseMirror pre .hljs-selector-tag {
+  @apply text-[rgb(94,234,212)];
+}
+
+.ProseMirror pre .hljs-emphasis {
+  font-style: italic;
+}
+
+.ProseMirror pre .hljs-strong {
+  font-weight: 700;
+}
+
+/* 代码块，代码段 end */
+
+.ProseMirror .collaboration-cursor__caret {
+  pointer-events: none;
+  position: relative;
+  margin-left: -1px;
+  margin-right: -1px;
+  overflow-wrap: normal;
+  word-break: normal;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.ProseMirror .collaboration-cursor__label {
+  position: absolute;
+  left: -1px;
+  top: -1.4em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  @apply rounded-md rounded-tl-none leading-4 font-semibold text-black;
+}
+
+/* 列表 start */
+.ProseMirror ol {
+  list-style-type: decimal;
+}
+
+.ProseMirror ul {
+  list-style-type: disc;
+}
+
+.ProseMirror ol,
+.ProseMirror ul {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0 2rem;
+}
+
+.ProseMirror ol:first-child,
+.ProseMirror ul:first-child {
+  margin-top: 0;
+}
+
+.ProseMirror ol:last-child,
+.ProseMirror ul:last-child {
+  margin-bottom: 0;
+}
+
+.ProseMirror ol li,
+.ProseMirror ol ol,
+.ProseMirror ol ul,
+.ProseMirror ul li,
+.ProseMirror ul ol,
+.ProseMirror ul ul {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.ProseMirror > ol,
+.ProseMirror > ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ProseMirror > ol:first-child,
+.ProseMirror > ul:first-child {
+  margin-top: 0;
+}
+
+.ProseMirror > ol:last-child,
+.ProseMirror > ul:last-child {
+  margin-bottom: 0;
+}
+
+.ProseMirror ul[data-type="taskList"] {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ProseMirror ul[data-type="taskList"] p {
+  margin: 0;
+}
+
+.ProseMirror ul[data-type="taskList"] li {
+  display: flex;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label {
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
+  flex: 1 1 auto;
+  flex-shrink: 0;
+  flex-grow: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.ProseMirror ul[data-type="taskList"] li > div {
+  flex: 1 1 auto;
+}
+
+.ProseMirror ul[data-type="taskList"] li[data-checked="true"] {
+  text-decoration-line: line-through;
+}
+
+/* 列表 end */
+
+/* 空 start */
+.ProseMirror .is-empty:before {
+  pointer-events: none;
+  float: left;
+  height: 0;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* 空 end */
+
+/**  表格 start  **/
+/* .ProseMirror .tableWrapper {} */
+
+.ProseMirror table {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.25rem;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  @apply border;
+  position: relative;
+  min-width: 100px;
+  border-width: 1px;
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.ProseMirror table td:first-of-type:not(a),
+.ProseMirror table th:first-of-type:not(a) {
+  margin-top: 0;
+}
+
+.ProseMirror table td p,
+.ProseMirror table th p {
+  margin: 0;
+}
+
+.ProseMirror table td p + p,
+.ProseMirror table th p + p {
+  margin-top: 0.75rem;
+}
+
+.ProseMirror table th {
+  font-weight: 700;
+}
+
+.ProseMirror table .column-resize-handle {
+  pointer-events: none;
+  position: absolute;
+  bottom: -2px;
+  right: -0.25rem;
+  top: 0;
+  display: flex;
+  width: 0.5rem;
+}
+
+.ProseMirror table .column-resize-handle:before {
+  margin-left: 0.5rem;
+  height: 100%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ProseMirror table .column-resize-handle:before {
+  content: "";
+}
+
+.ProseMirror table .selectedCell {
+  @apply border bg-muted/30;
+  border-style: double;
+}
+
+.ProseMirror table .grip-column,
+.ProseMirror table .grip-row {
+  @apply bg-muted/50;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.ProseMirror table .grip-column {
+  @apply border-l border-b;
+  left: 0;
+  top: -0.75rem;
+  margin-left: -1px;
+  height: 0.75rem;
+  width: calc(100% + 1px);
+}
+
+.ProseMirror table .grip-column.selected:before,
+.ProseMirror table .grip-column:hover:before {
+  content: "";
+  width: 0.625rem;
+}
+
+.ProseMirror table .grip-column:hover {
+  @apply bg-muted;
+}
+
+.ProseMirror table .grip-column:hover:before {
+  @apply border-b-2 border-dotted border-foreground/40;
+}
+
+.ProseMirror table .grip-column.last {
+  border-top-right-radius: 0.125rem;
+}
+
+.ProseMirror table .grip-column.selected {
+  @apply shadow-sm border-border;
+}
+
+.ProseMirror table .grip-column.selected:before {
+  @apply border-b-2 border-dotted border-foreground/60;
+}
+
+.ProseMirror table .grip-column.first {
+  @apply border-l-transparent;
+  border-top-left-radius: 0.125rem;
+}
+
+.ProseMirror table .grip-row {
+  @apply border-t border-r;
+  left: -0.75rem;
+  top: 0;
+  margin-top: -1px;
+  height: calc(100% + 1px);
+  width: 0.75rem;
+}
+
+.ProseMirror table .grip-row.selected:before,
+.ProseMirror table .grip-row:hover:before {
+  height: 0.625rem;
+  content: "";
+}
+
+.ProseMirror table .grip-row:hover {
+  @apply bg-muted;
+}
+
+.ProseMirror table .grip-row:hover:before {
+  @apply border-l-2 border-dotted border-foreground/40;
+}
+
+.ProseMirror table .grip-row.selected {
+  @apply shadow-sm border-border;
+}
+
+.ProseMirror table .grip-row.selected:before {
+  @apply border-l-2 border-dotted border-foreground/60;
+}
+
+.ProseMirror table .grip-row.first {
+  @apply border-t-transparent;
+  border-top-left-radius: 0.125rem;
+}
+
+.ProseMirror table .grip-row.last {
+  border-bottom-left-radius: 0.125rem;
+}
+
+/**  表格 end  **/
+
+/**  普通段落 start  **/
+.ProseMirror p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.625;
+}
+
+.ProseMirror p:first-child {
+  margin-top: 0;
+}
+
+.ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
+/**  普通段落 end  **/
+
+.ProseMirror ol p,
+.ProseMirror ul p {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+/**  标题 start  **/
+.ProseMirror h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.ProseMirror h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.ProseMirror h4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.ProseMirror h5 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.ProseMirror h6 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  font-weight: 700;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/**  标题 end  **/
+
+.ProseMirror a.link {
+  @apply text-primary font-bold;
+}
+
+.ProseMirror mark {
+  border-radius: 0.125rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.25rem 0;
+  color: inherit;
+}
+
+.ProseMirror img {
+  height: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.ProseMirror [data-type="horizontalRule"] {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition-property: all;
+  transition-duration: 0.1s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-duration: 0.1s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ProseMirror [data-type="horizontalRule"]:first-child {
+  margin-top: 0;
+}
+
+.ProseMirror [data-type="horizontalRule"].ProseMirror-selectednode {
+  @apply bg-muted;
+}
+
+.ProseMirror [data-type="horizontalRule"].ProseMirror-selectednode hr {
+  @apply border-t border-foreground/50;
+}
+
+.ProseMirror
+  [data-type="horizontalRule"]:hover:not(.ProseMirror [data-type="horizontalRule"].ProseMirror-selectednode) {
+  @apply bg-muted/60;
+}
+
+.ProseMirror [data-type="horizontalRule"] hr {
+  @apply border-t border-foreground/30;
+}
+
+.ProseMirror {
+  z-index: 0;
+  caret-color: #000;
+  outline-width: 0;
+}
+
+.ProseMirror > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ProseMirror .selection {
+  display: inline;
+}
+
+.ProseMirror > .react-renderer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ProseMirror > .react-renderer:first-child {
+  margin-top: 0;
+}
+
+.ProseMirror > .react-renderer:last-child {
+  margin-bottom: 0;
+}
+
+.ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+.ProseMirror .ProseMirror-gapcursor {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 42rem;
+}
+
+.ProseMirror .ProseMirror-gapcursor:after {
+  top: -1.5em;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 42rem;
+  border-top-color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="slash-command"] {
+  width: 1000vw;
+}

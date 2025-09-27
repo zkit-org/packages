@@ -17,7 +17,7 @@
   },
   "scripts": {
     "lint": "biome lint ./src",
-    "check": "biome check --write --unsafe ./src",
+    "format": "biome format --write ./src",
     "icon": "svgr src/assets/icons --out-dir src/components/icons --typescript --icon"
   },
   "type": "module",

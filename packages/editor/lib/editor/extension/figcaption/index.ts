@@ -1,1 +1,0 @@
-export { Figcaption } from './Figcaption'

@@ -3,13 +3,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      // "@/*": ["./src/*"],
-      // "@easykit/editor": ["./lib/index.ts"]
+      "@/*": ["./src/*"],
+      "@/lib/*": ["./src/lib/*"]
     },
     "jsx": "preserve",
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

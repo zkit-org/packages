@@ -1,0 +1,46 @@
+@import "../globals.css";
+
+.editor-container {
+  @apply w-full relative;
+}
+.editor-container .readonly {
+  .ProseMirror
+    [data-type="horizontalRule"]:hover:not(.ProseMirror [data-type="horizontalRule"].ProseMirror-selectednode) {
+    @apply bg-transparent cursor-default;
+  }
+}
+
+.editor-container .editor .tiptap {
+  @apply outline-none pt-[1px] -mt-[1px] caret-foreground;
+  p.is-empty::before {
+    color: var(--muted-foreground);
+    opacity: 0.5;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  blockquote.is-empty:before {
+    color: var(--muted-foreground);
+    opacity: 0.5;
+    content: attr(data-placeholder);
+  }
+
+  blockquote + figcaption.is-empty:before {
+    color: var(--muted-foreground);
+    opacity: 0.5;
+    content: attr(data-placeholder);
+  }
+
+  td,
+  li {
+    p.is-empty::before {
+      content: none;
+    }
+  }
+
+  p {
+    @apply leading-7;
+  }
+}

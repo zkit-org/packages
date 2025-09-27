@@ -1,0 +1,1 @@
+export { QuoteCaption } from "./QuoteCaption";
