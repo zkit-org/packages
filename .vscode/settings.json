@@ -39,7 +39,8 @@
     "encryptor",
     "nuqs",
     "dhtmlx",
-    "qriter"
+    "qriter",
+    "Authub"
   ],
   "css.customData": ["${workspaceFolder}/.vscode/tailwind.json"],
   "css.validate": false,

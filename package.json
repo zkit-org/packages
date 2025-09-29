@@ -5,12 +5,15 @@
   "scripts": {
     "dev:design": "pnpm --filter @easykit/design-app run dev",
     "dev:editor": "pnpm --filter @easykit/editor-app run dev",
+    "dev:authub": "pnpm --filter @easykit/authub run dev",
     "lint:design": "pnpm --filter @easykit/design run lint",
     "lint:editor": "pnpm --filter @easykit/editor run lint",
+    "lint:authub": "pnpm --filter @easykit/authub run lint",
     "format:design": "pnpm --filter @easykit/design run format",
     "format:editor": "pnpm --filter @easykit/editor run format",
     "build:design": "pnpm --filter @easykit/design-app run build",
     "build:editor": "pnpm --filter @easykit/editor-app run build",
+    "build:authub": "pnpm --filter @easykit/authub run build",
     "icon:design": "pnpm --filter @easykit/design run icon"
   },
   "dependencies": {

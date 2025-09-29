@@ -1,0 +1,31 @@
+{
+  "name": "@easykit/authub",
+  "version": "0.0.1",
+  "keywords": [
+    "easykit",
+    "authub",
+    "tailwindcss",
+    "react"
+  ],
+  "description": "Easy kit authub",
+  "author": "Grant <284885069@qq.com>",
+  "homepage": "https://github.com/zkit-org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zkit-org/packages.git"
+  },
+  "scripts": {
+    "dev": "next dev -p 4002 --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome lint"
+  },
+  "type": "module",
+  "dependencies": {
+    "next-themes": "0.4.4",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
+  }
+}
