@@ -1,0 +1,81 @@
+@import "@easykit/design/theme.css";
+
+@source "../../../../../node_modules/@easykit/design/**/*.{ts,tsx,css}";
+@source "../../../../../node_modules/@easykit/editor/**/*.{ts,tsx,css}";
+
+@theme {
+  --primary: #172FCA;
+
+  --width-input-xl: 45rem;
+  --width-input-lg: 35rem;
+  --width-input-md: 25rem;
+  --width-input-sm: 20rem;
+  --width-input-xs: 15rem;
+
+  --spacing-2xs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 1.75rem;
+  --spacing-3xl: 2rem;
+  --spacing-4xl: 2.25rem;
+  --spacing-5xl: 2.5rem;
+  --spacing-6xl: 3rem;
+  --spacing-7xl: 3.5rem;
+
+  --width-3xs: var(--container-3xs);
+  --width-2xs: var(--container-2xs);
+  --width-xs: var(--container-xs);
+  --width-sm: var(--container-sm);
+  --width-md: var(--container-md);
+  --width-lg: var(--container-lg);
+  --width-xl: var(--container-xl);
+  --width-2xl: var(--container-2xl);
+  --width-3xl: var(--container-3xl);
+  --width-4xl: var(--container-4xl);
+  --width-5xl: var(--container-5xl);
+  --width-6xl: var(--container-6xl);
+  --width-7xl: var(--container-7xl);
+
+  --min-width-3xs: var(--container-3xs);
+  --min-width-2xs: var(--container-2xs);
+  --min-width-xs: var(--container-xs);
+  --min-width-sm: var(--container-sm);
+  --min-width-md: var(--container-md);
+  --min-width-lg: var(--container-lg);
+  --min-width-xl: var(--container-xl);
+  --min-width-2xl: var(--container-2xl);
+  --min-width-3xl: var(--container-3xl);
+  --min-width-4xl: var(--container-4xl);
+  --min-width-5xl: var(--container-5xl);
+  --min-width-6xl: var(--container-6xl);
+  --min-width-7xl: var(--container-7xl);
+
+  --max-width-3xs: var(--container-3xs);
+  --max-width-2xs: var(--container-2xs);
+  --max-width-xs: var(--container-xs);
+  --max-width-sm: var(--container-sm);
+  --max-width-md: var(--container-md);
+  --max-width-lg: var(--container-lg);
+  --max-width-xl: var(--container-xl);
+  --max-width-2xl: var(--container-2xl);
+  --max-width-3xl: var(--container-3xl);
+  --max-width-4xl: var(--container-4xl);
+  --max-width-5xl: var(--container-5xl);
+  --max-width-6xl: var(--container-6xl);
+  --max-width-7xl: var(--container-7xl);
+
+  --container-max: 90rem;
+}
+
+@utility container {
+	margin-inline: auto;
+	padding-inline: 1rem;
+	max-width: var(--container-max) !important;
+}
+
+@utility link {
+	@apply text-primary/95 hover:text-primary hover:underline underline-offset-2;
+}

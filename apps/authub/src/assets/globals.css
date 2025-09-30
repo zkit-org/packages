@@ -1,4 +1,0 @@
-@import "@easykit/design/theme.css";
-
-@source "../../../../node_modules/@easykit/design/**/*.{ts,tsx,css}";
-@source "../../../../node_modules/@easykit/editor/**/*.{ts,tsx,css}";

@@ -1,18 +1,28 @@
 "use client";
-import type { FC, PropsWithChildren } from "react";
-import { ThemeProvider } from "next-themes";
 
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import { type FC, type PropsWithChildren, useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { useRouter } from "next/navigation";
+
+import { isLoginState } from "@/state/public";
+import { LoadingLayout } from "../loading";
 
 export const MainLayout: FC<PropsWithChildren> = (props) => {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange enableSystem>
-      <div>
-        <div className="flex items-center justify-end p-4">
-          <ThemeSwitcher />
-        </div>
-        <div>{props.children}</div>
-      </div>
-    </ThemeProvider>
+  const isLogin = useAtomValue(isLoginState);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLogin) {
+      router.push("/login");
+    }
+  }, [isLogin]);
+
+  return !isLogin ? (
+    <LoadingLayout />
+  ) : (
+    <div>
+      <div>main layout</div>
+      <div>{props.children}</div>
+    </div>
   );
 };
