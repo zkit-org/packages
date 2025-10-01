@@ -8,6 +8,7 @@ import "@/plugin/locales";
 import "@/assets/style/index.css";
 
 import { profile } from "@/rest/auth";
+import { common } from "@/rest/config";
 import { getLocale } from "@/utils/locale.server";
 import { getTheme } from "@/utils/theme.server";
 
@@ -28,17 +29,19 @@ const loadInitialData = async () => {
   const locale = await getLocale();
   const theme = await getTheme();
   const { success, data } = await profile();
+  const { success: configSuccess, data: config } = await common();
   const profileData = success ? data : null;
-  const initialData = { locale, theme, profileData, isLogin: success ?? false };
+  const configData = configSuccess ? config : null;
+  const initialData = { locale, theme, profileData, isLogin: success ?? false, configData };
   return initialData;
 };
 
 const Layout: FC<LayoutProps> = async (props) => {
   const initialData = await loadInitialData();
-  const { locale, theme, profileData, isLogin } = initialData;
+  const { locale, theme, profileData, isLogin, configData } = initialData;
   return (
     <HTMLLayout>
-      <RootLayout isLogin={isLogin} locale={locale} profile={profileData ?? null} theme={theme}>
+      <RootLayout config={configData} isLogin={isLogin} locale={locale} profile={profileData ?? null} theme={theme}>
         {props.children}
       </RootLayout>
     </HTMLLayout>

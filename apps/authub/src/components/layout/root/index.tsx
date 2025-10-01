@@ -22,16 +22,20 @@ import { getQueryClient } from "@/utils/query";
 import "@/plugin/locales";
 import { Provider } from "jotai";
 
+import { commonConfigState } from "@/state/config";
 import { isLoginState, localeState, profileState } from "@/state/public";
 import type { Profile } from "@/types/account";
+import type { CommonConfig } from "@/types/config";
 
 export type RootLayoutProps = PropsWithChildren<{
   locale: string;
   theme: string;
   isLogin: boolean;
   profile: Profile | null;
+  config?: CommonConfig | null;
 }>;
 
+// biome-ignore lint/suspicious/noExplicitAny: <AtomValues>
 export type AtomValues = Iterable<readonly [WritableAtom<unknown, [any], unknown>, unknown]>;
 
 export type AtomsHydrateProps = {
@@ -57,7 +61,7 @@ export const ThemeSyncProvider = ({ children }: PropsWithChildren) => {
 };
 
 export const RootLayout: FC<RootLayoutProps> = (props) => {
-  const { locale, theme, children, isLogin, profile } = props;
+  const { locale, theme, children, isLogin, profile, config } = props;
 
   i18next.changeLanguage(locale);
   const queryClient = getQueryClient();
@@ -72,6 +76,7 @@ export const RootLayout: FC<RootLayoutProps> = (props) => {
           [localeState, locale],
           [isLoginState, isLogin],
           [profileState, profile],
+          [commonConfigState, config],
         ]}
       >
         <NuqsAdapter>

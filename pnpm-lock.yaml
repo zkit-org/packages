@@ -29,7 +29,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-clover':
         specifier: 0.0.28
-        version: 0.0.28
+        version: 0.0.28(react@19.1.0)
       '@easykit/design':
         specifier: workspace:*
         version: link:packages/design
@@ -256,6 +256,9 @@ importers:
       js-cookie:
         specifier: 3.0.5
         version: 3.0.5
+      jsencrypt:
+        specifier: ^3.3.2
+        version: 3.5.4
       next-themes:
         specifier: 0.4.4
         version: 0.4.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -617,6 +620,8 @@ packages:
 
   '@arco-iconbox/react-clover@0.0.28':
     resolution: {integrity: sha512-JZHx/deixnALfrDyOkSPPbOoicSRmZ4o+jmLEbkFxRARRlFRbXzEbq/ktkO6HoNnsp5iS8re+Gsogd5G4NuETA==}
+    peerDependencies:
+      react: 19.1.0
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -4021,6 +4026,9 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
+  jsencrypt@3.5.4:
+    resolution: {integrity: sha512-kNjfYEMNASxrDGsmcSQh/rUTmcoRfSUkxnAz+MMywM8jtGu+fFEZ3nJjHM58zscVnwR0fYmG9sGkTDjqUdpiwA==}
+
   jsesc@3.1.0:
     resolution: {integrity: sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==}
     engines: {node: '>=6'}
@@ -5665,7 +5673,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
 
-  '@arco-iconbox/react-clover@0.0.28': {}
+  '@arco-iconbox/react-clover@0.0.28(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -9057,6 +9067,8 @@ snapshots:
   js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
+
+  jsencrypt@3.5.4: {}
 
   jsesc@3.1.0: {}
 

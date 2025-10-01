@@ -187,7 +187,6 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
         {...rest}
         className={cn("space-y-4", className)}
         onSubmit={(e) => {
-          console.log("onSubmit", e);
           stopPropagation && e.stopPropagation();
           if (onSubmit) {
             form.handleSubmit(onSubmit)(e);

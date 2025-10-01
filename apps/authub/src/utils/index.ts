@@ -1,3 +1,5 @@
+import { EMAIL } from "./regular";
+
 const isProd = process.env.NODE_ENV === "production";
 
 export const isServer = typeof window === "undefined";
@@ -20,3 +22,7 @@ export function isMobile() {
   if (isServer) return false;
   return !!window.navigator.userAgent.match(mobileRegex);
 }
+
+export const isEmail = (text: string) => {
+  return EMAIL.test(text);
+};
