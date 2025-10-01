@@ -30,17 +30,6 @@ export const LoginLayout: FC<PropsWithChildren> = (props) => {
         <div className="flex flex-col items-center justify-center gap-3xl [&>div]:w-full">
           <div className="font-bold text-3xl">Authub</div>
           <div>{props.children}</div>
-          <Divider className="my-0" orientation="center">
-            {t("第三方快捷登录")}
-          </Divider>
-          <div className="flex flex-col gap-sm">
-            <Button long variant="outline">
-              {t("微信登录")}
-            </Button>
-            <Button long variant="outline">
-              {t("Google 登录")}
-            </Button>
-          </div>
         </div>
       </div>
     </div>

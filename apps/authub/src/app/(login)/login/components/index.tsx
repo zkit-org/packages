@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-import { Button, Form, FormItem, Input } from "@easykit/design";
+import { Button, Divider, Form, FormItem, Input } from "@easykit/design";
 import { type LoginFormData, useSchema } from "@/schema/login";
 
 export const LoginPage = () => {
@@ -17,7 +17,7 @@ export const LoginPage = () => {
   }, []);
 
   return (
-    <div className="w-[360px]">
+    <div className="flex w-[360px] flex-col gap-md">
       <Form<LoginFormData> form={form} onSubmit={onSubmit} schema={schema}>
         <FormItem label={t("用户名")} name="username">
           <Input placeholder={t("请输入用户名")} />
@@ -35,6 +35,17 @@ export const LoginPage = () => {
           </Link>
         </div>
       </Form>
+      <Divider className="my-0" orientation="center">
+        {t("第三方快捷登录")}
+      </Divider>
+      <div className="flex flex-col gap-sm">
+        <Button long variant="outline">
+          {t("微信登录")}
+        </Button>
+        <Button long variant="outline">
+          {t("Google 登录")}
+        </Button>
+      </div>
     </div>
   );
 };
