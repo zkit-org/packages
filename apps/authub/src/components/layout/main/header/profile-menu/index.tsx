@@ -52,11 +52,10 @@ export const ProfileMenu: FC<ProfileMenuProps> = (props) => {
       <DropdownMenuContent align="end" className="z-100 w-64 p-0">
         <AccountInfo />
         <DropdownMenuSeparator />
-        <Link href={`/profile`} rel="noopener noreferrer" target="_blank">
+        <Link href={`/profile`}>
           <DropdownMenuItem>{t("个人资料")}</DropdownMenuItem>
         </Link>
         {extra}
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={exit}>{t("退出")}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

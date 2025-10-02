@@ -6,5 +6,5 @@ export type User = {
 };
 
 export type Profile = User & {
-  authorities: string[]
-}
+  authorities: string[];
+};

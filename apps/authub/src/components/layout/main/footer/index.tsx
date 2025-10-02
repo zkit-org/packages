@@ -22,7 +22,7 @@ export const Footer: FC<FooterProps> = (props) => {
     <div
       className={classNames(
         "container flex flex-col items-center justify-center pb-lg",
-        border ? "border-white border-t pt-lg dark:border-secondary" : "border-transparent",
+        border ? "border-t pt-lg dark:border-secondary dark:border-white/10" : "border-transparent",
         className,
       )}
     >
@@ -30,9 +30,9 @@ export const Footer: FC<FooterProps> = (props) => {
         <div className="flex flex-1 items-center justify-start space-x-lg">
           <div>© 2025 {t("Authub")}</div>
           <div className="flex items-center justify-start space-x-sm">
-            <GithubIcon className="text-2xl text-secondary-foreground/50" />
+            <GithubIcon className="text-2xl text-secondary-foreground/70" fill="currentColor" />
             <Separator className="h-4" orientation="vertical" />
-            <XIcon className="text-secondary-foreground/50 text-xl" />
+            <XIcon className="text-secondary-foreground/70 text-xl" fill="currentColor" />
           </div>
         </div>
         <div className="flex space-x-sm">
