@@ -79,3 +79,45 @@
 @utility link {
 	@apply text-primary/95 hover:text-primary hover:underline underline-offset-2;
 }
+
+@layer base {
+	:root {
+		--login-footer-height: 3rem;
+		--layout-header-height: 4rem;
+	}
+	
+	html p a {
+		@apply link;
+	}
+
+	/* View Transition API 主题切换动画样式 */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		height: 100vh;
+		animation: none;
+		mix-blend-mode: normal;
+		pointer-events: none;
+	}
+
+	/* 暗色主题切换时的层级控制 */
+	html.dark::view-transition-old(root) {
+		z-index: 10;
+	}
+
+	html.dark::view-transition-new(root) {
+		z-index: 1;
+	}
+
+	/* 亮色主题切换时的层级控制 */
+	html:not(.dark)::view-transition-old(root) {
+		z-index: 1;
+	}
+
+	html:not(.dark)::view-transition-new(root) {
+		z-index: 10;
+	}
+}
+
