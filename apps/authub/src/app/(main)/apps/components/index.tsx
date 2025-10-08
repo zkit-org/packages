@@ -2,7 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 
-import { ProfileBreadcrumb } from "@/components/common/breadcrumb/profile";
+import { AppsBreadcrumb } from "@/components/common/breadcrumb/apps";
 import { Coming } from "@/components/common/coming";
 import { MainPage } from "@/components/common/page";
 import { PageHeader } from "@/components/common/page/header";
@@ -10,16 +10,16 @@ import { TitleBar } from "@/components/common/page/title-bar";
 import { useLayoutConfig } from "@/components/layout/hooks";
 import type { MainLayoutProps } from "@/components/layout/main";
 
-export const Profile = () => {
+export const AppsPage = () => {
   useLayoutConfig<MainLayoutProps>({
-    active: "profile",
+    active: "apps",
   });
   const { t } = useTranslation();
-  const title = t("个人资料");
+  const title = t("应用");
   return (
     <MainPage>
       <PageHeader>
-        <ProfileBreadcrumb />
+        <AppsBreadcrumb />
         <TitleBar title={title} />
       </PageHeader>
       <Coming />

@@ -15,7 +15,7 @@ import {
   Skeleton,
   time,
 } from "@easykit/design";
-import { ProfileBreadcrumbBase } from "@/components/common/breadcrumb/profile";
+import { ProfileBreadcrumb } from "@/components/common/breadcrumb/profile";
 import { MainPage } from "@/components/common/page";
 import { PageHeader } from "@/components/common/page/header";
 import { TitleBar } from "@/components/common/page/title-bar";
@@ -53,7 +53,7 @@ export const MFAPage = () => {
   return (
     <MainPage>
       <PageHeader>
-        <ProfileBreadcrumbBase>
+        <ProfileBreadcrumb>
           <BreadcrumbItem>
             <BreadcrumbLink asChild={true}>
               <Link href="/profile/security">{t("安全设置")}</Link>
@@ -63,7 +63,7 @@ export const MFAPage = () => {
           <BreadcrumbItem>
             <BreadcrumbPage>{title}</BreadcrumbPage>
           </BreadcrumbItem>
-        </ProfileBreadcrumbBase>
+        </ProfileBreadcrumb>
         <TitleBar title={statusTitle} />
       </PageHeader>
       <div className="container">

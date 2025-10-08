@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 import { BreadcrumbItem, BreadcrumbPage, Card } from "@easykit/design";
-import { ProfileBreadcrumbBase } from "@/components/common/breadcrumb/profile";
+import { ProfileBreadcrumb } from "@/components/common/breadcrumb/profile";
 import { MainPage } from "@/components/common/page";
 import { PageHeader } from "@/components/common/page/header";
 import { TitleBar } from "@/components/common/page/title-bar";
@@ -22,11 +22,11 @@ export const SecurityPage = () => {
   return (
     <MainPage>
       <PageHeader>
-        <ProfileBreadcrumbBase>
+        <ProfileBreadcrumb>
           <BreadcrumbItem>
             <BreadcrumbPage>{title}</BreadcrumbPage>
           </BreadcrumbItem>
-        </ProfileBreadcrumbBase>
+        </ProfileBreadcrumb>
         <TitleBar title={title} />
       </PageHeader>
       <div className="container flex flex-col gap-md">

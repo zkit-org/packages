@@ -7,7 +7,7 @@ import { AppBreadcrumb } from "..";
 
 export type BreadcrumbProps = PropsWithChildren;
 
-export const ProfileBreadcrumb: FC<BreadcrumbProps> = (props) => {
+export const AppsBreadcrumb: FC<BreadcrumbProps> = (props) => {
   const { children } = props;
   const { t } = useTranslation();
 
@@ -15,7 +15,7 @@ export const ProfileBreadcrumb: FC<BreadcrumbProps> = (props) => {
     <AppBreadcrumb>
       <BreadcrumbItem>
         <BreadcrumbLink asChild={true}>
-          <Link href={`/profile`}>{t("个人资料")}</Link>
+          <Link href={`/apps`}>{t("应用")}</Link>
         </BreadcrumbLink>
       </BreadcrumbItem>
       {children && <BreadcrumbSeparator />}
