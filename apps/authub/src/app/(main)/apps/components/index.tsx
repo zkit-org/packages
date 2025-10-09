@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/common/page/header";
 import { TitleBar } from "@/components/common/page/title-bar";
 import { useLayoutConfig } from "@/components/layout/hooks";
 import type { MainLayoutProps } from "@/components/layout/main";
+import { AddButton } from "./add/button";
 
 export const AppsPage = () => {
   useLayoutConfig<MainLayoutProps>({
@@ -16,11 +17,12 @@ export const AppsPage = () => {
   });
   const { t } = useTranslation();
   const title = t("应用");
+  const actions = <AddButton />;
   return (
     <MainPage>
       <PageHeader>
         <AppsBreadcrumb />
-        <TitleBar title={title} />
+        <TitleBar actions={actions} title={title} />
       </PageHeader>
       <Coming />
     </MainPage>

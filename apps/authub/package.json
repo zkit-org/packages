@@ -41,7 +41,9 @@
     "@svgr/webpack": "8.1.0",
     "input-otp": "1.4.2",
     "es-toolkit": "1.35.0",
-    "react-hook-form": "7.52.1"
+    "react-hook-form": "7.52.1",
+    "cropperjs": "1.6.2",
+    "react-cropper": "2.3.3"
   },
   "devDependencies": {
     "@types/js-cookie": "3.0.6"
