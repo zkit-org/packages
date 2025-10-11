@@ -3,7 +3,7 @@ import { EllipsisVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
-import { Action, Avatar, Badge, Dropdown, type DropdownMenuItemProps, useAlert, useMessage } from "@easykit/design";
+import { Action, Avatar, Badge, Dropdown, type DropdownMenuItemProps, useAlert } from "@easykit/design";
 import { useMutation, useProfile } from "@/hooks";
 import { deleteApp, disable, enable } from "@/rest/app";
 import type { AppListResponse } from "@/types/app";
@@ -47,7 +47,6 @@ export const AppItem: FC<AppItemProps> = (props) => {
   const alert = useAlert();
   const { t } = useTranslation();
   const reload = useAppsReload();
-  const msg = useMessage();
   const router = useRouter();
 
   const { mutateAsync: enableMutate } = useMutation({
