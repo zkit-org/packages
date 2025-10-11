@@ -27,7 +27,13 @@ const Layout: FC<LayoutProps> = async (props) => {
   const { locale, theme, profileData, isLogin, configData } = initialData;
   return (
     <HTMLLayout>
-      <RootLayout config={configData} isLogin={isLogin} locale={locale} profile={profileData ?? null} theme={theme}>
+      <RootLayout
+        config={configData}
+        isLogin={isLogin ?? false}
+        locale={locale}
+        profile={profileData ?? null}
+        theme={theme}
+      >
         {props.children}
       </RootLayout>
     </HTMLLayout>

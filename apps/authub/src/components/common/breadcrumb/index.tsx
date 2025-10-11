@@ -15,7 +15,7 @@ export const AppBreadcrumb: FC<AppBreadcrumbProps> = (props) => {
     <Breadcrumb>
       <BreadcrumbList className="gap-1 sm:gap-1 [&>li]:flex [&>li]:items-center">
         <BreadcrumbItem className="leading-4">
-          <Link href={homeUrl}>
+          <Link className="flex items-center" href={homeUrl}>
             <House className="size-4" />
           </Link>
         </BreadcrumbItem>

@@ -1,4 +1,4 @@
-export type AppListResponse = {
+export type AppBase = {
   id: number;
   name: string;
   appKey: string;
@@ -10,3 +10,7 @@ export type AppListResponse = {
   role: number;
   enable: boolean;
 };
+
+export type AppResponse = AppBase;
+
+export type AppListResponse = AppBase;
