@@ -1,8 +1,9 @@
 import { type ChangeEvent, type ComponentProps, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-import { Button, Input, useMessage } from "@easykit/design";
+import { Button, Input } from "@easykit/design";
+import { useMutation } from "@/hooks";
+import type { RestResult } from "@/types/rest";
 import { isEmail } from "@/utils";
 import { i18n } from "@/utils/locale.client";
 
@@ -11,7 +12,7 @@ export type BaseData = {
 };
 
 interface EmailCodeInputProps<T extends BaseData> extends ComponentProps<typeof Input> {
-  api: (params: T) => Promise<unknown>;
+  api: (params: T) => Promise<RestResult<unknown>>;
   placeholder: string;
   data: T;
   needEmail?: boolean;
@@ -20,7 +21,6 @@ interface EmailCodeInputProps<T extends BaseData> extends ComponentProps<typeof 
 export const EmailCodeInput = <T extends BaseData>(props: EmailCodeInputProps<T>) => {
   const { api, data, needEmail = false, onChange, ...rest } = props;
 
-  const Message = useMessage();
   const [waiting, setWaiting] = useState(false);
   const [time, setTime] = useState(60);
   const timeRef = useRef(60);
@@ -53,9 +53,6 @@ export const EmailCodeInput = <T extends BaseData>(props: EmailCodeInputProps<T>
     mutationFn: api,
     onSuccess: () => {
       startTimer();
-    },
-    onError: (error) => {
-      Message.error(error.message);
     },
   });
 

@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import cloneDeep from "lodash/cloneDeep";
 import { useTranslation } from "react-i18next";
 
-import { Button, Form, FormItem, Input, useMessage } from "@easykit/design";
+import { Button, Form, FormItem, Input } from "@easykit/design";
 import { EmailCodeInput } from "@/components/common/input/email-code";
-import { useEncrypt } from "@/hooks";
+import { useEncrypt, useMutation } from "@/hooks";
 import { register, sendEmailCode } from "@/rest/register";
 import { type RegisterFormData, useSchema } from "@/schema/register";
 import { setToken } from "@/utils/token";
@@ -16,7 +15,6 @@ export const RegisterPage = () => {
   const schema = useSchema();
   const { t } = useTranslation();
   const [formData, setFormData] = useState<RegisterFormData | undefined>();
-  const msg = useMessage();
   const encrypt = useEncrypt();
 
   const { mutate, isPending } = useMutation({
@@ -26,9 +24,6 @@ export const RegisterPage = () => {
         setToken(data);
         location.href = "/";
       }
-    },
-    onError: (error) => {
-      msg.error(error.message);
     },
   });
 

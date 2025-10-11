@@ -155,14 +155,6 @@ export function download<T, P = undefined>(
   });
 }
 
-export const resultWrapper = async <T>(data: Promise<RestResult<T>>) => {
-  const result = await data;
-  if (result.success) {
-    return result.data;
-  }
-  throw new RestError(result.message, result.code, result.data);
-};
-
 // biome-ignore lint/suspicious/noExplicitAny: map
 export const alias = (map: Record<string, any>) => {
   aliasMap = {

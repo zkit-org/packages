@@ -1,13 +1,12 @@
 import { useCallback, useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { cloneDeep } from "es-toolkit";
 import type { UseFormReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { Button, Card, Form, FormItem, Input, Separator, Space, useMessage } from "@easykit/design";
+import { Button, Card, Form, FormItem, Input, Separator, Space } from "@easykit/design";
 import bus from "@/events";
 import { UNAUTHORIZED } from "@/events/auth";
-import { useEncrypt } from "@/hooks";
+import { useEncrypt, useMutation } from "@/hooks";
 import { change } from "@/rest/profile/security/password";
 import { type PasswordFormData, useSchema } from "@/schema/profile/security/password";
 
@@ -15,7 +14,6 @@ export const Password = () => {
   const { t } = useTranslation();
   const ref = useRef<UseFormReturn<PasswordFormData>>(null);
   const [state, setState] = useState<string>("normal");
-  const m = useMessage();
   const encrypt = useEncrypt();
   const schema = useSchema();
 
@@ -23,10 +21,6 @@ export const Password = () => {
     mutationFn: change,
     onSuccess: () => {
       bus.emit(UNAUTHORIZED);
-    },
-    onError: (error) => {
-      console.log(ref, error);
-      m.error(error.message);
     },
   });
 

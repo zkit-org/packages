@@ -1,11 +1,11 @@
 import { type FC, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai/index";
 import { useTranslation } from "react-i18next";
 import { object, string } from "zod";
 
-import { Button, Dialog, Form, FormItem, useMessage } from "@easykit/design";
+import { Button, Dialog, Form, FormItem } from "@easykit/design";
 import { EmailCodeInput } from "@/components/common/input/email-code";
+import { useMutation } from "@/hooks";
 import { type SendEmailCodeData, sendEmailCode } from "@/rest/common";
 import { otpDisable } from "@/rest/profile/security/mfa";
 import { profileState } from "@/state/public";
@@ -26,14 +26,12 @@ export const DisableModal: FC<DisableModalProps> = (props) => {
   const [visible, setVisible] = useState(false);
   const title = t("禁用二次验证");
   const account = useAtomValue(profileState);
-  const m = useMessage();
   const { mutate, isPending } = useMutation({
     mutationFn: otpDisable,
     onSuccess: () => {
       setVisible(false);
       props.onSuccess?.();
     },
-    onError: (error) => m.error(error.message),
   });
 
   return (

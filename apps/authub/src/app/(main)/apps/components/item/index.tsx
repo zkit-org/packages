@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { EllipsisVertical } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 import { Action, Avatar, Badge, Dropdown, type DropdownMenuItemProps, useAlert, useMessage } from "@easykit/design";
-import { useProfile } from "@/hooks";
+import { useMutation, useProfile } from "@/hooks";
 import { deleteApp, disable, enable } from "@/rest/app";
 import type { AppListResponse } from "@/types/app";
 import { useAppsReload } from "../hooks";
@@ -48,14 +48,12 @@ export const AppItem: FC<AppItemProps> = (props) => {
   const { t } = useTranslation();
   const reload = useAppsReload();
   const msg = useMessage();
+  const router = useRouter();
 
   const { mutateAsync: enableMutate } = useMutation({
     mutationFn: enable,
     onSuccess: () => {
       reload();
-    },
-    onError: (error) => {
-      msg.error(error.message);
     },
   });
 
@@ -64,18 +62,12 @@ export const AppItem: FC<AppItemProps> = (props) => {
     onSuccess: () => {
       reload();
     },
-    onError: (error) => {
-      msg.error(error.message);
-    },
   });
 
   const { mutateAsync: deleteMutate } = useMutation({
     mutationFn: deleteApp,
     onSuccess: () => {
       reload();
-    },
-    onError: (error) => {
-      msg.error(error.message);
     },
   });
 
@@ -123,6 +115,8 @@ export const AppItem: FC<AppItemProps> = (props) => {
               description: t("是否删除该应用？"),
               onOk: () => deleteMutate(app.id),
             });
+          } else if (item.id === "detail") {
+            router.push(`/apps/${app.id}/detail`);
           }
         }}
       >

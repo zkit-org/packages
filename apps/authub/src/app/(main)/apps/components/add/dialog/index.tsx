@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-import { Button, Dialog, type DialogProps, Form, FormItem, Input, Textarea, useMessage } from "@easykit/design";
+import { Button, Dialog, type DialogProps, Form, FormItem, Input, Textarea } from "@easykit/design";
 import { Cropper } from "@/components/common/cropper";
+import { useMutation } from "@/hooks";
 import { add } from "@/rest/app";
 import { type AddAppFormData, useSchema } from "@/schema/app";
 import { useAppsReload } from "../../hooks";
@@ -14,7 +14,6 @@ export const AddDialog: FC<AddDialogProps> = (props) => {
   const { t } = useTranslation();
   const schema = useSchema();
   const form = Form.useForm<AddAppFormData>();
-  const msg = useMessage();
   const reload = useAppsReload();
 
   const { mutate, isPending } = useMutation({
@@ -22,9 +21,6 @@ export const AddDialog: FC<AddDialogProps> = (props) => {
     onSuccess: () => {
       props.onCancel?.();
       reload();
-    },
-    onError: (error) => {
-      msg.error(error.message);
     },
   });
 

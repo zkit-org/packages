@@ -1,4 +1,4 @@
-import { post, resultWrapper } from "@/utils/rest";
+import { post } from "@/utils/rest";
 
 export type SendEmailCodeData = {
   action: string;
@@ -6,4 +6,4 @@ export type SendEmailCodeData = {
 };
 
 export const sendEmailCode = (data: SendEmailCodeData) =>
-  resultWrapper<unknown>(post<unknown, SendEmailCodeData>("@main/account/email/code/send", data));
+  post<unknown, SendEmailCodeData>("@main/account/email/code/send", data);

@@ -1,9 +1,9 @@
 import type { FC, PropsWithChildren } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { FormItem } from "@easykit/design";
 import { OtpInfo } from "@/components/common/account/otp-info";
+import { useQuery } from "@/hooks";
 import { otpSecret } from "@/rest/profile/security/mfa";
 
 export type SecretItemProps = PropsWithChildren;

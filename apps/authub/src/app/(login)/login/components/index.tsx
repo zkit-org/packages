@@ -1,14 +1,13 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import cloneDeep from "lodash/cloneDeep";
 import isUndefined from "lodash/isUndefined";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 import { Button, Divider, Form, FormItem, Input, useMessage } from "@easykit/design";
-import { useEncrypt } from "@/hooks";
+import { useEncrypt, useMutation } from "@/hooks";
 import { type LoginRestData, login } from "@/rest/auth";
 import { type LoginFormData, useSchema } from "@/schema/login";
 import { RestError } from "@/utils/rest";

@@ -7,10 +7,7 @@ import "@/plugin/rest.server";
 import "@/plugin/locales";
 import "@/assets/style/index.css";
 
-import { profile } from "@/rest/auth";
-import { common } from "@/rest/config";
-import { getLocale } from "@/utils/locale.server";
-import { getTheme } from "@/utils/theme.server";
+import { loadInitialData } from "@/utils/layout";
 
 export type LayoutProps = PropsWithChildren;
 
@@ -23,17 +20,6 @@ export const metadata: Metadata = {
     ],
     other: [{ url: "/site.webmanifest", rel: "manifest" }],
   },
-};
-
-const loadInitialData = async () => {
-  const locale = await getLocale();
-  const theme = await getTheme();
-  const { success, data } = await profile();
-  const { success: configSuccess, data: config } = await common();
-  const profileData = success ? data : null;
-  const configData = configSuccess ? config : null;
-  const initialData = { locale, theme, profileData, isLogin: success ?? false, configData };
-  return initialData;
 };
 
 const Layout: FC<LayoutProps> = async (props) => {

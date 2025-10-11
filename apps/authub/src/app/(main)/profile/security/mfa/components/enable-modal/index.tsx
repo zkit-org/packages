@@ -1,5 +1,4 @@
 import { type FC, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { object, string } from "zod";
@@ -7,6 +6,7 @@ import { object, string } from "zod";
 import { Button, Dialog, Form, FormItem, useMessage } from "@easykit/design";
 import { CodeInput } from "@/components/common/input/code";
 import { EmailCodeInput } from "@/components/common/input/email-code";
+import { useMutation } from "@/hooks";
 import { type SendEmailCodeData, sendEmailCode } from "@/rest/common";
 import { type OTPBindData, otpBind } from "@/rest/profile/security/mfa";
 import { profileState } from "@/state/public";
@@ -36,7 +36,6 @@ export const EnableModal: FC<EnableModalProps> = (props) => {
       setVisible(false);
       props.onSuccess?.();
     },
-    onError: (error) => m.error(error.message),
   });
 
   return (

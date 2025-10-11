@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { Empty, Pagination } from "@easykit/design";
@@ -11,6 +11,7 @@ import { PageHeader } from "@/components/common/page/header";
 import { TitleBar } from "@/components/common/page/title-bar";
 import { useLayoutConfig } from "@/components/layout/hooks";
 import type { MainLayoutProps } from "@/components/layout/main";
+import { useQuery } from "@/hooks";
 import { list } from "@/rest/app";
 import { AddButton } from "./add/button";
 import { AppItem } from "./item";
