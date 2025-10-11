@@ -3,7 +3,7 @@ import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { object, string } from "zod";
 
-import { Button, Dialog, Form, FormItem, useMessage } from "@easykit/design";
+import { Button, Dialog, Form, FormItem } from "@easykit/design";
 import { CodeInput } from "@/components/common/input/code";
 import { EmailCodeInput } from "@/components/common/input/email-code";
 import { useMutation } from "@/hooks";
@@ -29,7 +29,6 @@ export const EnableModal: FC<EnableModalProps> = (props) => {
   const { t } = useTranslation();
   const title = t("启用二次验证");
   const account = useAtomValue(profileState);
-  const m = useMessage();
   const { mutate, isPending } = useMutation({
     mutationFn: otpBind,
     onSuccess: () => {
