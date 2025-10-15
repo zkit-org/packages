@@ -7,7 +7,9 @@ export const AddButton = () => {
   const [visible, setVisible] = useState(false);
   return (
     <>
-      <Button onClick={() => setVisible(true)}>添加应用</Button>
+      <Button onClick={() => setVisible(true)} size="sm">
+        添加应用
+      </Button>
       <AddDialog onCancel={() => setVisible(false)} visible={visible} />
     </>
   );

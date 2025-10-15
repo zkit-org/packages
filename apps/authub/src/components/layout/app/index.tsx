@@ -1,56 +1,32 @@
 "use client";
 
-import { type FC, type PropsWithChildren, useEffect, useState } from "react";
+import type { FC, PropsWithChildren } from "react";
+import { useLayoutEffect } from "react";
 import { useSetAtom } from "jotai";
-import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
+import { useHydrateAtoms } from "jotai/utils";
 
-import { BreadcrumbItem } from "@easykit/design";
-import { AppsBreadcrumb } from "@/components/common/breadcrumb/apps";
-import { MainPage } from "@/components/common/page";
-import { PageHeader } from "@/components/common/page/header";
-import { TitleBar } from "@/components/common/page/title-bar";
-import { TabsTitle } from "@/components/common/tabs-title";
+import { useQuery } from "@/hooks";
+import { detail } from "@/rest/app";
 import { currentAppState } from "@/state/app";
-import type { AppResponse } from "@/types/app";
-import { useLayoutProps } from "../hooks";
-import { MainLayout } from "../main";
-import { useAppTabs } from "./config";
 
 export type AppLayoutProps = PropsWithChildren<{
-  app?: AppResponse;
-  activeTab?: string;
+  id?: string;
 }>;
 
-export const AppLayout: FC<AppLayoutProps> = (origin) => {
-  const props = useLayoutProps<AppLayoutProps>(origin);
-  const { app } = props;
-  const { t } = useTranslation();
+export const AppLayout: FC<AppLayoutProps> = (props) => {
+  const { id, children } = props;
   const setCurrentApp = useSetAtom(currentAppState);
-  const tabs = useAppTabs();
-  const router = useRouter();
-  const [active, setActive] = useState(props.activeTab ?? "detail");
 
-  useEffect(() => {
+  const { data: app } = useQuery({
+    queryKey: ["app", id],
+    queryFn: ({ queryKey }) => detail(Number(queryKey[1])),
+  });
+
+  useHydrateAtoms([[currentAppState, app]]);
+
+  useLayoutEffect(() => {
     setCurrentApp(app);
-  }, [app]);
+  }, [app, setCurrentApp]);
 
-  useEffect(() => {
-    router.push(`/apps/${app?.id}/${active}`);
-  }, [active]);
-
-  return (
-    <MainLayout active="apps">
-      <MainPage className="gap-md">
-        <PageHeader>
-          <AppsBreadcrumb>
-            <BreadcrumbItem>{t("详情")}</BreadcrumbItem>
-          </AppsBreadcrumb>
-          <TitleBar title={app?.name} />
-          <TabsTitle active={active} className="-mb-md" items={tabs} onChange={setActive} />
-        </PageHeader>
-        <div className="container flex flex-col gap-md">{props.children}</div>
-      </MainPage>
-    </MainLayout>
-  );
+  return children;
 };

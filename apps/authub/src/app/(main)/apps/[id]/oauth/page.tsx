@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { st } from "@/utils/locale.server";
 import { keywords, title } from "@/utils/seo";
+import { AppsOauthPage } from "./components";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,5 +12,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
-  return <div>Oauth</div>;
+  return <AppsOauthPage />;
 }

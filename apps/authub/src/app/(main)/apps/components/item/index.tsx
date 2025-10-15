@@ -1,74 +1,17 @@
 import type { FC } from "react";
-import { EllipsisVertical } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
-import { Action, Avatar, Badge, Dropdown, type DropdownMenuItemProps, useAlert } from "@easykit/design";
-import { useMutation, useProfile } from "@/hooks";
-import { deleteApp, disable, enable } from "@/rest/app";
+import { Avatar, Badge } from "@easykit/design";
+import { AppItemMenus } from "@/components/common/page/app/item-menus";
 import type { AppListResponse } from "@/types/app";
-import { useAppsReload } from "../hooks";
 
 export type AppItemProps = {
   app: AppListResponse;
 };
 
-const useItems = (app: AppListResponse): DropdownMenuItemProps[] => {
-  const { enable, role, ownerId } = app;
-  const { t } = useTranslation();
-  const profile = useProfile();
-  const isOwner = profile?.id === ownerId;
-  const isAdmin = role === 1;
-  const isSystemApp = app.id === 1;
-  return [
-    {
-      label: t("详情"),
-      id: "detail",
-      type: "item",
-    },
-    isAdmin &&
-      !isSystemApp && {
-        label: enable ? t("禁用") : t("启用"),
-        id: enable ? "disable" : "enable",
-        type: "item",
-      },
-    isOwner &&
-      !isSystemApp && {
-        label: t("删除"),
-        id: "delete",
-        type: "item",
-      },
-  ].filter(Boolean) as DropdownMenuItemProps[];
-};
-
 export const AppItem: FC<AppItemProps> = (props) => {
   const { app } = props;
-  const items = useItems(app);
-  const alert = useAlert();
   const { t } = useTranslation();
-  const reload = useAppsReload();
-  const router = useRouter();
-
-  const { mutateAsync: enableMutate } = useMutation({
-    mutationFn: enable,
-    onSuccess: () => {
-      reload();
-    },
-  });
-
-  const { mutateAsync: disableMutate } = useMutation({
-    mutationFn: disable,
-    onSuccess: () => {
-      reload();
-    },
-  });
-
-  const { mutateAsync: deleteMutate } = useMutation({
-    mutationFn: deleteApp,
-    onSuccess: () => {
-      reload();
-    },
-  });
 
   return (
     <div
@@ -91,38 +34,7 @@ export const AppItem: FC<AppItemProps> = (props) => {
         </div>
         <div className="text-muted-foreground text-sm">{app.appKey}</div>
       </div>
-      <Dropdown
-        align="end"
-        asChild
-        items={items}
-        onItemClick={(item) => {
-          if (item.id === "enable") {
-            alert.confirm({
-              title: t("启用"),
-              description: t("是否启用该应用？"),
-              onOk: () => enableMutate(app.id),
-            });
-          } else if (item.id === "disable") {
-            alert.confirm({
-              title: t("禁用"),
-              description: t("是否禁用该应用？"),
-              onOk: () => disableMutate(app.id),
-            });
-          } else if (item.id === "delete") {
-            alert.confirm({
-              title: t("删除"),
-              description: t("是否删除该应用？"),
-              onOk: () => deleteMutate(app.id),
-            });
-          } else if (item.id === "detail") {
-            router.push(`/apps/${app.id}/detail`);
-          }
-        }}
-      >
-        <Action>
-          <EllipsisVertical className="size-4" />
-        </Action>
-      </Dropdown>
+      <AppItemMenus app={app} />
     </div>
   );
 };

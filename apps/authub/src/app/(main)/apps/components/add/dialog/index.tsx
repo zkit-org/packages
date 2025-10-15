@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 
 import { Button, Dialog, type DialogProps, Form, FormItem, Input, Textarea } from "@easykit/design";
 import { Cropper } from "@/components/common/cropper";
+import { useAppsReload } from "@/components/common/page/app/hooks";
 import { useMutation } from "@/hooks";
 import { add } from "@/rest/app";
 import { type AddAppFormData, useSchema } from "@/schema/app";
-import { useAppsReload } from "../../hooks";
 
 export type AddDialogProps = DialogProps;
 
