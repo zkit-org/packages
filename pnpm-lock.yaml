@@ -27,7 +27,7 @@ importers:
     dependencies:
       '@arco-iconbox/react-clover':
         specifier: 0.0.28
-        version: 0.0.28
+        version: 0.0.28(react@19.1.0)
       '@easykit/design':
         specifier: workspace:*
         version: link:packages/design
@@ -121,9 +121,6 @@ importers:
       recoil:
         specifier: 0.7.7
         version: 0.7.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      sass:
-        specifier: 1.77.6
-        version: 1.77.6
       sortablejs:
         specifier: 1.15.2
         version: 1.15.2
@@ -636,6 +633,8 @@ packages:
 
   '@arco-iconbox/react-clover@0.0.28':
     resolution: {integrity: sha512-JZHx/deixnALfrDyOkSPPbOoicSRmZ4o+jmLEbkFxRARRlFRbXzEbq/ktkO6HoNnsp5iS8re+Gsogd5G4NuETA==}
+    peerDependencies:
+      react: 19.1.0
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -6280,7 +6279,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
 
-  '@arco-iconbox/react-clover@0.0.28': {}
+  '@arco-iconbox/react-clover@0.0.28(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -10311,7 +10312,8 @@ snapshots:
 
   immer@10.1.1: {}
 
-  immutable@4.3.7: {}
+  immutable@4.3.7:
+    optional: true
 
   import-fresh@3.3.1:
     dependencies:
@@ -11527,6 +11529,7 @@ snapshots:
       chokidar: 3.6.0
       immutable: 4.3.7
       source-map-js: 1.2.1
+    optional: true
 
   scheduler@0.26.0: {}
 

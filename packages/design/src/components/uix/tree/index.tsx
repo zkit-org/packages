@@ -1,6 +1,6 @@
 import RCTree, { type BasicDataNode, type TreeProps as RCTreeProps, type TreeNodeProps } from "rc-tree";
 import "rc-tree/assets/index.css";
-import "./style.scss";
+import "./style.css";
 
 import type { FC, ReactNode } from "react";
 import { TriangleDownIcon, TriangleRightIcon } from "@radix-ui/react-icons";
