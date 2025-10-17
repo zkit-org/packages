@@ -149,11 +149,11 @@ importers:
         specifier: ^0.22.0
         version: 0.22.0(rollup@4.45.1)(vite@5.4.19(@types/node@20.14.9)(lightningcss@1.30.1)(sass@1.77.6))
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 4.1.12
+        version: 4.1.12
       zod-i18n-map:
         specifier: 2.27.0
-        version: 2.27.0(i18next@23.11.5)(zod@3.23.8)
+        version: 2.27.0(i18next@23.11.5)(zod@4.1.12)
       zustand:
         specifier: 4.5.4
         version: 4.5.4(@types/react@19.1.6)(immer@10.1.1)(react@19.1.0)
@@ -6255,6 +6255,9 @@ packages:
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
+
   zustand@4.5.4:
     resolution: {integrity: sha512-/BPMyLKJPtFEvVL0E9E9BTUM63MNyhPGlvxk1XjrfWTUlV+BR8jufjsovHzrtR6YNcBEcL7cMHovL1n9xHawEg==}
     engines: {node: '>=12.7.0'}
@@ -12205,12 +12208,14 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-i18n-map@2.27.0(i18next@23.11.5)(zod@3.23.8):
+  zod-i18n-map@2.27.0(i18next@23.11.5)(zod@4.1.12):
     dependencies:
       i18next: 23.11.5
-      zod: 3.23.8
+      zod: 4.1.12
 
   zod@3.23.8: {}
+
+  zod@4.1.12: {}
 
   zustand@4.5.4(@types/react@19.1.6)(immer@10.1.1)(react@19.1.0):
     dependencies:
