@@ -18,7 +18,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import classNames from "classnames";
 import isObject from "lodash/isObject";
-import type { Control, FieldValues, WatchObserver } from "react-hook-form";
+import type { Control, FieldValues, Resolver, WatchObserver } from "react-hook-form";
 import {
   type ControllerRenderProps,
   type DefaultValues,
@@ -26,7 +26,7 @@ import {
   type UseFormReturn,
   useForm as useFormHook,
 } from "react-hook-form";
-import type { ZodTypeAny } from "zod";
+import type { ZodType } from "zod";
 
 import {
   FormControl,
@@ -38,6 +38,12 @@ import {
   FormItem as UIFormItem,
 } from "@easykit/design/components/ui/form";
 import { cn } from "@easykit/design/lib";
+
+// 类型安全的 zodResolver 包装器，处理 zod 4.x 版本兼容性
+const safeZodResolver = <T extends FieldValues>(schema: ZodType<T>): Resolver<T> => {
+  // @ts-expect-error - zod 4.x 版本兼容性问题，zodResolver 类型基于 zod 3.x
+  return zodResolver(schema);
+};
 
 export interface RenderProps extends ControllerRenderProps {
   placeholder?: string;
@@ -57,7 +63,7 @@ export type FormInstance<T extends FieldValues> = UseFormReturn<T> & {
 };
 
 export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit"> & {
-  schema?: ZodTypeAny;
+  schema?: ZodType<T>;
   defaultValues?: DefaultValues<T>;
   onSubmit?: SubmitHandler<T>;
   className?: string;
@@ -123,7 +129,7 @@ function FormInner<T extends FieldValues>(props: FormProps<T>, ref: Ref<FormInst
   } = props;
 
   const form = useFormHook<T>({
-    resolver: zodResolver(schema!),
+    resolver: schema ? safeZodResolver(schema) : undefined,
     defaultValues: defaultValues,
   });
   form.watch(onValuesChange!);
