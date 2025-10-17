@@ -26,7 +26,7 @@ import {
   type UseFormReturn,
   useForm as useFormHook,
 } from "react-hook-form";
-import type { ZodType } from "zod";
+import type { ZodTypeAny } from "zod";
 
 import {
   FormControl,
@@ -57,7 +57,7 @@ export type FormInstance<T extends FieldValues> = UseFormReturn<T> & {
 };
 
 export type FormProps<T extends FieldValues> = Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit"> & {
-  schema?: ZodType<T>;
+  schema?: ZodTypeAny;
   defaultValues?: DefaultValues<T>;
   onSubmit?: SubmitHandler<T>;
   className?: string;
